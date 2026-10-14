@@ -64,7 +64,7 @@ Then visit: [http://localhost:8000](http://localhost:8000)
 ## 📖 Available Tutorials
 
 | # | 🎓 Tutorial | 📝 Description | 🔗 Link |
-|---|---|-----------|----------------|---------|
+|---|---|-----------|--------|
 | 1 | 🐧 [Linux Command Line](linux/) | Master the terminal: files, permissions, processes, networking, SSH, scripting, and systemd. | [Open tutorial](linux/index.html) |
 | 2 | 🌐 [HTML & CSS Fundamentals](html-css/) | A complete beginner guide to modern HTML5, CSS3, Flexbox, Grid, responsive design, and a portfolio project. | [Open tutorial](html-css/index.html) |
 | 3 | ♿ [Web Accessibility](web-accessibility/) | Semantic HTML, ARIA, keyboard navigation, screen readers, contrast, and real-world a11y patterns from Gov.uk, Apple, and BBC. | [Open tutorial](web-accessibility/index.html) |
