@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Data Storage &amp; Warehouses</title>
+  <link href="../assets/favicons/data-engineering-storage-warehouses.svg" rel="icon" type="image/svg+xml"/>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-light" rel="stylesheet"/>
+  <link disabled="" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" id="hljs-dark" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js">
+  </script>
+  <script>
+   tailwind.config = { darkMode: 'class' }
+  </script>
+  <link href="../assets/styles.css" rel="stylesheet"/>
+ </head>
+ <body class="antialiased transition-colors duration-300 brand-data-engineering-storage-warehouses">
+  <a class="sr-only" href="#main" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Skip to content</a>
+  <div class="fixed inset-0 bg-black/40 z-30 hidden lg:hidden" id="menu-overlay" onclick="toggleSidebar()">
+  </div>
+  <div class="flex min-h-screen">
+   <aside class="fixed lg:sticky top-0 left-0 h-screen w-72 border-r border-[var(--border)] bg-[var(--panel)] z-40 overflow-y-auto p-6" id="sidebar">
+    <div class="flex items-center gap-3 mb-8">
+     <img alt="Data Engineering" class="w-10 h-10" src="../assets/favicons/data-engineering-storage-warehouses.svg"/>
+     <span class="text-xl font-bold">DE Storage</span>
+    </div>
+    <nav class="space-y-1 text-sm" id="toc">
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">1. Introduction</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#relational">2. Relational Databases</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#nosql">3. NoSQL Databases</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#cap">4. CAP Theorem</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#lake-warehouse">5. Lake, Warehouse, Mart, Mesh, Fabric, Hub</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#lakehouse">6. Lakehouse</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#choosing">7. Indexing &amp; Choosing Technologies</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#project">8. Capstone: SaaS Event Analytics Warehouse</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#quiz">9. Knowledge Check</a>
+    </nav>
+    <div class="mt-8 pt-6 border-t border-[var(--border)]">
+     <p class="text-xs text-[var(--muted)]">Open in any browser. No build step required.</p>
+    </div>
+   </aside>
+   <main class="flex-1 min-w-0" id="main">
+    <header class="sticky top-0 z-20 border-b border-[var(--border)] bg-[var(--panel)]/90 backdrop-blur px-6 py-4 flex items-center justify-between">
+     <div class="flex items-center gap-3">
+      <button aria-label="Open menu" class="lg:hidden p-2 rounded-md border border-[var(--border)]" onclick="toggleSidebar()">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path>
+       </svg>
+      </button>
+      <h1 class="text-lg sm:text-xl font-bold tracking-tight">Data Storage &amp; Warehouses</h1>
+     </div>
+     <div class="hidden sm:flex items-center gap-2 progress-controls" id="progress-controls">
+      <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-start">Start</button>
+      <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-complete">Mark Complete</button>
+      <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-reset">Reset</button>
+     </div>
+     <div class="sm:hidden flex items-center gap-2 progress-controls" id="progress-controls-mobile">
+      <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-start-mobile">Start</button>
+      <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-complete-mobile">Complete</button>
+      <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-reset-mobile">Reset</button>
+     </div>
+     <button aria-label="Toggle theme" class="p-2 rounded-full border border-[var(--border)] hover:bg-black/5 dark:hover:bg-white/5 transition" id="theme-toggle">
+      <svg aria-hidden="true" class="w-5 h-5" fill="none" id="moon" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+       <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <svg aria-hidden="true" class="w-5 h-5 hidden" fill="none" id="sun" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+       <circle cx="12" cy="12" r="5"></circle>
+       <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+     </button>
+    </header>
+    <div class="max-w-4xl mx-auto px-6 py-10 space-y-20">
+     <section class="scroll-mt-24" id="intro">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 1</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Introduction</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Choosing the right storage technology is one of the highest-leverage decisions in data engineering. This tutorial compares relational and NoSQL databases, explains the CAP theorem, and walks through lakes, warehouses, lakehouses, data mesh, and modern indexing. By the end you will be able to match a business problem to a storage architecture.</p>
+      <div class="card rounded-2xl p-6 mb-8">
+       <h3 class="text-xl font-semibold mb-3">Before you start</h3>
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+        <li>Comfortable with basic SQL and table design.</li>
+        <li>Familiarity with <a class="underline" href="../sql-databases/index.html" target="_blank">SQL &amp; Databases</a> is helpful.</li>
+        <li>No cloud account required; examples use local Postgres and SQLite.</li>
+       </ul>
+      </div>
+      <div class="card rounded-2xl p-6 mb-8">
+       <h3 class="text-xl font-semibold mb-3">What you'll learn</h3>
+       <ul class="grid sm:grid-cols-2 gap-3 text-[var(--muted)]">
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>Relational databases and ACID transactions</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>NoSQL types: key-value, document, column, graph</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>CAP theorem trade-offs</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>Data lake, warehouse, mart, mesh, fabric, hub</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>Lakehouse concepts with Delta/Iceberg ideas</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>Choosing the right storage for a SaaS warehouse capstone</li>
+       </ul>
+      </div>
+      <div class="card rounded-2xl p-6 mb-8">
+       <h3 class="text-xl font-semibold mb-3">Real-world impact</h3>
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+        <li><strong>Airbnb</strong> built Minerva, a metrics store on top of Druid and Presto, to unify analytical storage.</li>
+        <li><strong>Netflix</strong> combines S3 data lakes, Presto, and Druid for recommendations and operational analytics.</li>
+        <li><strong>Zalando</strong> uses a data mesh approach so autonomous teams own their analytical data products.</li>
+       </ul>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <span></span>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#relational">Next: Relational Databases &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="relational">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 2</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Relational Databases</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Relational databases remain the default for structured transactional workloads. PostgreSQL and MySQL are open-source, proven choices. They enforce schemas, support joins, and provide ACID guarantees. See <a class="underline" href="../sql-databases/index.html" target="_blank">SQL &amp; Databases</a> and <a class="underline" href="../database-optimization/index.html" target="_blank">Database Optimization</a> for deeper coverage.</p>
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">PostgreSQL</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li>Advanced indexing, JSON support, CTEs, window functions.</li>
+         <li>Excellent extensibility and open-source community.</li>
+         <li>Strong choice for OLTP and light analytics.</li>
+        </ul>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">MySQL / MariaDB</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li>Widely deployed in web applications.</li>
+         <li>Good replication tooling and managed options.</li>
+         <li>Common in LAMP/LEMP stacks.</li>
+        </ul>
+       </div>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-sql">-- Start Postgres locally with Docker for the capstone
+docker run -d --name pg-de \
+  -e POSTGRES_USER=de_user \
+  -e POSTGRES_PASSWORD=de_pass \
+  -e POSTGRES_DB=events_db \
+  -p 5432:5432 \
+  postgres:16-alpine
+
+-- Connect
+psql -h localhost -U de_user -d events_db</code></pre>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#nosql">Next: NoSQL &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="nosql">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 3</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">NoSQL Databases</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">NoSQL databases relax the rigid relational model to scale horizontally, handle flexible schemas, or optimize specific access patterns. They are grouped into key-value, document, column-family, and graph stores.</p>
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Key-value &amp; wide-column</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>Redis</strong>: in-memory key-value store. See <a class="underline" href="../redis-caching/index.html" target="_blank">Redis &amp; Caching</a>.</li>
+         <li><strong>DynamoDB, Cassandra, HBase, Bigtable</strong>: wide-column stores for massive scale.</li>
+        </ul>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Document &amp; graph</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>MongoDB, CouchDB</strong>: flexible JSON documents. See <a class="underline" href="../mongodb-nosql/index.html" target="_blank">MongoDB &amp; NoSQL</a>.</li>
+         <li><strong>Neo4j, Amazon Neptune</strong>: graph databases for relationships. See <a class="underline" href="../graph-databases/index.html" target="_blank">Graph Databases</a>.</li>
+        </ul>
+       </div>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-python"># Example document shape for MongoDB/CouchDB
+patient_doc = {
+    "_id": "P001",
+    "name": "Jane Doe",
+    "observations": [
+        {"code": "8867-4", "value": 72, "unit": "beats/min"},
+        {"code": "8310-5", "value": 37.1, "unit": "Cel"}
+    ]
+}
+# Access pattern: fetch full patient record by _id</code></pre>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#relational">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#cap">Next: CAP Theorem &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="cap">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 4</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">CAP Theorem</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">The CAP theorem states that a distributed data store can only guarantee two of three properties during a partition: Consistency, Availability, and Partition tolerance. Since partitions are unavoidable, the real choice is between CP and AP systems.</p>
+      <div class="card rounded-2xl p-6 mb-8 flex flex-col items-center">
+       <h3 class="text-xl font-semibold mb-4 w-full">CAP trade-off triangle</h3>
+       <svg aria-label="Diagram showing CAP theorem triangle" class="diagram" viewBox="0 0 720 220">
+        <polygon fill="none" points="360,30 640,190 80,190" stroke="#0284c7" stroke-width="3"></polygon>
+        <circle cx="360" cy="30" fill="#0284c7" opacity="0.2" r="45" stroke="#0284c7" stroke-width="2"></circle>
+        <text fill="#0284c7" font-size="13" font-weight="700" text-anchor="middle" x="360" y="35">Consistency</text>
+        <circle cx="80" cy="190" fill="#0284c7" opacity="0.2" r="45" stroke="#0284c7" stroke-width="2"></circle>
+        <text fill="#0284c7" font-size="13" font-weight="700" text-anchor="middle" x="80" y="195">Availability</text>
+        <circle cx="640" cy="190" fill="#0284c7" opacity="0.2" r="45" stroke="#0284c7" stroke-width="2"></circle>
+        <text fill="#0284c7" font-size="13" font-weight="700" text-anchor="middle" x="640" y="195">Partition Tolerance</text>
+        <text fill="var(--muted)" font-size="12" text-anchor="middle" x="360" y="240">Pick two during a network partition.</text>
+       </svg>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">CP systems</h3>
+        <p class="text-[var(--muted)]">Favor consistency over availability during a partition. Examples: HBase, Redis Cluster, etcd, ZooKeeper.</p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">AP systems</h3>
+        <p class="text-[var(--muted)]">Favor availability and accept eventual consistency. Examples: Cassandra, DynamoDB, CouchDB.</p>
+       </div>
+      </div>
+      <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5">
+       <h4 class="font-semibold mb-2">Practical note</h4>
+       <p class="text-[var(--muted)]">Most distributed systems tune the trade-off per operation. For example, Cassandra lets you choose consistency levels per query (ONE, QUORUM, ALL).</p>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#nosql">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#lake-warehouse">Next: Lake &amp; Warehouse &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="lake-warehouse">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 5</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Lake, Warehouse, Mart, Mesh, Fabric, Hub</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Modern organizations store data at multiple layers. Each layer solves a different problem, from cheap raw storage to curated departmental datasets.</p>
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Storage layers</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>Data lake</strong>: cheap raw storage in S3/GCS/Blob (JSON, Parquet, CSV).</li>
+         <li><strong>Data warehouse</strong>: structured, query-optimized store for analytics.</li>
+         <li><strong>Data mart</strong>: department-specific subset of a warehouse.</li>
+        </ul>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Architectural styles</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>Data mesh</strong>: domain-oriented, decentralized data ownership.</li>
+         <li><strong>Data fabric</strong>: unified metadata and integration layer across silos.</li>
+         <li><strong>Data hub</strong>: central exchange that connects producers and consumers.</li>
+        </ul>
+       </div>
+      </div>
+      <div class="card rounded-2xl p-6 mb-8">
+       <h3 class="text-xl font-semibold mb-3">Comparison</h3>
+       <div class="overflow-x-auto">
+        <table class="compare-table w-full">
+         <thead>
+          <tr>
+           <th>Concept</th>
+           <th>Best for</th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>Data lake</td>
+           <td>Cheap storage of raw, diverse data</td>
+          </tr>
+          <tr>
+           <td>Data warehouse</td>
+           <td>Fast SQL analytics on curated data</td>
+          </tr>
+          <tr>
+           <td>Data mart</td>
+           <td>Departmental reporting (sales, finance)</td>
+          </tr>
+          <tr>
+           <td>Data mesh</td>
+           <td>Large orgs with autonomous domains</td>
+          </tr>
+          <tr>
+           <td>Data fabric</td>
+           <td>Unified discovery across distributed systems</td>
+          </tr>
+         </tbody>
+        </table>
+       </div>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#cap">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#lakehouse">Next: Lakehouse &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="lakehouse">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 6</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Lakehouse</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">A lakehouse merges the low-cost storage of a data lake with the transactional reliability and performance of a warehouse. Open table formats like Delta Lake, Apache Iceberg, and Apache Hudi make this possible.</p>
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Why lakehouse?</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li>Store raw and curated data on cheap object storage.</li>
+         <li>Support ACID transactions, time travel, and schema evolution.</li>
+         <li>Run both BI and ML workloads on the same data.</li>
+        </ul>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Platforms</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>Databricks</strong>: Delta Lake + Spark.</li>
+         <li><strong>Snowflake</strong>: managed warehouse with external table support.</li>
+         <li><strong>AWS Glue + Athena</strong>: query Iceberg tables on S3.</li>
+        </ul>
+       </div>
+      </div>
+       <div class="code-block mb-6">
+        <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <pre><code class="language-bash"># Save as delta_setup.py, then run with uv
+cat &lt;&lt; 'EOF' &gt; delta_setup.py
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+    .appName("DeltaSetup") \
+    .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
+    .getOrCreate()
+
+spark.sql("""
+  CREATE TABLE IF NOT EXISTS bronze.events (
+    event_id STRING,
+    user_id STRING,
+    event_type STRING,
+    page STRING,
+    ts TIMESTAMP
+  ) USING DELTA
+  LOCATION 's3a://my-lake/bronze/events'
+""")
+
+# Time travel: query table as of a previous version
+path = "s3a://my-lake/bronze/events"
+spark.read.format("delta").option("versionAsOf", 5).load(path).show()
+EOF
+
+uv run --with delta-spark delta_setup.py</code></pre>
+       </div>
+       <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#lake-warehouse">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#choosing">Next: Choosing Tech &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="choosing">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 7</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Indexing &amp; Choosing Technologies</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Indexes speed up reads at the cost of write overhead. Choosing the right storage is about matching access patterns, scale, consistency needs, and team skills.</p>
+      <div class="card rounded-2xl p-6 mb-8">
+       <h3 class="text-xl font-semibold mb-3">Decision framework</h3>
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+        <li><strong>Structured transactions</strong>: PostgreSQL or MySQL.</li>
+        <li><strong>Flexible documents at scale</strong>: MongoDB, CouchDB.</li>
+        <li><strong>Massive wide-column/time series</strong>: Cassandra, Bigtable, DynamoDB.</li>
+        <li><strong>Graph relationships</strong>: Neo4j, Neptune.</li>
+        <li><strong>Ad-hoc analytics</strong>: Snowflake, BigQuery, Redshift.</li>
+        <li><strong>Unified lake + warehouse</strong>: Databricks, Glue + Athena.</li>
+       </ul>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-sql">-- Typical indexing for an event analytics warehouse
+CREATE INDEX idx_events_user_id ON events(user_id);
+CREATE INDEX idx_events_event_type_ts ON events(event_type, event_ts);
+CREATE INDEX idx_events_page_ts ON events(page, event_ts);
+
+-- Composite covering index for funnel queries
+CREATE INDEX idx_events_funnel ON events(event_type, page, event_ts)
+INCLUDE (user_id, session_id);</code></pre>
+      </div>
+      <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5">
+       <h4 class="font-semibold mb-2">Remember</h4>
+       <p class="text-[var(--muted)]">No database does everything well. Use the best tool for each workload and connect them with pipelines.</p>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#lakehouse">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#project">Next: Capstone &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="project">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 8</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Capstone: SaaS Event Analytics Warehouse</h2>
+      <h3 class="text-xl font-semibold mb-3">1. What is this project?</h3>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">You will design a data warehouse for a SaaS product that captures clickstream events. The project covers source schemas, a star schema, storage layer choices, and analytical queries.</p>
+      <h3 class="text-xl font-semibold mb-3">2. What it covers?</h3>
+      <div class="card rounded-2xl p-6 mb-8">
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+        <li>Define event sources and business questions.</li>
+        <li>Design OLTP source schema and OLAP star schema.</li>
+        <li>Choose storage: Postgres for OLTP, S3 data lake, warehouse layer.</li>
+        <li>Implement fact/dimension tables in SQL.</li>
+        <li>Write analytical queries and explain technology choices.</li>
+       </ul>
+      </div>
+      <h3 class="text-xl font-semibold mb-3">3. How it is done?</h3>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Start with the OLTP event table, then model dimensions and a fact table for analytics. Use S3 as a raw landing zone and Postgres/SQLite for the curated warehouse.</p>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-sql">-- OLTP source table (application database)
+CREATE TABLE app_events (
+    event_id UUID PRIMARY KEY,
+    user_id INT NOT NULL,
+    event_type VARCHAR(50) NOT NULL,
+    page VARCHAR(200),
+    session_id VARCHAR(100),
+    event_ts TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- OLAP dimensions
+CREATE TABLE dim_user (
+    user_key SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    email_domain VARCHAR(100),
+    signup_date DATE,
+    plan VARCHAR(50),
+    valid_from DATE NOT NULL,
+    valid_to DATE,
+    is_current BOOLEAN DEFAULT TRUE
+);
+
+CREATE TABLE dim_date (
+    date_key INT PRIMARY KEY,
+    full_date DATE NOT NULL,
+    year INT,
+    month INT,
+    day_of_week INT
+);
+
+-- OLAP fact table
+CREATE TABLE fact_events (
+    event_key BIGSERIAL PRIMARY KEY,
+    event_id UUID NOT NULL,
+    user_key INT REFERENCES dim_user(user_key),
+    date_key INT REFERENCES dim_date(date_key),
+    event_type VARCHAR(50),
+    page VARCHAR(200),
+    session_id VARCHAR(100)
+);</code></pre>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-sql">-- Daily active users (DAU)
+SELECT d.full_date, COUNT(DISTINCT f.user_key) AS dau
+FROM fact_events f
+JOIN dim_date d ON d.date_key = f.date_key
+GROUP BY d.full_date
+ORDER BY d.full_date;
+
+-- Top pages by event count this month
+SELECT f.page, COUNT(*) AS views
+FROM fact_events f
+JOIN dim_date d ON d.date_key = f.date_key
+WHERE f.event_type = 'page_view'
+  AND d.year = 2024 AND d.month = 9
+GROUP BY f.page
+ORDER BY views DESC
+LIMIT 10;</code></pre>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-yaml"># Conceptual storage architecture
+layers:
+  raw:
+    store: s3://saas-events/raw/{year}/{month}/{day}/
+    format: JSON Lines
+  bronze:
+    store: s3://saas-events/bronze/
+    format: Parquet
+  warehouse:
+    store: Postgres / Snowflake
+    schema: star_schema
+  marts:
+    product: fact_events + dim_user + dim_date
+    marketing: acquisition_funnel</code></pre>
+      </div>
+      <h3 class="text-xl font-semibold mb-3">4. What did we learn from this capstone project?</h3>
+      <div class="card rounded-2xl p-6 mb-8">
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+        <li>OLTP schemas optimize writes; OLAP schemas optimize analytical reads.</li>
+        <li>A star schema with dimensions and facts makes reporting straightforward.</li>
+        <li>Layered storage (lake + warehouse + mart) balances cost, flexibility, and performance.</li>
+        <li>Indexes should match query predicates for fast dashboards.</li>
+       </ul>
+      </div>
+      <h3 class="text-xl font-semibold mb-3">5. How can I enhance this project in the future?</h3>
+      <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5">
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+        <li>Partition the fact table by date and load it into BigQuery or Snowflake.</li>
+        <li>Add sessionization logic to build a funnel analysis.</li>
+        <li>Convert raw JSON to Parquet using Python or Spark.</li>
+        <li>Add a DataOps tutorial-style dashboard with Streamlit or a BI tool.</li>
+        <li>Model a data mesh by splitting user-domain and event-domain ownership.</li>
+       </ul>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#choosing">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#quiz">Next: Quiz &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="quiz">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Knowledge Check</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Test Your Understanding</h2>
+      <div class="space-y-8">
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">1. According to the CAP theorem, which two properties can a distributed system guarantee during a partition?</p>
+        <div class="quiz" data-answer="B">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Consistency, Availability, Partition tolerance</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Any two of Consistency, Availability, and Partition tolerance</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Only Availability and Partition tolerance</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Consistency and Availability always</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">2. Which store is best described as cheap storage of raw, diverse data?</p>
+        <div class="quiz" data-answer="A">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Data lake</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Data warehouse</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Data mart</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Graph database</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">3. MongoDB and CouchDB are examples of which NoSQL category?</p>
+        <div class="quiz" data-answer="C">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Key-value</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Wide-column</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Document</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Graph</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">4. A lakehouse combines which two benefits?</p>
+        <div class="quiz" data-answer="B">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. OLTP speed and graph traversal</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Cheap lake storage and warehouse reliability</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Document flexibility and key-value speed</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Strong consistency and global availability</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">5. In a star schema, dimension tables are typically:</p>
+        <div class="quiz" data-answer="A">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Denormalized and descriptive</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Fully normalized to 3NF</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Immutable append-only logs</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Stored only in object storage</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">6. Data mesh emphasizes:</p>
+        <div class="quiz" data-answer="B">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Central IT owning all data pipelines</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Domain-oriented, decentralized data ownership</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. A single monolithic warehouse</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Storing everything in relational databases</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">7. Which open table format is commonly associated with Databricks?</p>
+        <div class="quiz" data-answer="A">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Delta Lake</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Apache Iceberg</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Apache Hudi</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Parquet only</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">8. A department-specific subset of a data warehouse is called a:</p>
+        <div class="quiz" data-answer="C">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Data lake</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Data fabric</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Data mart</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Data hub</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+      </div>
+     </section>
+    </div>
+   </main>
+  </div>
+  <script>
+   const html = document.documentElement; const moon = document.getElementById('moon'); const sun = document.getElementById('sun'); const lightStylesheet = document.getElementById('hljs-light'); const darkStylesheet = document.getElementById('hljs-dark'); function applyTheme(theme) { html.classList.remove('light', 'dark'); html.classList.add(theme); if (theme === 'dark') { lightStylesheet.disabled = true; darkStylesheet.disabled = false; moon.classList.add('hidden'); sun.classList.remove('hidden'); } else { lightStylesheet.disabled = false; darkStylesheet.disabled = true; moon.classList.remove('hidden'); sun.classList.add('hidden'); } localStorage.setItem('tutorials-theme', theme); } document.getElementById('theme-toggle').addEventListener('click', () => { applyTheme(html.classList.contains('dark') ? 'light' : 'dark'); }); const saved = localStorage.getItem('tutorials-theme'); applyTheme(saved === 'dark' ? 'dark' : 'light');
+   function setStatus(status) { localStorage.setItem('tutorial-data-engineering-storage-warehouses-status', status); updateButtons(); }
+   function updateButtons() { const status = localStorage.getItem('tutorial-data-engineering-storage-warehouses-status') || 'not-started'; document.querySelectorAll('[id^="btn-start"]').forEach(btn => { btn.textContent = status === 'in-progress' ? 'In Progress' : 'Start'; }); document.querySelectorAll('[id^="btn-complete"]').forEach(btn => { btn.textContent = status === 'completed' ? 'Completed' : 'Mark Complete'; }); }
+   document.querySelectorAll('[id^="btn-start"]').forEach(btn => btn.addEventListener('click', () => setStatus('in-progress')));
+   document.querySelectorAll('[id^="btn-complete"]').forEach(btn => btn.addEventListener('click', () => setStatus('completed')));
+   document.querySelectorAll('[id^="btn-reset"]').forEach(btn => btn.addEventListener('click', () => { localStorage.removeItem('tutorial-data-engineering-storage-warehouses-status'); updateButtons(); }));
+   updateButtons();
+   function toggleSidebar() { const sidebar = document.getElementById('sidebar'); const overlay = document.getElementById('menu-overlay'); sidebar.classList.toggle('open'); overlay.classList.toggle('hidden'); }
+   function copyCode(btn) { const code = btn.nextElementSibling.querySelector('code'); navigator.clipboard.writeText(code.innerText).then(() => { btn.textContent = 'Copied!'; btn.classList.add('copied'); setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500); }); }
+   const sections = document.querySelectorAll('section[id]'); const tocLinks = document.querySelectorAll('.toc-link'); const observer = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (entry.isIntersecting) { tocLinks.forEach((link) => link.classList.remove('active')); const active = document.querySelector(`.toc-link[href="#${entry.target.id}"]`); if (active) active.classList.add('active'); } }); }, { rootMargin: '-20% 0px -60% 0px' }); sections.forEach((section) => observer.observe(section));
+   document.querySelectorAll('.quiz').forEach((quiz) => { const correct = quiz.dataset.answer; const feedback = quiz.nextElementSibling; quiz.querySelectorAll('.quiz-opt').forEach((opt) => { opt.addEventListener('click', () => { quiz.querySelectorAll('.quiz-opt').forEach((o) => { o.classList.remove('selected', 'correct', 'wrong'); o.disabled = true; }); opt.classList.add('selected'); if (opt.dataset.val === correct) { opt.classList.add('correct'); feedback.textContent = 'Correct! ✅'; feedback.className = 'quiz-feedback mt-3 font-medium text-[var(--success)]'; } else { opt.classList.add('wrong'); feedback.textContent = `Not quite. The correct answer is ${correct}.`; feedback.className = 'quiz-feedback mt-3 font-medium text-[var(--danger)]'; } }); }); }); hljs.highlightAll();
+  </script>
+ </body>
+</html>

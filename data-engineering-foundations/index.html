@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Data Engineering Foundations</title>
+  <link href="../assets/favicons/data-engineering-foundations.svg" rel="icon" type="image/svg+xml"/>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-light" rel="stylesheet"/>
+  <link disabled="" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" id="hljs-dark" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js">
+  </script>
+  <script>
+   tailwind.config = { darkMode: 'class' }
+  </script>
+  <link href="../assets/styles.css" rel="stylesheet"/>
+ </head>
+ <body class="antialiased transition-colors duration-300 brand-data-engineering-foundations">
+  <a class="sr-only" href="#main" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Skip to content</a>
+  <div class="fixed inset-0 bg-black/40 z-30 hidden lg:hidden" id="menu-overlay" onclick="toggleSidebar()">
+  </div>
+  <div class="flex min-h-screen">
+   <aside class="fixed lg:sticky top-0 left-0 h-screen w-72 border-r border-[var(--border)] bg-[var(--panel)] z-40 overflow-y-auto p-6" id="sidebar">
+    <div class="flex items-center gap-3 mb-8">
+     <img alt="Data Engineering" class="w-10 h-10" src="../assets/favicons/data-engineering-foundations.svg"/>
+     <span class="text-xl font-bold">DE Foundations</span>
+    </div>
+    <nav class="space-y-1 text-sm" id="toc">
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">1. Introduction</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#what-is-de">2. What is Data Engineering?</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#sources">3. Data Sources &amp; Generation</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#modeling">4. Data Modeling Basics</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#oltp-olap">5. OLTP vs OLAP</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#lifecycle">6. Data Engineering Lifecycle</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#skills">7. Core Skills</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#project">8. Capstone: Healthcare FHIR Data Foundation</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#quiz">9. Knowledge Check</a>
+    </nav>
+    <div class="mt-8 pt-6 border-t border-[var(--border)]">
+     <p class="text-xs text-[var(--muted)]">Open in any browser. No build step required.</p>
+    </div>
+   </aside>
+   <main class="flex-1 min-w-0" id="main">
+    <header class="sticky top-0 z-20 border-b border-[var(--border)] bg-[var(--panel)]/90 backdrop-blur px-6 py-4 flex items-center justify-between">
+     <div class="flex items-center gap-3">
+      <button aria-label="Open menu" class="lg:hidden p-2 rounded-md border border-[var(--border)]" onclick="toggleSidebar()">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path>
+       </svg>
+      </button>
+      <h1 class="text-lg sm:text-xl font-bold tracking-tight">Data Engineering Foundations</h1>
+     </div>
+     <div class="hidden sm:flex items-center gap-2 progress-controls" id="progress-controls">
+      <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-start">Start</button>
+      <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-complete">Mark Complete</button>
+      <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-reset">Reset</button>
+     </div>
+     <div class="sm:hidden flex items-center gap-2 progress-controls" id="progress-controls-mobile">
+      <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-start-mobile">Start</button>
+      <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-complete-mobile">Complete</button>
+      <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-reset-mobile">Reset</button>
+     </div>
+     <button aria-label="Toggle theme" class="p-2 rounded-full border border-[var(--border)] hover:bg-black/5 dark:hover:bg-white/5 transition" id="theme-toggle">
+      <svg aria-hidden="true" class="w-5 h-5" fill="none" id="moon" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+       <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <svg aria-hidden="true" class="w-5 h-5 hidden" fill="none" id="sun" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+       <circle cx="12" cy="12" r="5"></circle>
+       <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+     </button>
+    </header>
+    <div class="max-w-4xl mx-auto px-6 py-10 space-y-20">
+     <section class="scroll-mt-24" id="intro">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 1</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Introduction</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Data engineering is the discipline of designing, building, and maintaining the systems that move and transform data into a usable state for analytics and applications. This tutorial introduces the mindset, lifecycle, and core technical skills you need before diving into storage, pipelines, streaming, and governance.</p>
+      <div class="card rounded-2xl p-6 mb-8">
+       <h3 class="text-xl font-semibold mb-3">Before you start</h3>
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+        <li>Basic computer literacy and comfort with a text editor.</li>
+        <li>Willingness to read SQL and Python snippets (no prior mastery required).</li>
+        <li>Optional: <a class="underline" href="../python-basics/index.html" target="_blank">Python Fundamentals</a> and <a class="underline" href="../sql-databases/index.html" target="_blank">SQL &amp; Databases</a> for extra context.</li>
+       </ul>
+      </div>
+      <div class="card rounded-2xl p-6 mb-8">
+       <h3 class="text-xl font-semibold mb-3">What you'll learn</h3>
+       <ul class="grid sm:grid-cols-2 gap-3 text-[var(--muted)]">
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>What data engineering is and how it differs from data science</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>The data engineering lifecycle from ingestion to serving</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>OLTP vs OLAP and when to use each</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>Normalization, star schemas, and slowly changing dimensions</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>Core tooling: Python, SQL, Linux, Git, and basic networking</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>A complete FHIR data foundation capstone</li>
+       </ul>
+      </div>
+      <div class="card rounded-2xl p-6 mb-8">
+       <h3 class="text-xl font-semibold mb-3">Real-world impact</h3>
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+        <li><strong>Spotify</strong> data engineers run ingestion and modeling pipelines that power billions of daily recommendations.</li>
+        <li><strong>Netflix</strong> relies on well-modeled data to optimize streaming quality and content decisions.</li>
+        <li><strong>NHS Digital</strong> uses FHIR-based healthcare data pipelines to standardize patient information across systems.</li>
+       </ul>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <span></span>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#what-is-de">Next: What is Data Engineering? &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="what-is-de">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 2</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">What is Data Engineering?</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Data engineers build the platforms and pipelines that collect, store, transform, and serve data. They sit between the systems that produce data (applications, sensors, logs) and the people who consume it (analysts, data scientists, business stakeholders).</p>
+      <div class="grid sm:grid-cols-3 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Data Engineering</h3>
+        <p class="text-[var(--muted)]">Builds reliable data infrastructure, pipelines, and storage. Focuses on availability, scale, and quality.</p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Data Science</h3>
+        <p class="text-[var(--muted)]">Builds models, experiments, and predictions on data prepared by engineers. See also <a class="underline" href="../machine-learning-python/index.html" target="_blank">Machine Learning with Python</a>.</p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Data Analytics</h3>
+        <p class="text-[var(--muted)]">Answers business questions with dashboards, reports, and ad-hoc queries.</p>
+       </div>
+      </div>
+      <div class="card rounded-2xl p-6 mb-8">
+       <h3 class="text-xl font-semibold mb-3">Typical responsibilities</h3>
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+        <li>Ingest data from APIs, databases, files, message queues, and streaming sources.</li>
+        <li>Design schemas, warehouses, and data marts.</li>
+        <li>Build batch and streaming ETL/ELT pipelines.</li>
+        <li>Ensure data quality, lineage, security, and governance.</li>
+        <li>Monitor, optimize, and scale data infrastructure.</li>
+       </ul>
+      </div>
+      <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5">
+       <h4 class="font-semibold mb-2">Key mindset</h4>
+       <p class="text-[var(--muted)]">Data engineering is <strong>infrastructure engineering for data</strong>. Reliability, observability, and reproducibility matter as much as volume and speed.</p>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#sources">Next: Data Sources &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="sources">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 3</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Data Sources &amp; Generation</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Before moving data, you must understand where it comes from and how it is generated. Data sources shape collection frequency, schema, quality, and legal constraints.</p>
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Structured sources</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li>Relational databases (OLTP) such as PostgreSQL and MySQL.</li>
+         <li>Data warehouses and data marts.</li>
+         <li>Spreadsheets and CSV exports.</li>
+        </ul>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Semi/unstructured sources</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li>JSON from REST APIs and webhooks.</li>
+         <li>Log files, clickstream events, and sensor telemetry.</li>
+         <li>Images, documents, audio, and video.</li>
+        </ul>
+       </div>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-json">{
+  "event_id": "evt_42",
+  "user_id": "usr_998",
+  "event_type": "page_view",
+  "page": "/pricing",
+  "timestamp": "2024-09-12T14:35:00Z",
+  "metadata": {
+    "browser": "Firefox",
+    "device": "mobile"
+  }
+}</code></pre>
+      </div>
+      <div class="card rounded-2xl p-6 mb-8">
+       <h3 class="text-xl font-semibold mb-3">Collection considerations</h3>
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+        <li><strong>Frequency</strong>: batch hourly/daily vs near-real-time streaming.</li>
+        <li><strong>Schema</strong>: fixed columns vs evolving JSON documents.</li>
+        <li><strong>Volume</strong>: thousands vs billions of events per day.</li>
+        <li><strong>Quality</strong>: duplicates, missing values, out-of-order timestamps.</li>
+        <li><strong>Legal/ethical</strong>: consent, PII, retention, and jurisdiction.</li>
+       </ul>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#what-is-de">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#modeling">Next: Data Modeling &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="modeling">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 4</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Data Modeling Basics</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Data modeling turns real-world concepts into tables, columns, and relationships. Good models make queries fast, joins simple, and updates safe. This chapter covers normalization, star and snowflake schemas, and slowly changing dimensions.</p>
+      <div class="card rounded-2xl p-6 mb-8 flex flex-col items-center">
+       <h3 class="text-xl font-semibold mb-4 w-full">Star vs snowflake schema</h3>
+       <svg aria-label="Diagram showing star and snowflake schema shapes" class="diagram" viewBox="0 0 720 260">
+        <rect fill="#0ea5e9" height="80" opacity="0.2" rx="8" stroke="#0ea5e9" stroke-width="2" width="140" x="170" y="90"></rect>
+        <text fill="#0ea5e9" font-size="12" font-weight="700" text-anchor="middle" x="240" y="130">Fact Sales</text>
+        <rect fill="#0ea5e9" height="50" opacity="0.2" rx="6" stroke="#0ea5e9" stroke-width="2" width="100" x="30" y="30"></rect>
+        <text fill="#0ea5e9" font-size="11" font-weight="600" text-anchor="middle" x="80" y="58">Customer</text>
+        <rect fill="#0ea5e9" height="50" opacity="0.2" rx="6" stroke="#0ea5e9" stroke-width="2" width="100" x="30" y="180"></rect>
+        <text fill="#0ea5e9" font-size="11" font-weight="600" text-anchor="middle" x="80" y="208">Product</text>
+        <rect fill="#0ea5e9" height="50" opacity="0.2" rx="6" stroke="#0ea5e9" stroke-width="2" width="100" x="340" y="180"></rect>
+        <text fill="#0ea5e9" font-size="11" font-weight="600" text-anchor="middle" x="390" y="208">Date</text>
+        <rect fill="#0ea5e9" height="50" opacity="0.2" rx="6" stroke="#0ea5e9" stroke-width="2" width="100" x="340" y="30"></rect>
+        <text fill="#0ea5e9" font-size="11" font-weight="600" text-anchor="middle" x="390" y="58">Region</text>
+        <path d="M130 55 L 170 110" stroke="var(--border)" stroke-width="2"></path>
+        <path d="M130 205 L 170 155" stroke="var(--border)" stroke-width="2"></path>
+        <path d="M310 155 L 340 205" stroke="var(--border)" stroke-width="2"></path>
+        <path d="M310 110 L 340 55" stroke="var(--border)" stroke-width="2"></path>
+        <text fill="var(--muted)" font-size="12" text-anchor="middle" x="240" y="230">Star schema: denormalized dimensions</text>
+        <rect fill="#0ea5e9" height="80" opacity="0.2" rx="8" stroke="#0ea5e9" stroke-width="2" width="140" x="550" y="90"></rect>
+        <text fill="#0ea5e9" font-size="12" font-weight="700" text-anchor="middle" x="620" y="130">Fact Sales</text>
+        <rect fill="#0ea5e9" height="40" opacity="0.2" rx="6" stroke="#0ea5e9" stroke-width="2" width="90" x="450" y="40"></rect>
+        <text fill="#0ea5e9" font-size="10" font-weight="600" text-anchor="middle" x="495" y="62">Category</text>
+        <path d="M540 110 L 495 80" stroke="var(--border)" stroke-width="2"></path>
+        <path d="M495 80 L 460 80" stroke="var(--border)" stroke-width="2"></path>
+        <text fill="var(--muted)" font-size="12" text-anchor="middle" x="595" y="230">Snowflake: normalized dimensions</text>
+       </svg>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Normalization</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>1NF</strong>: atomic values, no repeating groups.</li>
+         <li><strong>2NF</strong>: no partial dependency on composite keys.</li>
+         <li><strong>3NF</strong>: no transitive dependencies.</li>
+         <li>Good for OLTP; reduces redundancy and update anomalies.</li>
+        </ul>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Slowly changing dimensions</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>SCD Type 1</strong>: overwrite old value, no history.</li>
+         <li><strong>SCD Type 2</strong>: keep history with start/end dates and active flag.</li>
+         <li><strong>SCD Type 3</strong>: keep previous value in a separate column.</li>
+        </ul>
+       </div>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-sql">-- SCD Type 2 customer dimension example
+CREATE TABLE dim_customer (
+    customer_key SERIAL PRIMARY KEY,
+    customer_id VARCHAR(50) NOT NULL,
+    full_name VARCHAR(200) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    valid_from DATE NOT NULL,
+    valid_to DATE,
+    is_current BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+-- Query current view of customers
+SELECT customer_id, full_name, email
+FROM dim_customer
+WHERE is_current = TRUE;</code></pre>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#sources">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#oltp-olap">Next: OLTP vs OLAP &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="oltp-olap">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 5</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">OLTP vs OLAP</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Online Transaction Processing (OLTP) and Online Analytical Processing (OLAP) serve very different purposes. Many data pipelines extract from OLTP systems and load into OLAP systems for reporting.</p>
+      <div class="card rounded-2xl p-6 mb-8 overflow-x-auto">
+       <table class="compare-table w-full">
+        <thead>
+         <tr>
+          <th>Dimension</th>
+          <th>OLTP</th>
+          <th>OLAP</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td>Goal</td>
+          <td>Record business transactions</td>
+          <td>Analyze trends and patterns</td>
+         </tr>
+         <tr>
+          <td>Writes</td>
+          <td>Many small, fast inserts/updates</td>
+          <td>Mostly bulk loads, few updates</td>
+         </tr>
+         <tr>
+          <td>Reads</td>
+          <td>Look up single rows</td>
+          <td>Scan and aggregate huge ranges</td>
+         </tr>
+         <tr>
+          <td>Schema</td>
+          <td>Normalized, many tables</td>
+          <td>Star/snowflake, wide tables</td>
+         </tr>
+         <tr>
+          <td>Examples</td>
+          <td>PostgreSQL, MySQL</td>
+          <td>Snowflake, BigQuery, Redshift</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+      <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5">
+       <h4 class="font-semibold mb-2">Typical flow</h4>
+       <p class="text-[var(--muted)]">Application writes to OLTP &rarr; pipeline extracts &rarr; transforms &rarr; loads into OLAP warehouse &rarr; analysts and dashboards consume.</p>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#modeling">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#lifecycle">Next: Lifecycle &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="lifecycle">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 6</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Data Engineering Lifecycle</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">The lifecycle is a simple mental model for every data project: generation, ingestion, storage, transformation, and serving. Governance, security, and quality cross all stages.</p>
+      <div class="card rounded-2xl p-6 mb-8 flex flex-col items-center">
+       <h3 class="text-xl font-semibold mb-4 w-full">Lifecycle stages</h3>
+       <svg aria-label="Diagram showing data engineering lifecycle stages" class="diagram" viewBox="0 0 720 120">
+        <rect fill="#0ea5e9" height="50" opacity="0.2" rx="6" stroke="#0ea5e9" stroke-width="2" width="110" x="30" y="35"></rect>
+        <text fill="#0ea5e9" font-size="11" font-weight="700" text-anchor="middle" x="85" y="62">Generate</text>
+        <path d="M140 60 L 160 60" marker-end="url(#arrow)" stroke="var(--border)" stroke-width="2"></path>
+        <rect fill="#0ea5e9" height="50" opacity="0.2" rx="6" stroke="#0ea5e9" stroke-width="2" width="110" x="170" y="35"></rect>
+        <text fill="#0ea5e9" font-size="11" font-weight="700" text-anchor="middle" x="225" y="62">Ingest</text>
+        <path d="M280 60 L 300 60" marker-end="url(#arrow)" stroke="var(--border)" stroke-width="2"></path>
+        <rect fill="#0ea5e9" height="50" opacity="0.2" rx="6" stroke="#0ea5e9" stroke-width="2" width="110" x="310" y="35"></rect>
+        <text fill="#0ea5e9" font-size="11" font-weight="700" text-anchor="middle" x="365" y="62">Store</text>
+        <path d="M420 60 L 440 60" marker-end="url(#arrow)" stroke="var(--border)" stroke-width="2"></path>
+        <rect fill="#0ea5e9" height="50" opacity="0.2" rx="6" stroke="#0ea5e9" stroke-width="2" width="110" x="450" y="35"></rect>
+        <text fill="#0ea5e9" font-size="11" font-weight="700" text-anchor="middle" x="505" y="62">Transform</text>
+        <path d="M560 60 L 580 60" marker-end="url(#arrow)" stroke="var(--border)" stroke-width="2"></path>
+        <rect fill="#0ea5e9" height="50" opacity="0.2" rx="6" stroke="#0ea5e9" stroke-width="2" width="110" x="590" y="35"></rect>
+        <text fill="#0ea5e9" font-size="11" font-weight="700" text-anchor="middle" x="645" y="62">Serve</text>
+        <defs>
+         <marker id="arrow" markerHeight="10" markerUnits="strokeWidth" markerWidth="10" orient="auto" refX="8" refY="3">
+          <path d="M0,0 L0,6 L9,3 z" fill="var(--border)"></path>
+         </marker>
+        </defs>
+       </svg>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Horizontal concerns</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>Data quality</strong>: profiling, validation, testing.</li>
+         <li><strong>Governance</strong>: lineage, metadata, access control.</li>
+         <li><strong>Security</strong>: encryption, masking, authentication.</li>
+        </ul>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Common outputs</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li>Data warehouses, lakes, and lakehouses.</li>
+         <li>BI dashboards and self-service analytics.</li>
+         <li>Machine learning feature stores.</li>
+        </ul>
+       </div>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#oltp-olap">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#skills">Next: Core Skills &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="skills">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 7</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Core Skills</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Data engineers use a mix of programming, database, systems, and collaboration skills. This chapter highlights the minimum set to be productive.</p>
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Programming</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>Python</strong> for scripting, ingestion, and orchestration. See <a class="underline" href="../python-basics/index.html" target="_blank">Python Fundamentals</a>.</li>
+         <li><strong>SQL</strong> for modeling, querying, and transformations. See <a class="underline" href="../sql-databases/index.html" target="_blank">SQL &amp; Databases</a>.</li>
+         <li>Bash for automation and cloud CLI tasks.</li>
+        </ul>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Systems &amp; collaboration</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>Linux</strong> basics: files, permissions, cron, ssh. See <a class="underline" href="../linux/index.html" target="_blank">Linux Command Line</a>.</li>
+         <li><strong>Git/GitHub</strong> for version control and CI/CD. See <a class="underline" href="../github/index.html" target="_blank">Git &amp; GitHub</a>.</li>
+         <li><strong>Networking</strong>: TCP/IP, DNS, HTTP, ports, VPNs.</li>
+        </ul>
+       </div>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-bash"># Linux commands every data engineer uses
+ls -la                      # list files
+psql -U admin -d warehouse  # connect to Postgres
+ssh user@server             # remote shell
+crontab -e                  # schedule jobs
+git pull origin main        # update code</code></pre>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-bash"># Save as inspect_patients.py, then run with uv
+cat << 'EOF' > inspect_patients.py
+import csv
+
+with open("patients.csv", newline="") as f:
+    reader = csv.DictReader(f)
+    for i, row in enumerate(reader):
+        if i >= 3:
+            break
+        print(row)
+EOF
+
+uv run inspect_patients.py</code></pre>
+      </div>
+      <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5">
+       <h4 class="font-semibold mb-2">Learning path</h4>
+       <p class="text-[var(--muted)]">Master SQL and Python first, then add Linux/Git, Docker/Kubernetes, cloud services, and orchestration tools in later tutorials.</p>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#lifecycle">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#project">Next: Capstone &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="project">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 8</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Capstone: Healthcare FHIR Data Foundation</h2>
+      <h3 class="text-xl font-semibold mb-3">1. What is this project?</h3>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">You will build a small healthcare data foundation using FHIR (Fast Healthcare Interoperability Resources) patient and observation data. The goal is to load sample JSON, normalize it into relational tables, and model a star schema for reporting.</p>
+      <h3 class="text-xl font-semibold mb-3">2. What it covers?</h3>
+      <div class="card rounded-2xl p-6 mb-8">
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+        <li>Understanding FHIR Patient and Observation resources.</li>
+        <li>Normalizing nested JSON into relational tables.</li>
+        <li>Building a star schema for analytics.</li>
+        <li>Writing SQL cohort queries.</li>
+        <li>Documenting data lineage and collection considerations.</li>
+       </ul>
+      </div>
+      <h3 class="text-xl font-semibold mb-3">3. How it is done?</h3>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Load the sample JSON, design normalized tables, build dimensions and a fact table, then run cohort queries. The examples use SQLite-compatible SQL for portability.</p>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-json">{
+  "resourceType": "Patient",
+  "id": "P001",
+  "name": [{ "family": "Doe", "given": ["Jane"] }],
+  "gender": "female",
+  "birthDate": "1985-03-10"
+}</code></pre>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-sql">-- Normalized relational model (SQLite/Postgres compatible)
+CREATE TABLE patient (
+    patient_id TEXT PRIMARY KEY,
+    family_name TEXT NOT NULL,
+    given_name TEXT NOT NULL,
+    gender TEXT,
+    birth_date DATE
+);
+
+CREATE TABLE observation (
+    observation_id TEXT PRIMARY KEY,
+    patient_id TEXT REFERENCES patient(patient_id),
+    code TEXT NOT NULL,
+    display TEXT,
+    value_numeric REAL,
+    unit TEXT,
+    effective_date DATE
+);
+
+CREATE TABLE dim_patient (
+    patient_key INTEGER PRIMARY KEY,
+    patient_id TEXT,
+    full_name TEXT,
+    gender TEXT,
+    age_group TEXT,
+    valid_from DATE,
+    valid_to DATE,
+    is_current BOOLEAN
+);
+
+CREATE TABLE fact_observation (
+    patient_key INTEGER REFERENCES dim_patient(patient_key),
+    observation_date_key INTEGER,
+    code TEXT,
+    display TEXT,
+    value_numeric REAL,
+    unit TEXT
+);</code></pre>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-sql">-- Patient cohort: adult females with blood pressure observations
+SELECT p.patient_id, p.full_name, o.display, o.value_numeric, o.unit
+FROM dim_patient p
+JOIN fact_observation o ON o.patient_key = p.patient_key
+WHERE p.gender = 'female'
+  AND CAST((julianday('now') - julianday(p.birth_date)) / 365 AS INT) >= 18
+  AND o.code = '8867-4'
+  AND p.is_current = TRUE;</code></pre>
+      </div>
+      <h3 class="text-xl font-semibold mb-3">4. What did we learn from this capstone project?</h3>
+      <div class="card rounded-2xl p-6 mb-8">
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+        <li>Nested healthcare JSON maps cleanly to normalized relational tables.</li>
+        <li>A star schema separates dimensional context from measurable facts.</li>
+        <li>SCD Type 2 dimensions let you track patient changes over time.</li>
+        <li>Documenting lineage and source constraints is part of the model, not an afterthought.</li>
+       </ul>
+      </div>
+      <h3 class="text-xl font-semibold mb-3">5. How can I enhance this project in the future?</h3>
+      <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5">
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+        <li>Load real FHIR bundles from the CMS or Synthea synthetic dataset.</li>
+        <li>Add SCD Type 2 tracking for patient address or provider changes.</li>
+        <li>Build a Python loader that parses JSON and inserts rows transactionally.</li>
+        <li>Connect the model to a dashboard or BI tool in the DataOps tutorial.</li>
+        <li>Add data quality checks for missing codes, units, and out-of-range values.</li>
+       </ul>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#skills">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#quiz">Next: Quiz &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="quiz">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Knowledge Check</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Test Your Understanding</h2>
+      <div class="space-y-8">
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">1. Which role is primarily responsible for building data pipelines and storage systems?</p>
+        <div class="quiz" data-answer="A">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Data engineer</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Data analyst</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Product manager</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. UX designer</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">2. What is the final stage of the data engineering lifecycle?</p>
+        <div class="quiz" data-answer="D">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Ingestion</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Storage</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Transformation</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Serving</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">3. OLTP systems are optimized for which workload?</p>
+        <div class="quiz" data-answer="B">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Large analytical aggregations</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Many small, fast transactions</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Batch data loads</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Machine learning training</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">4. A star schema has a central fact table surrounded by what?</p>
+        <div class="quiz" data-answer="A">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Dimension tables</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Other fact tables</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Temporary tables</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Materialized views</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">5. Third normal form (3NF) removes which dependency?</p>
+        <div class="quiz" data-answer="C">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Multivalued dependency</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Partial dependency</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Transitive dependency</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Functional dependency</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">6. In SCD Type 2, how is history preserved?</p>
+        <div class="quiz" data-answer="B">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Overwriting the old value</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Adding valid_from, valid_to, and is_current columns</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Storing the old value in a separate column</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Deleting the old row</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">7. Which of the following is NOT a typical data source?</p>
+        <div class="quiz" data-answer="D">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Application database</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. REST API</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. IoT sensor stream</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. CSS stylesheet</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">8. Which command line tool is used to push local code changes to a remote repository?</p>
+        <div class="quiz" data-answer="C">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. psql</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. ssh</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. git push</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. docker run</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+      </div>
+     </section>
+    </div>
+   </main>
+  </div>
+  <script>
+   const html = document.documentElement; const moon = document.getElementById('moon'); const sun = document.getElementById('sun'); const lightStylesheet = document.getElementById('hljs-light'); const darkStylesheet = document.getElementById('hljs-dark'); function applyTheme(theme) { html.classList.remove('light', 'dark'); html.classList.add(theme); if (theme === 'dark') { lightStylesheet.disabled = true; darkStylesheet.disabled = false; moon.classList.add('hidden'); sun.classList.remove('hidden'); } else { lightStylesheet.disabled = false; darkStylesheet.disabled = true; moon.classList.remove('hidden'); sun.classList.add('hidden'); } localStorage.setItem('tutorials-theme', theme); } document.getElementById('theme-toggle').addEventListener('click', () => { applyTheme(html.classList.contains('dark') ? 'light' : 'dark'); }); const saved = localStorage.getItem('tutorials-theme'); applyTheme(saved === 'dark' ? 'dark' : 'light');
+   function setStatus(status) { localStorage.setItem('tutorial-data-engineering-foundations-status', status); updateButtons(); }
+   function updateButtons() { const status = localStorage.getItem('tutorial-data-engineering-foundations-status') || 'not-started'; document.querySelectorAll('[id^="btn-start"]').forEach(btn => { btn.textContent = status === 'in-progress' ? 'In Progress' : 'Start'; }); document.querySelectorAll('[id^="btn-complete"]').forEach(btn => { btn.textContent = status === 'completed' ? 'Completed' : 'Mark Complete'; }); }
+   document.querySelectorAll('[id^="btn-start"]').forEach(btn => btn.addEventListener('click', () => setStatus('in-progress')));
+   document.querySelectorAll('[id^="btn-complete"]').forEach(btn => btn.addEventListener('click', () => setStatus('completed')));
+   document.querySelectorAll('[id^="btn-reset"]').forEach(btn => btn.addEventListener('click', () => { localStorage.removeItem('tutorial-data-engineering-foundations-status'); updateButtons(); }));
+   updateButtons();
+   function toggleSidebar() { const sidebar = document.getElementById('sidebar'); const overlay = document.getElementById('menu-overlay'); sidebar.classList.toggle('open'); overlay.classList.toggle('hidden'); }
+   function copyCode(btn) { const code = btn.nextElementSibling.querySelector('code'); navigator.clipboard.writeText(code.innerText).then(() => { btn.textContent = 'Copied!'; btn.classList.add('copied'); setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500); }); }
+   const sections = document.querySelectorAll('section[id]'); const tocLinks = document.querySelectorAll('.toc-link'); const observer = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (entry.isIntersecting) { tocLinks.forEach((link) => link.classList.remove('active')); const active = document.querySelector(`.toc-link[href="#${entry.target.id}"]`); if (active) active.classList.add('active'); } }); }, { rootMargin: '-20% 0px -60% 0px' }); sections.forEach((section) => observer.observe(section));
+   document.querySelectorAll('.quiz').forEach((quiz) => { const correct = quiz.dataset.answer; const feedback = quiz.nextElementSibling; quiz.querySelectorAll('.quiz-opt').forEach((opt) => { opt.addEventListener('click', () => { quiz.querySelectorAll('.quiz-opt').forEach((o) => { o.classList.remove('selected', 'correct', 'wrong'); o.disabled = true; }); opt.classList.add('selected'); if (opt.dataset.val === correct) { opt.classList.add('correct'); feedback.textContent = 'Correct! ✅'; feedback.className = 'quiz-feedback mt-3 font-medium text-[var(--success)]'; } else { opt.classList.add('wrong'); feedback.textContent = `Not quite. The correct answer is ${correct}.`; feedback.className = 'quiz-feedback mt-3 font-medium text-[var(--danger)]'; } }); }); }); hljs.highlightAll();
+  </script>
+ </body>
+</html>

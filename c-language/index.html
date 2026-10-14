@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>C Language: From Zero to Systems Programming</title>
+  <link href="../assets/favicons/svg/C.svg" rel="icon" type="image/svg+xml"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-light" rel="stylesheet"/>
+  <link disabled="" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" id="hljs-dark" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/c.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cmake.min.js"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' }
+  </script>
+  <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="antialiased transition-colors duration-300 brand-c-language">
+  <a class="sr-only" href="#main">Skip to content</a>
+  <div class="fixed inset-0 bg-black/40 z-30 hidden lg:hidden" id="menu-overlay" onclick="toggleSidebar()"></div>
+  <div class="flex min-h-screen">
+    <aside class="fixed lg:sticky top-0 left-0 h-screen w-72 border-r border-[var(--border)] bg-[var(--panel)] z-40 overflow-y-auto p-6" id="sidebar">
+      <div class="flex items-center gap-3 mb-8">
+        <img alt="C" class="w-10 h-10" src="../assets/favicons/svg/C.svg"/>
+        <span class="text-xl font-bold">C Language</span>
+      </div>
+      <nav class="space-y-1 text-sm" id="toc">
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">1. Introduction + Installation</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#structure">2. Program Structure &amp; Compilation Model</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#variables">3. Variables, Data Types, Operators</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#control-flow">4. Control Flow</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#functions">5. Functions &amp; Recursion</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#pointers">6. Pointers &amp; Arrays (Deep)</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#strings">7. Strings &amp; Character Handling</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#structs">8. Structs, Unions, Enums, Bit-fields</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#memory">9. Dynamic Memory &amp; Memory Layout</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#function-pointers">10. Function Pointers, Callbacks &amp; qsort</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#file-io">11. File I/O &amp; System Calls</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#modules">12. Modular Design, Headers, Build Systems</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#debugging">13. Debugging &amp; Profiling</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#advanced">14. Advanced C</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#capstone">15. Capstone Projects</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#quiz">16. Knowledge Check</a>
+      </nav>
+      <div class="mt-8 pt-6 border-t border-[var(--border)]">
+        <p class="text-xs text-[var(--muted)]">Open in any browser. No build step required.</p>
+      </div>
+    </aside>
+    <main class="flex-1 min-w-0" id="main">
+      <header class="sticky top-0 z-20 border-b border-[var(--border)] bg-[var(--panel)]/90 backdrop-blur px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <button aria-label="Open menu" class="lg:hidden p-2 rounded-md border border-[var(--border)]" onclick="toggleSidebar()">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </button>
+          <h1 class="text-lg sm:text-xl font-bold tracking-tight">C Language: From Zero to Systems Programming</h1>
+        </div>
+        <div class="hidden sm:flex items-center gap-2 progress-controls" id="progress-controls">
+          <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-start">Start</button>
+          <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-complete">Mark Complete</button>
+          <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-reset">Reset</button>
+        </div>
+        <div class="sm:hidden flex items-center gap-2 progress-controls" id="progress-controls-mobile">
+          <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-start-mobile">Start</button>
+          <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-complete-mobile">Complete</button>
+          <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-reset-mobile">Reset</button>
+        </div>
+        <button aria-label="Toggle theme" class="p-2 rounded-full border border-[var(--border)] hover:bg-black/5 dark:hover:bg-white/5 transition" id="theme-toggle">
+          <svg aria-hidden="true" class="w-5 h-5" fill="none" id="moon" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <svg aria-hidden="true" class="w-5 h-5 hidden" fill="none" id="sun" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5"></circle>
+            <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </header>
+      <div class="max-w-4xl mx-auto px-6 py-10 space-y-20">
+
+        <section class="scroll-mt-24" id="intro">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 1</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Introduction + Installation</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            C is a small, fast, portable systems programming language. It powers operating systems, embedded firmware, databases, language runtimes, and any software where raw performance matters. Learning C gives you a mental model of how computers actually work.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Why learn C?</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+              <li><strong>Systems:</strong> Linux, Windows kernels, and device drivers are written in C.</li>
+              <li><strong>Embedded:</strong> Microcontrollers and IoT devices run C with tiny memory footprints.</li>
+              <li><strong>Databases:</strong> PostgreSQL, SQLite, Redis, and many engines are built in C.</li>
+              <li><strong>Performance:</strong> Predictable memory layout, no runtime overhead, direct hardware access.</li>
+              <li><strong>Foundation:</strong> C is the common ancestor of C++, Objective-C, and many scripting language interpreters.</li>
+            </ul>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Before you start</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li>A text editor and a terminal (new to the command line? Try the <a class="brand underline" href="../linux/index.html">Linux tutorial</a>).</li>
+              <li>Optional: <a class="brand underline" href="../github/index.html">Git basics</a> for saving your projects.</li>
+              <li>No prior programming experience required, but patience helps.</li>
+            </ul>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Install a C compiler</h3>
+
+          <div class="space-y-4 mb-8">
+            <div class="card rounded-xl p-5">
+              <h4 class="font-semibold mb-2">Windows</h4>
+              <p class="text-sm text-[var(--muted)] mb-3">Option A: Install Visual Studio with the <code class="kbd">Desktop development with C++</code> workload. Option B: use MSYS2 / MinGW-w64.</p>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-bash"># MSYS2 / MinGW-w64 in PowerShell
+winget install MSYS2.MSYS2
+# Inside MSYS2 terminal:
+pacman -S mingw-w64-ucrt-x86_64-gcc
+# Verify
+gcc --version</code></pre>
+              </div>
+            </div>
+
+            <div class="card rounded-xl p-5">
+              <h4 class="font-semibold mb-2">macOS</h4>
+              <p class="text-sm text-[var(--muted)] mb-3">Install Xcode Command Line Tools, or use Homebrew for the latest GCC.</p>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-bash"># Xcode Command Line Tools
+xcode-select --install
+# Or Homebrew GCC
+brew install gcc
+# Verify
+clang --version</code></pre>
+              </div>
+            </div>
+
+            <div class="card rounded-xl p-5">
+              <h4 class="font-semibold mb-2">Linux</h4>
+              <p class="text-sm text-[var(--muted)] mb-3">GCC and Clang are available in every major package manager.</p>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-bash"># Debian / Ubuntu
+sudo apt update
+sudo apt install build-essential
+# Fedora
+sudo dnf install gcc gcc-c++ make
+# Verify
+gcc --version</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Hello, World</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">/* hello.c */
+#include &lt;stdio.h&gt;
+
+int main(void) {
+    printf("Hello, World!\n");
+    return 0;
+}</code></pre>
+          </div>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-bash"># Compile and run
+gcc -std=c11 -Wall -Wextra -o hello hello.c
+./hello
+# On Windows with MSVC: cl hello.c
+# Then run: hello.exe</code></pre>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">What the compiler does</h3>
+            <p class="text-[var(--muted)] mb-3">Building a C program is a pipeline of four stages:</p>
+            <ol class="text-[var(--muted)] list-decimal pl-5 space-y-1">
+              <li><strong>Preprocessor</strong> handles <code class="kbd">#include</code>, <code class="kbd">#define</code>, and conditional compilation.</li>
+              <li><strong>Compiler</strong> turns preprocessed C into assembly.</li>
+              <li><strong>Assembler</strong> turns assembly into an object file (<code class="kbd">.o</code>).</li>
+              <li><strong>Linker</strong> joins object files and libraries into an executable.</li>
+            </ol>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <span></span>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#structure">Next: Program Structure &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="structure">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 2</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Program Structure &amp; Compilation Model</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            A C program is a collection of declarations, statements, and comments. Understanding how the compiler processes your source helps you read error messages and control the build.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">/* tokens.c */
+#include &lt;stdio.h&gt;
+
+int main(void) {          /* function definition */
+    int count = 10;       /* declaration + statement */
+    count = count + 1;    /* expression statement */
+
+    if (count &gt; 0) {      /* compound statement / block */
+        printf("Count is %d\n", count);
+    }
+
+    return 0;             /* return statement */
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Core building blocks</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+                <li><strong>Tokens:</strong> identifiers, keywords, literals, operators, and separators.</li>
+                <li><strong>Statements:</strong> actions ending with a semicolon.</li>
+                <li><strong>Blocks:</strong> statements grouped by <code class="kbd">{}</code>.</li>
+                <li><strong>Functions:</strong> named blocks that receive arguments and may return a value.</li>
+                <li><strong>Comments:</strong> <code class="kbd">/* block */</code> or <code class="kbd">// line</code> (C99+).</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3"><code class="kbd">main</code> and return values</h3>
+              <p class="text-[var(--muted)]">Every hosted program starts in <code class="kbd">main</code>. Return <code class="kbd">0</code> for success and a non-zero value for failure. The operating system can read this exit code.</p>
+            </div>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Preprocessor directives</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;     /* system header */
+#include "mylib.h"     /* project header */
+
+#define PI 3.14159     /* constant macro */
+#define SQUARE(x) ((x) * (x))  /* function-like macro */
+
+#ifdef DEBUG
+    #define LOG(fmt, ...) fprintf(stderr, fmt, __VA_ARGS__)
+#else
+    #define LOG(fmt, ...) ((void)0)
+#endif</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Compilation stages with GCC</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-bash">gcc -E hello.c -o hello.i     # Preprocess only
+gcc -S hello.i -o hello.s     # Compile to assembly
+gcc -c hello.s -o hello.o     # Assemble to object
+gcc hello.o -o hello          # Link executable
+
+# All at once
+gcc -std=c11 -Wall -Wextra -O2 hello.c -o hello</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#variables">Next: Variables &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="variables">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 3</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Variables, Data Types, Operators</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            C exposes the machine's native types directly. Mastering sizes, signedness, and conversions is essential for correct and portable code.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdint.h&gt;   /* fixed-width integers */
+
+int main(void) {
+    char c = 'A';                 /* at least 8 bits */
+    short s = 1000;               /* small integer */
+    int i = 42;                   /* natural integer */
+    long l = 123456789L;          /* long integer */
+    long long ll = 9LL;           /* very long integer */
+
+    unsigned int u = 4000000000U; /* wraps at UINT_MAX */
+    uint32_t exact = 0xDEADBEEF;  /* exactly 32 bits */
+
+    float f = 3.14f;
+    double d = 3.141592653589793;
+    _Bool flag = 1;               /* C99 boolean */
+
+    printf("int size = %zu bytes\n", sizeof(int));
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Integer literals</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><code class="kbd">42</code> is an <code class="kbd">int</code>.</li>
+                <li><code class="kbd">42L</code> is a <code class="kbd">long</code>.</li>
+                <li><code class="kbd">42U</code> is unsigned.</li>
+                <li><code class="kbd">0x2A</code> is hexadecimal.</li>
+                <li><code class="kbd">052</code> is octal (avoid leading zeros).</li>
+                <li><code class="kbd">0b101010</code> is binary (C23).</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Constants</h3>
+              <p class="text-[var(--muted)]"><code class="kbd">const</code> creates read-only variables. Prefer it over <code class="kbd">#define</code> when you need a typed value or a pointer to constant data.</p>
+              <div class="code-block mt-3">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-c">const int max_users = 100;
+const char *msg = "read-only string";</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Operators</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">int a = 10, b = 3;
+int sum = a + b;          /* arithmetic */
+int mod = a % b;          /* remainder */
+int bit = a &amp; b;          /* bitwise AND */
+int shift = a &lt;&lt; 1;       /* left shift */
+_Bool eq = (a == b);      /* relational */
+_Bool both = a &amp;&amp; b;      /* logical */
+int big = (a &gt; b) ? a : b; /* ternary */
+size_t sz = sizeof(a);    /* bytes used */
+
+/* Compound assignment */
+a += 5;   /* a = a + 5 */</code></pre>
+          </div>
+
+          <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5 mb-8">
+            <h4 class="font-semibold mb-2">Promotion, conversion, and undefined behavior</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li>Smaller integer types are promoted to <code class="kbd">int</code> before most operations.</li>
+              <li>Assigning a wider type to a narrower one may truncate silently.</li>
+              <li>Signed integer overflow is undefined behavior. Use unsigned types or check bounds.</li>
+              <li>Never divide by zero or shift by the width of the type.</li>
+            </ul>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">unsigned int x = 4294967295U;
+x = x + 1;    /* wraps to 0: defined for unsigned */
+
+int y = 2147483647;
+y = y + 1;    /* signed overflow: undefined behavior */</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#structure">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#control-flow">Next: Control Flow &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="control-flow">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 4</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Control Flow</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Control-flow statements decide which code runs and how many times. C keeps them minimal but powerful.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+
+int main(void) {
+    int score = 85;
+
+    if (score &gt;= 90) {
+        printf("A\n");
+    } else if (score &gt;= 80) {
+        printf("B\n");
+    } else if (score &gt;= 70) {
+        printf("C\n");
+    } else {
+        printf("F\n");
+    }
+
+    int option = 2;
+    switch (option) {
+        case 1: printf("One\n"); break;
+        case 2: printf("Two\n"); break;
+        case 3: printf("Three\n"); break;
+        default: printf("Other\n"); break;
+    }
+
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Loops</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-c">for (int i = 0; i &lt; 10; i++) {
+    printf("%d\n", i);
+}
+
+int n = 5;
+while (n &gt; 0) {
+    printf("%d\n", n--);
+}
+
+int m = 0;
+do {
+    printf("at least once\n");
+} while (m &gt; 0);</code></pre>
+              </div>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Jump statements</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><code class="kbd">break</code> exits the nearest loop or switch.</li>
+                <li><code class="kbd">continue</code> skips to the next loop iteration.</li>
+                <li><code class="kbd">goto</code> jumps to a label. Use sparingly; common valid uses are centralized cleanup and breaking out of nested loops.</li>
+                <li><code class="kbd">return</code> exits a function and gives a value.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5 mb-8">
+            <h4 class="font-semibold mb-2">Real-world pattern: early exit</h4>
+            <p class="text-[var(--muted)]">Return early to keep the happy path unindented and reduce nesting. This is often called "guard clauses."</p>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">double safe_divide(double a, double b) {
+    if (b == 0.0) {
+        return 0.0 / 0.0;   /* NaN */
+    }
+    return a / b;
+}</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#variables">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#functions">Next: Functions &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="functions">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 5</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Functions &amp; Recursion</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Functions split programs into reusable pieces. C passes all arguments by value, so a function receives a copy unless you explicitly pass a pointer.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+
+/* declaration / prototype */
+int add(int a, int b);
+
+int main(void) {
+    int result = add(3, 4);
+    printf("3 + 4 = %d\n", result);
+    return 0;
+}
+
+/* definition */
+int add(int a, int b) {
+    return a + b;
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Scope and linkage</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><strong>Block scope:</strong> variables live inside <code class="kbd">{}</code>.</li>
+                <li><strong>File scope:</strong> variables declared outside functions.</li>
+                <li><strong>Internal linkage:</strong> visible only in one translation unit (use <code class="kbd">static</code>).</li>
+                <li><strong>External linkage:</strong> visible across files (default for globals).</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Storage classes</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><code class="kbd">auto</code>: local, automatic lifetime. Implicit today.</li>
+                <li><code class="kbd">static</code>: persists for the whole program.</li>
+                <li><code class="kbd">extern</code>: refers to a definition elsewhere.</li>
+                <li><code class="kbd">register</code>: hint to keep in a register; modern compilers ignore it.</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Recursion</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+
+unsigned long factorial(unsigned int n) {
+    if (n &lt;= 1) return 1;
+    return n * factorial(n - 1);
+}
+
+unsigned long fib(unsigned int n) {
+    if (n &lt;= 1) return n;
+    return fib(n - 1) + fib(n - 2);
+}
+
+int main(void) {
+    printf("5! = %lu\n", factorial(5));  /* 120 */
+    printf("fib(10) = %lu\n", fib(10));  /* 55 */
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5 mb-8">
+            <h4 class="font-semibold mb-2">Tail recursion</h4>
+            <p class="text-[var(--muted)]">A tail-recursive call is the very last action in a function. Optimizing compilers can turn it into a loop, preventing stack overflow. The factorial version above is not tail-recursive because it multiplies after the call.</p>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">unsigned long factorial_tail(unsigned int n, unsigned long acc) {
+    if (n &lt;= 1) return acc;
+    return factorial_tail(n - 1, n * acc);
+}
+
+unsigned long factorial(unsigned int n) {
+    return factorial_tail(n, 1);
+}</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#control-flow">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#pointers">Next: Pointers &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="pointers">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 6</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Pointers &amp; Arrays (Deep)</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Pointers are C's superpower and its biggest source of bugs. An array is closely related to a pointer to its first element, but they are not identical.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+
+int main(void) {
+    int x = 42;
+    int *p = &amp;x;     /* p holds the address of x */
+
+    printf("x = %d\n", x);
+    printf("*p = %d\n", *p);
+
+    *p = 100;        /* dereference: write through p */
+    printf("x = %d\n", x);
+
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Pointer arithmetic</h3>
+              <p class="text-[var(--muted)]">Adding one to a pointer moves by the size of the pointed-to type, not by one byte. This makes array traversal efficient and type-safe.</p>
+              <div class="code-block mt-3">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-c">int nums[] = {10, 20, 30};
+int *p = nums;
+printf("%d\n", *(p + 1));  /* 20 */</code></pre>
+              </div>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Array decay</h3>
+              <p class="text-[var(--muted)]">In most expressions, an array name decays to a pointer to its first element. <code class="kbd">sizeof(array)</code> and <code class="kbd">&amp;array</code> are the main exceptions.</p>
+              <div class="code-block mt-3">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-c">int a[5];
+printf("%zu\n", sizeof(a));       /* 20 on 32-bit int */
+void f(int *p); f(a);            /* decays */</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Multi-dimensional arrays</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">int board[3][3] = {
+    {1, 0, 0},
+    {0, 1, 0},
+    {0, 0, 1}
+};
+
+void print_board(int rows, int cols, int b[rows][cols]) {
+    for (int r = 0; r &lt; rows; r++) {
+        for (int c = 0; c &lt; cols; c++) {
+            printf("%d ", b[r][c]);
+        }
+        printf("\n");
+    }
+}</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Pointer to pointer</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">void swap_int_ptrs(int **a, int **b) {
+    int *tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+int x = 1, y = 2;
+int *px = &amp;x, *py = &amp;y;
+swap_int_ptrs(&amp;px, &amp;py);</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Dynamic arrays</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(void) {
+    size_t n = 5;
+    int *arr = malloc(n * sizeof(int));
+    if (!arr) {
+        perror("malloc");
+        return 1;
+    }
+    for (size_t i = 0; i &lt; n; i++) arr[i] = (int)(i * 10);
+    free(arr);   /* always free heap memory */
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5 mb-8">
+            <h4 class="font-semibold mb-2">Common pointer pitfalls</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li><strong>Dangling pointers:</strong> pointing to freed or stack-local memory.</li>
+              <li><strong>Buffer overflows:</strong> writing past the end of an array.</li>
+              <li><strong>NULL dereference:</strong> using a pointer that was never initialized or was freed.</li>
+              <li><strong>Memory leaks:</strong> losing the last pointer to allocated memory.</li>
+            </ul>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#functions">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#strings">Next: Strings &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="strings">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 7</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Strings &amp; Character Handling</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            C strings are null-terminated byte arrays. There is no built-in string type, so you must track length and buffer size yourself.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(void) {
+    char msg[] = "Hello";          /* mutable copy, 6 bytes including '\0' */
+    const char *lit = "World";     /* pointer to string literal */
+
+    printf("%zu\n", strlen(msg));  /* 5 */
+    strcat(msg, "!");              /* only safe if buffer is big enough */
+    printf("%s\n", msg);
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Common <code class="kbd">string.h</code> functions</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><code class="kbd">strlen</code> &mdash; length without <code class="kbd">\0</code>.</li>
+                <li><code class="kbd">strcpy</code> / <code class="kbd">strncpy</code> &mdash; copy strings.</li>
+                <li><code class="kbd">strcat</code> / <code class="kbd">strncat</code> &mdash; concatenate.</li>
+                <li><code class="kbd">strcmp</code> / <code class="kbd">strncmp</code> &mdash; compare.</li>
+                <li><code class="kbd">strchr</code> / <code class="kbd">strstr</code> &mdash; search.</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Safe string handling</h3>
+              <p class="text-[var(--muted)]">Modern C code often uses bounds-checked alternatives or manually tracks buffer sizes. <code class="kbd">strncpy</code> does not guarantee null-termination, so check after copying.</p>
+            </div>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(void) {
+    char src[] = "Copy me";
+    char dst[20];
+
+    strncpy(dst, src, sizeof(dst) - 1);
+    dst[sizeof(dst) - 1] = '\0';   /* force termination */
+
+    if (strcmp(src, dst) == 0) {
+        printf("Match\n");
+    }
+    return 0;
+}</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Character classification with <code class="kbd">ctype.h</code></h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;ctype.h&gt;
+#include &lt;stdio.h&gt;
+
+int main(void) {
+    char c = 'a';
+    printf("isalpha: %d, isdigit: %d, toupper: %c\n",
+           isalpha(c), isdigit(c), (char)toupper(c));
+    return 0;
+}</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Parsing simple input</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+
+int main(void) {
+    char name[64];
+    int age;
+    printf("Enter name and age: ");
+    if (scanf("%63s %d", name, &amp;age) == 2) {
+        printf("%s is %d years old\n", name, age);
+    }
+    return 0;
+}</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#pointers">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#structs">Next: Structs &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="structs">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 8</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Structs, Unions, Enums, Bit-fields</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            These constructs let you model real-world data and pack memory tightly. They are the foundation of data structures and hardware interfaces.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+
+struct Point {
+    int x;
+    int y;
+};
+
+struct Rectangle {
+    struct Point top_left;
+    struct Point bottom_right;
+};
+
+int main(void) {
+    struct Point p = {10, 20};
+    struct Rectangle r = {{0, 0}, {100, 200}};
+
+    printf("Point: (%d, %d)\n", p.x, p.y);
+    printf("Rectangle width: %d\n", r.bottom_right.x - r.top_left.x);
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Unions</h3>
+              <p class="text-[var(--muted)]">A union holds one member at a time in the same memory. It is useful for type punning, tagged variants, and memory overlays.</p>
+              <div class="code-block mt-3">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-c">union Packet {
+    uint32_t raw;
+    struct {
+        uint8_t a, b, c, d;
+    } bytes;
+};</code></pre>
+              </div>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Enums</h3>
+              <p class="text-[var(--muted)]">Enums give names to integer constants, making state machines and option sets readable.</p>
+              <div class="code-block mt-3">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-c">enum Color { RED, GREEN, BLUE };
+enum Status { OK = 0, ERROR = -1, PENDING = 1 };</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Bit-fields</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+
+struct Flags {
+    unsigned int is_active : 1;
+    unsigned int priority  : 3;  /* 0..7 */
+    unsigned int category  : 4;  /* 0..15 */
+};
+
+int main(void) {
+    struct Flags f = {1, 5, 9};
+    printf("size = %zu bytes\n", sizeof(f));
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5 mb-8">
+            <h4 class="font-semibold mb-2">Padding and alignment</h4>
+            <p class="text-[var(--muted)]">Compilers insert padding so members align to natural boundaries. Reordering members can shrink a struct. You can pack with <code class="kbd">#pragma pack</code>, but that may slow access.</p>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">struct Padded {
+    char a;      /* 1 byte + 3 padding */
+    int  b;      /* 4 bytes */
+    char c;      /* 1 byte + 3 padding */
+};  /* often 12 bytes */
+
+struct Compact {
+    int  b;
+    char a;
+    char c;
+};  /* often 8 bytes */</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#strings">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#memory">Next: Dynamic Memory &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="memory">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 9</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Dynamic Memory &amp; Memory Layout</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            C gives you direct control over memory. With that power comes responsibility: every <code class="kbd">malloc</code> needs a matching <code class="kbd">free</code>.
+          </p>
+
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Stack vs heap</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li><strong>Stack:</strong> automatic variables, function frames, fast but limited. Freed when the function returns.</li>
+              <li><strong>Heap:</strong> manually managed, large, survives function calls. Use <code class="kbd">malloc</code> / <code class="kbd">free</code>.</li>
+              <li><strong>Data segment:</strong> global and static variables.</li>
+              <li><strong>Text segment:</strong> program code, usually read-only.</li>
+            </ul>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(void) {
+    size_t n = 100;
+
+    int *arr1 = malloc(n * sizeof(int));
+    if (!arr1) { perror("malloc"); return 1; }
+
+    int *arr2 = calloc(n, sizeof(int));   /* zeroed */
+    if (!arr2) { perror("calloc"); free(arr1); return 1; }
+
+    /* grow arr2 */
+    int *tmp = realloc(arr2, 2 * n * sizeof(int));
+    if (tmp) arr2 = tmp;
+
+    free(arr1);
+    free(arr2);
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Common heap bugs</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><strong>Memory leak:</strong> losing the pointer before freeing.</li>
+                <li><strong>Use-after-free:</strong> reading or writing freed memory.</li>
+                <li><strong>Double-free:</strong> calling <code class="kbd">free</code> twice on the same pointer.</li>
+                <li><strong>Invalid free:</strong> freeing memory not from <code class="kbd">malloc</code>.</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Safe pattern</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-c">void *p = malloc(size);
+if (!p) { /* handle error */ }
+/* use p */
+free(p);
+p = NULL;   /* avoid dangling */</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Detecting leaks with Valgrind</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-bash"># Compile with debug symbols
+gcc -std=c11 -g -O0 leak.c -o leak
+
+# Run under valgrind
+valgrind --leak-check=full --show-leak-kinds=all ./leak</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Aligned allocation</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+
+int main(void) {
+    void *p = aligned_alloc(64, 1024);  /* 64-byte aligned */
+    if (!p) { perror("aligned_alloc"); return 1; }
+    printf("address %p is aligned\n", p);
+    free(p);
+    return 0;
+}</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#structs">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#function-pointers">Next: Function Pointers &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="function-pointers">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 10</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Function Pointers, Callbacks &amp; qsort</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Function pointers let you pass behavior as data. They enable callbacks, plugin architectures, and table-driven dispatch.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+
+int add(int a, int b) { return a + b; }
+int sub(int a, int b) { return a - b; }
+
+int main(void) {
+    int (*op)(int, int) = add;
+    printf("%d\n", op(5, 3));  /* 8 */
+
+    op = sub;
+    printf("%d\n", op(5, 3));  /* 2 */
+    return 0;
+}</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Callback pattern</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+
+void for_each(int *arr, size_t n, void (*fn)(int)) {
+    for (size_t i = 0; i &lt; n; i++) fn(arr[i]);
+}
+
+void print_int(int x) { printf("%d\n", x); }
+
+int main(void) {
+    int nums[] = {1, 2, 3, 4};
+    for_each(nums, 4, print_int);
+    return 0;
+}</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Using <code class="kbd">qsort</code> and <code class="kbd">bsearch</code></h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int cmp_int(const void *a, const void *b) {
+    int x = *(const int *)a;
+    int y = *(const int *)b;
+    return (x &gt; y) - (x &lt; y);
+}
+
+int main(void) {
+    int arr[] = {3, 1, 4, 1, 5, 9, 2, 6};
+    size_t n = sizeof(arr) / sizeof(arr[0]);
+
+    qsort(arr, n, sizeof(int), cmp_int);
+
+    int key = 5;
+    int *found = bsearch(&amp;key, arr, n, sizeof(int), cmp_int);
+    if (found) printf("Found %d\n", *found);
+    return 0;
+}</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Generic-ish code with <code class="kbd">void*</code></h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">void swap(void *a, void *b, size_t size) {
+    unsigned char *pa = a, *pb = b;
+    for (size_t i = 0; i &lt; size; i++) {
+        unsigned char tmp = pa[i];
+        pa[i] = pb[i];
+        pb[i] = tmp;
+    }
+}</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#memory">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#file-io">Next: File I/O &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="file-io">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 11</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">File I/O &amp; System Calls</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            The C standard library provides portable file functions. POSIX system calls sit underneath and offer finer control on Unix-like systems.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+
+int main(void) {
+    FILE *fp = fopen("data.txt", "w");
+    if (!fp) { perror("fopen"); return 1; }
+
+    fprintf(fp, "count: %d\n", 42);
+    fclose(fp);
+
+    fp = fopen("data.txt", "r");
+    if (!fp) { perror("fopen"); return 1; }
+
+    char line[128];
+    while (fgets(line, sizeof(line), fp)) {
+        printf("%s", line);
+    }
+    fclose(fp);
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Common <code class="kbd">fopen</code> modes</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><code class="kbd">"r"</code> read text.</li>
+                <li><code class="kbd">"w"</code> write text, truncate.</li>
+                <li><code class="kbd">"a"</code> append text.</li>
+                <li><code class="kbd">"rb"</code> / <code class="kbd">"wb"</code> binary.</li>
+                <li><code class="kbd">"r+"</code> / <code class="kbd">"w+"</code> read and write.</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Binary I/O</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-c">int data[10];
+FILE *fp = fopen("out.bin", "wb");
+fwrite(data, sizeof(int), 10, fp);
+fclose(fp);</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Positioning and error handling</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;errno.h&gt;
+
+int main(void) {
+    FILE *fp = fopen("data.txt", "r");
+    if (!fp) {
+        perror("data.txt");
+        return 1;
+    }
+
+    fseek(fp, 0, SEEK_END);
+    long size = ftell(fp);
+    rewind(fp);
+
+    printf("size = %ld\n", size);
+    fclose(fp);
+    return 0;
+}</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">POSIX system calls intro</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;fcntl.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;stdio.h&gt;
+
+int main(void) {
+    int fd = open("data.txt", O_RDONLY);
+    if (fd &lt; 0) { perror("open"); return 1; }
+
+    char buf[128];
+    ssize_t n = read(fd, buf, sizeof(buf) - 1);
+    if (n &gt; 0) {
+        buf[n] = '\0';
+        printf("%s", buf);
+    }
+
+    lseek(fd, 0, SEEK_SET);
+    close(fd);
+    return 0;
+}</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#function-pointers">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#modules">Next: Modular Design &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="modules">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 12</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Modular Design, Headers, Build Systems</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Real C projects split code into many files. Headers declare interfaces, source files implement them, and build systems tie everything together.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">/* math_utils.h */
+#ifndef MATH_UTILS_H
+#define MATH_UTILS_H
+
+int add(int a, int b);
+int square(int x);
+
+#endif</code></pre>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">/* math_utils.c */
+#include "math_utils.h"
+
+int add(int a, int b) { return a + b; }
+int square(int x) { return x * x; }</code></pre>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">/* main.c */
+#include &lt;stdio.h&gt;
+#include "math_utils.h"
+
+int main(void) {
+    printf("%d\n", add(2, 3));
+    return 0;
+}</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">A simple Makefile</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-makefile">CC = gcc
+CFLAGS = -std=c11 -Wall -Wextra -O2
+
+app: main.o math_utils.o
+	$(CC) $(CFLAGS) -o app main.o math_utils.o
+
+main.o: main.c math_utils.h
+	$(CC) $(CFLAGS) -c main.c
+
+math_utils.o: math_utils.c math_utils.h
+	$(CC) $(CFLAGS) -c math_utils.c
+
+clean:
+	rm -f *.o app
+
+.PHONY: clean</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Static libraries</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-bash"># Create archive
+ar rcs libmath.a math_utils.o
+
+# Link against it
+gcc main.c -o app -L. -lmath</code></pre>
+              </div>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Dynamic libraries</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-bash"># Position-independent code
+gcc -fPIC -c math_utils.c
+
+# Shared object (Linux)
+gcc -shared -o libmath.so math_utils.o
+
+# Link
+gcc main.c -o app -L. -lmath</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#file-io">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#debugging">Next: Debugging &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="debugging">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 13</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Debugging &amp; Profiling</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Modern C debugging is a mix of classic tools and compiler-powered sanitizers. Compile with debug symbols and let the tools do the heavy lifting.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-bash"># Compile with debug symbols, no optimization
+gcc -std=c11 -g -O0 app.c -o app
+
+# Start gdb
+gdb ./app
+
+# Common gdb commands
+(gdb) break main        # stop at main
+(gdb) run               # start execution
+(gdb) next              # step over
+(gdb) step              # step into
+(gdb) print x           # inspect variable
+(gdb) continue          # resume
+(gdb) quit              # exit</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Valgrind</h3>
+              <p class="text-[var(--muted)]">Valgrind catches memory leaks, invalid reads/writes, and use of uninitialized memory on Linux.</p>
+              <div class="code-block mt-3">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-bash">valgrind --leak-check=full ./app
+valgrind --tool=memcheck ./app</code></pre>
+              </div>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">AddressSanitizer</h3>
+              <p class="text-[var(--muted)]">AddressSanitizer is built into GCC and Clang. It finds heap and stack buffer overflows with lower overhead than Valgrind.</p>
+              <div class="code-block mt-3">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-bash">gcc -std=c11 -g -fsanitize=address app.c -o app
+./app</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#modules">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#advanced">Next: Advanced C &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="advanced">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 14</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Advanced C</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Once the fundamentals are solid, you can explore low-level bit manipulation, compiler intrinsics, custom allocators, and the sharp edges of undefined behavior.
+          </p>
+
+          <h3 class="text-xl font-semibold mb-4">Bitwise operations in depth</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;stdint.h&gt;
+#include &lt;stdio.h&gt;
+
+#define FLAG_A (1u &lt;&lt; 0)
+#define FLAG_B (1u &lt;&lt; 1)
+#define FLAG_C (1u &lt;&lt; 2)
+
+int main(void) {
+    uint32_t flags = 0;
+    flags |= FLAG_A;        /* set */
+    flags |= FLAG_B;
+    flags &amp;= ~FLAG_B;       /* clear */
+    _Bool a_on = flags &amp; FLAG_A;
+    flags ^= FLAG_C;        /* toggle */
+
+    printf("flags = 0x%X, A = %d\n", flags, a_on);
+    return 0;
+}</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Inline assembly</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">/* GCC x86_64 inline assembly example */
+static inline uint64_t rdtsc(void) {
+    uint32_t lo, hi;
+    __asm__ __volatile__ ("rdtsc" : "=a"(lo), "=d"(hi));
+    return ((uint64_t)hi &lt;&lt; 32) | lo;
+}</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Arena allocator concept</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-c">#include &lt;stdlib.h&gt;
+#include &lt;stdint.h&gt;
+
+typedef struct {
+    uint8_t *base;
+    size_t used;
+    size_t cap;
+} Arena;
+
+void *arena_alloc(Arena *a, size_t n) {
+    if (a-&gt;used + n &gt; a-&gt;cap) return NULL;
+    void *p = a-&gt;base + a-&gt;used;
+    a-&gt;used += n;
+    return p;
+}
+
+void arena_free_all(Arena *a) { a-&gt;used = 0; }</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Special qualifiers</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><code class="kbd">volatile</code>: tells the compiler the value may change outside the current thread, e.g. hardware registers.</li>
+                <li><code class="kbd">restrict</code>: promises that a pointer is the only way to access its target, enabling optimizations.</li>
+                <li><code class="kbd">_Atomic</code> (C11): thread-safe atomic operations.</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Undefined behavior</h3>
+              <p class="text-[var(--muted)]">Signed overflow, dereferencing NULL, accessing out-of-bounds memory, and violating sequence points are all undefined. The compiler is allowed to do anything, so never rely on "what the CPU usually does."</p>
+            </div>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#debugging">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#capstone">Next: Capstone Projects &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="capstone">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 15</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Capstone Projects</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            These three projects tie together the whole tutorial. Pick one to finish first, then come back for the others.
+          </p>
+
+          <div class="card rounded-2xl p-6 mb-10">
+            <h3 class="text-2xl font-bold mb-4">Project A: Memory-Mapped Key&ndash;Value Store</h3>
+
+            <h4 class="text-xl font-semibold mb-2">1. What is this project?</h4>
+            <p class="text-[var(--muted)] mb-4">Build a tiny persistent key&ndash;value store. Strings are keys and strings are values. The store loads from a file on startup and saves on demand.</p>
+
+            <h4 class="text-xl font-semibold mb-2">2. What it covers?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li>Hash tables and collision handling.</li>
+              <li>Struct design and serialization.</li>
+              <li>File I/O and persistence formats.</li>
+              <li>Optional <code class="kbd">mmap</code> for fast loading.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">3. How it is done?</h4>
+            <div class="code-block mb-4">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-c">#define TABLE_SIZE 1024
+
+typedef struct Entry {
+    char key[64];
+    char value[256];
+    struct Entry *next;   /* separate chaining */
+} Entry;
+
+typedef struct {
+    Entry *buckets[TABLE_SIZE];
+} KVStore;
+
+unsigned int hash(const char *key) {
+    unsigned int h = 5381;
+    int c;
+    while ((c = *key++)) h = ((h &lt;&lt; 5) + h) + c;
+    return h % TABLE_SIZE;
+}</code></pre>
+            </div>
+
+            <h4 class="text-xl font-semibold mb-2">4. What did we learn?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li>Persistent data needs a stable on-disk format.</li>
+              <li>Hashing converts variable-length keys into array indices.</li>
+              <li>Text serialization is simple but binary formats are faster.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">5. How can I enhance?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li>Use <code class="kbd">mmap</code> to map the file directly into memory.</li>
+              <li>Add a write-ahead log for crash recovery.</li>
+              <li>Implement deletion and automatic rehashing.</li>
+            </ul>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-10">
+            <h3 class="text-2xl font-bold mb-4">Project B: Mini Shell</h3>
+
+            <h4 class="text-xl font-semibold mb-2">1. What is this project?</h4>
+            <p class="text-[var(--muted)] mb-4">Implement a command-line shell that reads user input, parses it into commands and arguments, and executes programs.</p>
+
+            <h4 class="text-xl font-semibold mb-2">2. What it covers?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li>String tokenization.</li>
+              <li>Process creation with <code class="kbd">fork</code> and <code class="kbd">exec</code>.</li>
+              <li>Built-in commands.</li>
+              <li>Pipes and I/O redirection.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">3. How it is done?</h4>
+            <div class="code-block mb-4">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/wait.h&gt;
+
+int main(void) {
+    char line[256];
+    while (1) {
+        printf("minish&gt; ");
+        if (!fgets(line, sizeof(line), stdin)) break;
+        line[strcspn(line, "\n")] = '\0';
+
+        if (strcmp(line, "exit") == 0) break;
+        if (strncmp(line, "cd ", 3) == 0) {
+            chdir(line + 3);
+            continue;
+        }
+
+        pid_t pid = fork();
+        if (pid == 0) {
+            char *argv[] = { line, NULL };
+            execvp(argv[0], argv);
+            perror("execvp");
+            exit(1);
+        }
+        waitpid(pid, NULL, 0);
+    }
+    return 0;
+}</code></pre>
+            </div>
+
+            <h4 class="text-xl font-semibold mb-2">4. What did we learn?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li>Every external command runs in a new process.</li>
+              <li><code class="kbd">execvp</code> replaces the child process image.</li>
+              <li><code class="kbd">dup2</code> redirects file descriptors for pipes and redirection.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">5. How can I enhance?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li>Parse quoted arguments and environment variables.</li>
+              <li>Add pipelines like <code class="kbd">ls | wc -l</code>.</li>
+              <li>Implement job control with <code class="kbd">SIGTSTP</code>.</li>
+            </ul>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-10">
+            <h3 class="text-2xl font-bold mb-4">Project C: Custom Memory Allocator</h3>
+
+            <h4 class="text-xl font-semibold mb-2">1. What is this project?</h4>
+            <p class="text-[var(--muted)] mb-4">Write your own <code class="kbd">malloc</code>/<code class="kbd">free</code> replacement using a free-list allocator and a bump allocator for fast temporary allocations.</p>
+
+            <h4 class="text-xl font-semibold mb-2">2. What it covers?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li>Pointer arithmetic and alignment.</li>
+              <li>Free-list bookkeeping with headers.</li>
+              <li>Splitting and coalescing free blocks.</li>
+              <li>Benchmarking against the system allocator.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">3. How it is done?</h4>
+            <div class="code-block mb-4">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-c">typedef struct Block {
+    size_t size;
+    struct Block *next;
+    /* user memory follows immediately after */
+} Block;
+
+static Block *free_list = NULL;
+
+void *my_malloc(size_t size) {
+    /* find first fitting block, split if large,
+       or request fresh memory from sbrk/mmap */
+    (void)size;
+    return NULL;  /* exercise for the reader */
+}
+
+void my_free(void *p) {
+    /* insert block back into free list and merge neighbors */
+    (void)p;
+}</code></pre>
+            </div>
+
+            <h4 class="text-xl font-semibold mb-2">4. What did we learn?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li>Heap allocators hide a lot of bookkeeping in block headers.</li>
+              <li>Alignment is required so any type can live in the returned block.</li>
+              <li>Coalescing reduces fragmentation.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">5. How can I enhance?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li>Add per-thread arenas to avoid contention.</li>
+              <li>Use memory poisoning to catch use-after-free.</li>
+              <li>Compare throughput and fragmentation against <code class="kbd">malloc</code> using micro-benchmarks.</li>
+            </ul>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#advanced">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#quiz">Next: Knowledge Check &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="quiz">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 16</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Knowledge Check</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Test your understanding with eight quick questions.</p>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">1. Which header provides <code class="kbd">printf</code>?</h3>
+            <div class="quiz" data-answer="A">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. <code class="kbd">&lt;stdio.h&gt;</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. <code class="kbd">&lt;stdlib.h&gt;</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. <code class="kbd">&lt;string.h&gt;</code></button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">2. What does <code class="kbd">&amp;x</code> produce?</h3>
+            <div class="quiz" data-answer="B">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. The value of <code class="kbd">x</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. The address of <code class="kbd">x</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. The size of <code class="kbd">x</code></button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">3. Which function copies at most <code class="kbd">n</code> bytes and is safer than <code class="kbd">strcpy</code>?</h3>
+            <div class="quiz" data-answer="B">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. <code class="kbd">strcat</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. <code class="kbd">strncpy</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. <code class="kbd">strcmp</code></button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">4. On most 32-bit systems, how many bytes is <code class="kbd">sizeof(int)</code>?</h3>
+            <div class="quiz" data-answer="B">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. 2</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. 4</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. 8</button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">5. Which storage class keeps its value across function calls?</h3>
+            <div class="quiz" data-answer="B">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. <code class="kbd">auto</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. <code class="kbd">static</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. <code class="kbd">register</code></button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">6. What does <code class="kbd">malloc</code> return when it cannot allocate memory?</h3>
+            <div class="quiz" data-answer="A">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. <code class="kbd">NULL</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. <code class="kbd">0</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. A garbage pointer</button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">7. In <code class="kbd">const char *p</code>, what is constant?</h3>
+            <div class="quiz" data-answer="B">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. The pointer <code class="kbd">p</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. The data <code class="kbd">p</code> points to</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. Both</button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="font-semibold mb-2">8. Which tool is commonly used to detect memory leaks in C?</h3>
+            <div class="quiz" data-answer="B">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. <code class="kbd">gdb</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. <code class="kbd">valgrind</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. <code class="kbd">gcc</code></button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-8 text-center mb-10">
+            <h3 class="text-2xl font-bold mb-3">Congratulations!</h3>
+            <p class="text-[var(--muted)] mb-5">You have worked through the core of C and built a foundation for systems programming.</p>
+            <div class="flex justify-center gap-4 flex-wrap">
+              <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">Restart tutorial</a>
+              <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="https://en.cppreference.com/w/c" target="_blank">C Reference &rarr;</a>
+            </div>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#capstone">&larr; Previous</a>
+            <span></span>
+          </nav>
+        </section>
+
+      </div>
+      <footer class="border-t border-[var(--border)] px-6 py-8 text-center text-sm text-[var(--muted)]">
+        <p>Open in any browser. No build step required.</p>
+      </footer>
+    </main>
+  </div>
+  <script>
+    const html = document.documentElement;
+    const moon = document.getElementById('moon');
+    const sun = document.getElementById('sun');
+    const lightStylesheet = document.getElementById('hljs-light');
+    const darkStylesheet = document.getElementById('hljs-dark');
+
+    function applyTheme(theme) {
+      html.classList.remove('light', 'dark');
+      html.classList.add(theme);
+      if (theme === 'dark') {
+        lightStylesheet.disabled = true;
+        darkStylesheet.disabled = false;
+        moon.classList.add('hidden');
+        sun.classList.remove('hidden');
+      } else {
+        lightStylesheet.disabled = false;
+        darkStylesheet.disabled = true;
+        moon.classList.remove('hidden');
+        sun.classList.add('hidden');
+      }
+      localStorage.setItem('tutorials-theme', theme);
+    }
+
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      applyTheme(html.classList.contains('dark') ? 'light' : 'dark');
+    });
+
+    const saved = localStorage.getItem('tutorials-theme');
+    applyTheme(saved === 'dark' ? 'dark' : 'light');
+
+    function setStatus(status) {
+      localStorage.setItem('tutorial-c-language-status', status);
+      updateButtons();
+    }
+
+    function updateButtons() {
+      const status = localStorage.getItem('tutorial-c-language-status') || 'not-started';
+      const startBtns = document.querySelectorAll('[id^="btn-start"]');
+      const completeBtns = document.querySelectorAll('[id^="btn-complete"]');
+      startBtns.forEach(btn => { btn.textContent = status === 'in-progress' ? 'In Progress' : 'Start'; });
+      completeBtns.forEach(btn => { btn.textContent = status === 'completed' ? 'Completed' : 'Mark Complete'; });
+    }
+
+    document.querySelectorAll('[id^="btn-start"]').forEach(btn => btn.addEventListener('click', () => setStatus('in-progress')));
+    document.querySelectorAll('[id^="btn-complete"]').forEach(btn => btn.addEventListener('click', () => setStatus('completed')));
+    document.querySelectorAll('[id^="btn-reset"]').forEach(btn => btn.addEventListener('click', () => { localStorage.removeItem('tutorial-c-language-status'); updateButtons(); }));
+    updateButtons();
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('menu-overlay');
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('hidden');
+    }
+
+    function copyCode(btn) {
+      const code = btn.nextElementSibling.querySelector('code');
+      navigator.clipboard.writeText(code.innerText).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+      });
+    }
+
+    const sections = document.querySelectorAll('section[id]');
+    const tocLinks = document.querySelectorAll('.toc-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach((link) => link.classList.remove('active'));
+          const active = document.querySelector(`.toc-link[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -60% 0px' });
+    sections.forEach((section) => observer.observe(section));
+
+    document.querySelectorAll('.quiz').forEach((quiz) => {
+      const correct = quiz.dataset.answer;
+      const feedback = quiz.nextElementSibling;
+      quiz.querySelectorAll('.quiz-opt').forEach((opt) => {
+        opt.addEventListener('click', () => {
+          quiz.querySelectorAll('.quiz-opt').forEach((o) => { o.classList.remove('selected', 'correct', 'wrong'); o.disabled = true; });
+          opt.classList.add('selected');
+          if (opt.dataset.val === correct) {
+            opt.classList.add('correct');
+            feedback.textContent = 'Correct! ✅';
+            feedback.className = 'quiz-feedback mt-3 font-medium text-[var(--success)]';
+          } else {
+            opt.classList.add('wrong');
+            feedback.textContent = `Not quite. The correct answer is ${correct}.`;
+            feedback.className = 'quiz-feedback mt-3 font-medium text-[var(--danger)]';
+          }
+        });
+      });
+    });
+
+    hljs.highlightAll();
+  </script>
+</body>
+</html>

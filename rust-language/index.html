@@ -1,0 +1,1788 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Rust: Systems Programming with Safety &amp; Concurrency</title>
+  <link href="../assets/favicons/svg/Rust.svg" rel="icon" type="image/svg+xml"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-light" rel="stylesheet"/>
+  <link disabled="" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" id="hljs-dark" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/rust.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/toml.min.js"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' }
+  </script>
+  <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="antialiased transition-colors duration-300 brand-rust-language">
+  <a class="sr-only" href="#main">Skip to content</a>
+  <div class="fixed inset-0 bg-black/40 z-30 hidden lg:hidden" id="menu-overlay" onclick="toggleSidebar()"></div>
+  <div class="flex min-h-screen">
+    <aside class="fixed lg:sticky top-0 left-0 h-screen w-72 border-r border-[var(--border)] bg-[var(--panel)] z-40 overflow-y-auto p-6" id="sidebar">
+      <div class="flex items-center gap-3 mb-8">
+        <img alt="Rust" class="w-10 h-10" src="../assets/favicons/svg/Rust.svg"/>
+        <span class="text-xl font-bold">Rust Language</span>
+      </div>
+      <nav class="space-y-1 text-sm" id="toc">
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">1. Introduction + Installation</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#cargo">2. Hello World, Cargo &amp; Tooling</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#ownership">3. Ownership</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#borrowing">4. Borrowing &amp; References</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#lifetimes">5. Lifetimes</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#structs">6. Structs &amp; Enums</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#patterns">7. Pattern Matching</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#errors">8. Error Handling</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#generics">9. Generics</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#traits">10. Traits</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#closures">11. Closures &amp; Iterators</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#modules">12. Modules &amp; Crates</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#testing">13. Testing &amp; Macros</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#concurrency">14. Concurrency</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#unsafe">15. Unsafe Rust &amp; FFI</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#async">16. Async / Await</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#crates">17. Common Crates</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#capstone">18. Capstone Projects</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#quiz">19. Knowledge Check</a>
+      </nav>
+      <div class="mt-8 pt-6 border-t border-[var(--border)]">
+        <p class="text-xs text-[var(--muted)]">Open in any browser. No build step required.</p>
+      </div>
+    </aside>
+    <main class="flex-1 min-w-0" id="main">
+      <header class="sticky top-0 z-20 border-b border-[var(--border)] bg-[var(--panel)]/90 backdrop-blur px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <button aria-label="Open menu" class="lg:hidden p-2 rounded-md border border-[var(--border)]" onclick="toggleSidebar()">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </button>
+          <h1 class="text-lg sm:text-xl font-bold tracking-tight">Rust: Systems Programming with Safety &amp; Concurrency</h1>
+        </div>
+        <div class="hidden sm:flex items-center gap-2 progress-controls" id="progress-controls">
+          <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-start">Start</button>
+          <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-complete">Mark Complete</button>
+          <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-reset">Reset</button>
+        </div>
+        <div class="sm:hidden flex items-center gap-2 progress-controls" id="progress-controls-mobile">
+          <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-start-mobile">Start</button>
+          <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-complete-mobile">Complete</button>
+          <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-reset-mobile">Reset</button>
+        </div>
+        <button aria-label="Toggle theme" class="p-2 rounded-full border border-[var(--border)] hover:bg-black/5 dark:hover:bg-white/5 transition" id="theme-toggle">
+          <svg aria-hidden="true" class="w-5 h-5" fill="none" id="moon" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <svg aria-hidden="true" class="w-5 h-5 hidden" fill="none" id="sun" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5"></circle>
+            <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </header>
+      <div class="max-w-4xl mx-auto px-6 py-10 space-y-20">
+
+        <section class="scroll-mt-24" id="intro">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 1</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Introduction + Installation</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Rust is a systems programming language that guarantees memory safety and thread safety without a garbage collector. It compiles to native code, runs everywhere C does, and is used for operating systems, browsers, game engines, blockchains, and cloud infrastructure.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Why learn Rust?</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+              <li><strong>Memory safety:</strong> The borrow checker prevents null pointers, use-after-free, and data races at compile time.</li>
+              <li><strong>Performance:</strong> Zero-cost abstractions with predictable memory layout and no runtime garbage collector.</li>
+              <li><strong>Concurrency:</strong> Fearless parallelism thanks to ownership and type system guarantees.</li>
+              <li><strong>Tooling:</strong> Cargo, rustfmt, clippy, and rust-analyzer give a polished developer experience.</li>
+              <li><strong>Ecosystem:</strong> Crates.io hosts high-quality libraries for web services, embedded, cryptography, and more.</li>
+            </ul>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Before you start</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li>A text editor and a terminal. New to the command line? Try the <a class="brand underline" href="../linux/index.html">Linux tutorial</a>.</li>
+              <li>Optional: <a class="brand underline" href="../github/index.html">Git basics</a> for saving your projects.</li>
+              <li>No systems-programming background required, but patience with compiler errors helps.</li>
+            </ul>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Install Rust</h3>
+          <p class="text-[var(--muted)] mb-4">The official toolchain installer is <code class="kbd">rustup</code>. Pick your operating system row below.</p>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-left border border-[var(--border)] rounded-xl">
+              <thead>
+                <tr class="border-b border-[var(--border)] bg-[var(--panel)]">
+                  <th class="px-4 py-3 font-semibold">OS</th>
+                  <th class="px-4 py-3 font-semibold">Install command</th>
+                  <th class="px-4 py-3 font-semibold">Verify</th>
+                </tr>
+              </thead>
+              <tbody class="text-[var(--muted)]">
+                <tr class="border-b border-[var(--border)]">
+                  <td class="px-4 py-3 font-medium">Windows</td>
+                  <td class="px-4 py-3">
+                    <div class="code-block">
+                      <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                      <pre><code class="language-bash"># Download and run rustup-init.exe from:
+# https://rustup.rs
+# Or with winget:
+winget install Rustlang.Rustup</code></pre>
+                    </div>
+                  </td>
+                  <td class="px-4 py-3">
+                    <div class="code-block">
+                      <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                      <pre><code class="language-bash">rustc --version
+cargo --version</code></pre>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="border-b border-[var(--border)]">
+                  <td class="px-4 py-3 font-medium">macOS</td>
+                  <td class="px-4 py-3">
+                    <div class="code-block">
+                      <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                      <pre><code class="language-bash">curl --proto '=https' --tlsv1.2 -sSf \
+  https://sh.rustup.rs | sh</code></pre>
+                    </div>
+                  </td>
+                  <td class="px-4 py-3">
+                    <div class="code-block">
+                      <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                      <pre><code class="language-bash">rustc --version
+cargo --version</code></pre>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium">Linux</td>
+                  <td class="px-4 py-3">
+                    <div class="code-block">
+                      <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                      <pre><code class="language-bash">curl --proto '=https' --tlsv1.2 -sSf \
+  https://sh.rustup.rs | sh
+# Some distros also provide a package:
+# sudo apt install rustup</code></pre>
+                    </div>
+                  </td>
+                  <td class="px-4 py-3">
+                    <div class="code-block">
+                      <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                      <pre><code class="language-bash">rustc --version
+cargo --version</code></pre>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5 mb-8">
+            <h4 class="font-semibold mb-2">Useful rustup commands</h4>
+            <div class="code-block mb-4">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-bash">rustup update                  # update toolchain
+rustup component add clippy  # linter
+rustup component add rustfmt # formatter
+rustup target add wasm32-unknown-unknown</code></pre>
+            </div>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <span></span>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#cargo">Next: Cargo &amp; Tooling &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="cargo">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 2</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Hello World, Cargo &amp; Tooling</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Cargo is Rust's build system and package manager. It handles compilation, dependencies, tests, and documentation. Most Rust projects live inside a Cargo workspace.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-bash"># Create a new binary project
+cargo new hello_rust
+cd hello_rust
+
+# Build and run
+cargo run
+
+# Check without producing a binary (fast feedback)
+cargo check
+
+# Build a release binary
+cargo build --release</code></pre>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">// src/main.rs
+fn main() {
+    println!("Hello, Rust!");
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Cargo project layout</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><code class="kbd">Cargo.toml</code> — project metadata and dependencies.</li>
+                <li><code class="kbd">src/main.rs</code> — binary entry point.</li>
+                <li><code class="kbd">src/lib.rs</code> — library entry point.</li>
+                <li><code class="kbd">target/</code> — build artifacts (do not commit).</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Cargo.toml essentials</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-toml">[package]
+name = "hello_rust"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-bash"># Run tests, lint, and format
+cargo test
+cargo clippy
+cargo fmt
+
+# Generate and open docs
+cargo doc --open</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#ownership">Next: Ownership &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="ownership">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 3</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Ownership</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Ownership is Rust's core memory-management rule. Every value has a single owner, and when the owner goes out of scope the value is dropped. This removes the need for a garbage collector while preventing use-after-free and double-free bugs.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">fn main() {
+    let s1 = String::from("hello"); // s1 owns the String
+    let s2 = s1;                    // ownership moves to s2
+    // println!("{}", s1);          // ERROR: value borrowed after move
+    println!("{}", s2);             // OK
+} // s2 dropped here, heap memory freed</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Ownership rules</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li>Each value has exactly one owner.</li>
+                <li>When the owner leaves scope, the value is dropped.</li>
+                <li>Ownership can be moved, borrowed, or copied (for <code class="kbd">Copy</code> types).</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3"><code class="kbd">Copy</code> vs <code class="kbd">Clone</code></h3>
+              <p class="text-[var(--muted)]">Scalars and small fixed-size types implement <code class="kbd">Copy</code>, so assignment duplicates instead of moving. Heap-allocated types like <code class="kbd">String</code> and <code class="kbd">Vec</code> move by default and must be explicitly cloned.</p>
+            </div>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">fn take_ownership(s: String) {
+    println!("took: {}", s);
+} // s is dropped here
+
+fn main() {
+    let s = String::from("rust");
+    take_ownership(s); // s moves into the function
+    // println!("{}", s); // ERROR
+
+    let x = 42;        // i32 is Copy
+    copy_value(x);
+    println!("still have {}", x); // OK
+}
+
+fn copy_value(n: i32) {
+    println!("copied: {}", n);
+}</code></pre>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">fn gives_ownership() -> String {
+    String::from("yours")
+}
+
+fn takes_and_gives_back(s: String) -> String {
+    s // ownership returned to caller
+}
+
+fn main() {
+    let s1 = gives_ownership();
+    let s2 = takes_and_gives_back(s1);
+    println!("{}", s2);
+}</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#cargo">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#borrowing">Next: Borrowing &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="borrowing">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 4</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Borrowing &amp; References</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Borrowing lets code use a value without taking ownership. References are immutable by default; mutable references let you modify borrowed data under strict aliasing rules.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">fn main() {
+    let s = String::from("hello");
+    let len = calculate_length(&amp;s); // immutable borrow
+    println!("'{}' length is {}", s, len); // s still valid
+}
+
+fn calculate_length(s: &amp;String) -> usize {
+    s.len()
+}</code></pre>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">fn main() {
+    let mut s = String::from("hello");
+    change(&amp;mut s);
+    println!("{}", s);
+}
+
+fn change(s: &amp;mut String) {
+    s.push_str(", world");
+}</code></pre>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Borrowing rules</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li>Any number of immutable references <code class="kbd">&amp;T</code>, OR one mutable reference <code class="kbd">&amp;mut T</code>.</li>
+              <li>References must always be valid (no dangling references).</li>
+              <li>Mutable references prevent data races while still allowing zero-cost access.</li>
+            </ul>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">fn main() {
+    let mut s = String::from("hello");
+
+    let r1 = &amp;s;
+    let r2 = &amp;s;       // OK: multiple immutable borrows
+    println!("{} {}", r1, r2);
+
+    let r3 = &amp;mut s;  // OK: after immutable borrows end
+    r3.push('!');
+    println!("{}", r3);
+}</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#ownership">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#lifetimes">Next: Lifetimes &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="lifetimes">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 5</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Lifetimes</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Lifetimes are compile-time annotations that tell the compiler how long references live. In most code they are inferred; you write them explicitly when a function accepts or returns a reference and the compiler cannot determine the relationship.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -> &amp;'a str {
+    if x.len() > y.len() { x } else { y }
+}
+
+fn main() {
+    let s1 = String::from("long");
+    let s2 = "short";
+    let result = longest(&amp;s1, s2);
+    println!("longest is {}", result);
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Lifetime elision</h3>
+              <p class="text-[var(--muted)]">The compiler applies three common rules automatically, so simple functions rarely need explicit lifetimes.</p>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3"><code class="kbd">'static</code></h3>
+              <p class="text-[var(--muted)]">A <code class="kbd">'static</code> reference lives for the entire program. String literals and global constants are <code class="kbd">'static</code>.</p>
+            </div>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">struct Book&lt;'a&gt; {
+    title: &amp;'a str,
+}
+
+impl&lt;'a&gt; Book&lt;'a&gt; {
+    fn excerpt(&amp;self, text: &amp;'a str) -> &amp;'a str {
+        text
+    }
+}
+
+fn main() {
+    let title = String::from("The Rust Book");
+    let book = Book { title: &amp;title };
+    println!("{}", book.title);
+}</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#borrowing">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#structs">Next: Structs &amp; Enums &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="structs">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 6</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Structs &amp; Enums</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Structs bundle related data. Enums define a type that can be one of several variants. Combined with pattern matching, they make state machines and domain modeling expressive and safe.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">struct User {
+    username: String,
+    email: String,
+    active: bool,
+}
+
+fn main() {
+    let mut user = User {
+        username: String::from("ada"),
+        email: String::from("ada@example.com"),
+        active: true,
+    };
+    user.email = String::from("ada@new.com");
+    println!("{} &lt;{}&gt;", user.username, user.email);
+}</code></pre>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(u8, u8, u8),
+}
+
+impl Message {
+    fn describe(&amp;self) -> &amp;'static str {
+        match self {
+            Message::Quit => "quit",
+            Message::Move { .. } => "move",
+            Message::Write(_) => "write",
+            Message::ChangeColor(_, _, _) => "color",
+        }
+    }
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Tuple structs</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-rust">struct Point(f64, f64);
+struct Meters(u32);
+
+let p = Point(1.0, 2.0);
+println!("x = {}", p.0);</code></pre>
+              </div>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Unit structs</h3>
+              <p class="text-[var(--muted)]">A struct with no fields is a unit struct. It is useful for type-level markers and zero-sized types.</p>
+              <div class="code-block mt-3">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-rust">struct Empty;
+let _e = Empty;</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#lifetimes">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#patterns">Next: Pattern Matching &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="patterns">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 7</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Pattern Matching</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Pattern matching is the primary control-flow tool for enums, structs, and destructuring. <code class="kbd">match</code> is exhaustive: the compiler ensures every possible case is handled.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter(String),
+}
+
+fn value(coin: &amp;Coin) -> u8 {
+    match coin {
+        Coin::Penny => 1,
+        Coin::Nickel => 5,
+        Coin::Dime => 10,
+        Coin::Quarter(state) => {
+            println!("quarter from {}", state);
+            25
+        }
+    }
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Destructuring</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-rust">let p = Point(3, 4);
+let Point(x, y) = p;
+
+let (a, b) = (1, 2);
+
+let User { username, .. } = user;</code></pre>
+              </div>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Guards and ranges</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-rust">let n = 7;
+match n {
+    1..=5 => "small",
+    6..=10 if n % 2 == 0 => "even medium",
+    _ => "something else",
+};</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">let config_max = Some(10u8);
+if let Some(max) = config_max {
+    println!("max = {}", max);
+}
+
+let mut count = 0;
+while let Some(_) = stack.pop() {
+    count += 1;
+}</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#structs">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#errors">Next: Error Handling &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="errors">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 8</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Error Handling</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Rust has no exceptions. Recoverable errors use <code class="kbd">Result&lt;T, E&gt;</code>. Optional values use <code class="kbd">Option&lt;T&gt;</code>. Unrecoverable bugs use <code class="kbd">panic!</code>.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">fn main() {
+    let some_number = Some(5);
+    let absent: Option&lt;i32&gt; = None;
+
+    match some_number {
+        Some(n) => println!("got {}", n),
+        None => println!("nothing"),
+    }
+
+    if let Some(n) = absent {
+        println!("{}", n);
+    }
+}</code></pre>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">use std::fs::File;
+
+fn open_file(path: &amp;str) -> Result&lt;File, std::io::Error&gt; {
+    let f = File::open(path)?; // propagate errors with ?
+    Ok(f)
+}
+
+fn main() {
+    match open_file("hello.txt") {
+        Ok(file) => println!("opened {:?}", file),
+        Err(e) => println!("error: {}", e),
+    }
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Combining Results</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-rust">let text = std::fs::read_to_string("data.txt")
+    .unwrap_or_else(|_| String::from("default"));
+
+let n: i32 = "42".parse().expect("not a number");</code></pre>
+              </div>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Custom error types</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-rust">#[derive(Debug)]
+enum AppError {
+    NotFound,
+    InvalidInput,
+}
+
+fn find(id: u32) -> Result&lt;String, AppError&gt; {
+    if id == 0 { Err(AppError::InvalidInput) }
+    else { Ok(String::from("ok")) }
+}</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#patterns">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#generics">Next: Generics &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="generics">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 9</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Generics</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Generics let you write code that works across many concrete types. Rust monomorphizes generic code, generating specialized machine code at compile time with no runtime overhead.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">fn largest&lt;T: std::cmp::PartialOrd&gt;(list: &amp;[T]) -> &amp;T {
+    let mut biggest = &amp;list[0];
+    for item in list {
+        if item > biggest { biggest = item; }
+    }
+    biggest
+}
+
+fn main() {
+    let nums = [1, 5, 3, 8, 2];
+    println!("largest number is {}", largest(&amp;nums));
+
+    let words = ["cat", "elephant", "dog"];
+    println!("largest word is {}", largest(&amp;words));
+}</code></pre>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">struct Wrapper&lt;T&gt; {
+    value: T,
+}
+
+impl&lt;T&gt; Wrapper&lt;T&gt; {
+    fn new(value: T) -> Self {
+        Wrapper { value }
+    }
+}
+
+fn main() {
+    let w = Wrapper::new(String::from("hello"));
+    println!("{}", w.value);
+}</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#errors">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#traits">Next: Traits &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="traits">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 10</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Traits</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Traits define shared behavior, similar to interfaces in other languages. They enable polymorphism, operator overloading, and the rich standard-library abstractions you use every day.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">pub trait Summary {
+    fn summarize(&amp;self) -> String;
+
+    fn default_summary(&amp;self) -> String {
+        String::from("(read more)")
+    }
+}
+
+struct Article {
+    headline: String,
+}
+
+impl Summary for Article {
+    fn summarize(&amp;self) -> String {
+        format!("{}", self.headline)
+    }
+}
+
+fn notify(item: &amp;impl Summary) {
+    println!("Breaking! {}", item.summarize());
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Common standard traits</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><code class="kbd">Clone</code>, <code class="kbd">Copy</code> — duplication semantics.</li>
+                <li><code class="kbd">Debug</code>, <code class="kbd">Display</code> — formatting for <code class="kbd">{:?}</code> and <code class="kbd">{}</code>.</li>
+                <li><code class="kbd">PartialOrd</code>, <code class="kbd">Ord</code> — comparison.</li>
+                <li><code class="kbd">Default</code>, <code class="kbd">Drop</code> — construction and destruction.</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Derive macros</h3>
+              <p class="text-[var(--muted)]">The compiler can automatically implement many traits if the contained types support them.</p>
+              <div class="code-block mt-3">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-rust">#[derive(Debug, Clone, PartialEq)]
+struct Point { x: i32, y: i32 }</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">use std::fmt;
+
+struct Satellite {
+    name: String,
+}
+
+impl fmt::Display for Satellite {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Satellite: {}", self.name)
+    }
+}
+
+fn main() {
+    let s = Satellite { name: String::from("Hubble") };
+    println!("{}", s);
+}</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#generics">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#closures">Next: Closures &amp; Iterators &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="closures">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 11</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Closures &amp; Iterators</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Closures are anonymous functions that capture their environment. Iterators produce sequences of values lazily and compose into readable data-processing pipelines.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">fn main() {
+    let threshold = 10;
+    let is_big = |n: i32| n > threshold; // closure borrows threshold
+
+    let nums = vec![3, 12, 7, 25, 5];
+    let big: Vec&lt;i32&gt; = nums.into_iter().filter(&amp;is_big).collect();
+    println!("{:?}", big);
+}</code></pre>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">fn main() {
+    let scores = vec![55, 82, 91, 67, 78];
+
+    let sum: i32 = scores.iter().sum();
+    let avg = sum as f64 / scores.len() as f64;
+
+    let doubled: Vec&lt;i32&gt; = scores.iter().map(|x| x * 2).collect();
+    let first_pass = scores.iter().find(|&amp;&amp;x| x >= 90);
+
+    println!("sum = {}, avg = {:.1}", sum, avg);
+    println!("doubled = {:?}", doubled);
+    println!("first pass = {:?}", first_pass);
+}</code></pre>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Iterator adapters</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li><code class="kbd">map</code>, <code class="kbd">filter</code>, <code class="kbd">fold</code>, <code class="kbd">zip</code> — transform and aggregate.</li>
+              <li><code class="kbd">collect</code> — materialize into a collection.</li>
+              <li><code class="kbd">iter()</code> borrows, <code class="kbd">iter_mut()</code> mutably borrows, <code class="kbd">into_iter()</code> consumes.</li>
+            </ul>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#traits">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#modules">Next: Modules &amp; Crates &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="modules">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 12</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Modules &amp; Crates</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Modules organize code into namespaces. Crates are compilation units: binaries have a <code class="kbd">main</code> entry, libraries have a <code class="kbd">lib.rs</code>. Use <code class="kbd">pub</code> to expose items and <code class="kbd">use</code> to bring names into scope.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">// src/lib.rs
+pub mod network;
+
+pub mod utils {
+    pub fn greet(name: &amp;str) -> String {
+        format!("Hello, {}", name)
+    }
+}
+
+pub struct Config {
+    pub host: String,
+    pub port: u16,
+}</code></pre>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">// src/network.rs
+pub fn connect() {
+    println!("connecting...");
+}
+
+// src/main.rs
+use my_crate::network;
+use my_crate::utils::greet;
+
+fn main() {
+    network::connect();
+    println!("{}", greet("Rust"));
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Visibility</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><code class="kbd">pub</code> — visible everywhere.</li>
+                <li><code class="kbd">pub(crate)</code> — visible within the crate.</li>
+                <li><code class="kbd">pub(super)</code> — visible to parent module.</li>
+                <li>Default is private to the module.</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Workspaces</h3>
+              <p class="text-[var(--muted)]">Cargo workspaces let multiple related crates share a single <code class="kbd">Cargo.lock</code> and build directory. Large projects like <code class="kbd">tokio</code> use workspaces.</p>
+            </div>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#closures">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#testing">Next: Testing &amp; Macros &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="testing">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 13</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Testing &amp; Macros</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Rust has built-in unit, integration, and documentation testing. Macros provide metaprogramming: declarative macros transform syntax, while procedural macros generate code from attributes.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">pub fn add(a: i32, b: i32) -> i32 { a + b }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn it_adds() {
+        assert_eq!(add(2, 2), 4);
+    }
+
+    #[test]
+    #[should_panic(expected = "panic message")]
+    fn it_panics() {
+        panic!("panic message");
+    }
+}</code></pre>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-bash"># Run tests
+cargo test
+
+# Run a specific test
+cargo test it_adds
+
+# Run with output visible
+cargo test -- --nocapture</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Doc tests</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-rust">/// Doubles a number.
+///
+/// # Examples
+///
+/// ```
+/// assert_eq!(my_crate::double(4), 8);
+/// ```
+pub fn double(n: i32) -> i32 { n * 2 }</code></pre>
+              </div>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Declarative macro</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-rust">macro_rules! say_hello {
+    () => {
+        println!("hello!")
+    };
+}
+
+say_hello!();</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#modules">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#concurrency">Next: Concurrency &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="concurrency">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 14</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Concurrency</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Rust's ownership and type system eliminate data races at compile time. Threads, message passing, shared-state primitives, and async runtimes all build on the same safety guarantees.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">use std::thread;
+
+fn main() {
+    let handle = thread::spawn(|| {
+        for i in 1..=3 {
+            println!("spawned: {}", i);
+        }
+    });
+
+    for i in 1..=3 {
+        println!("main: {}", i);
+    }
+
+    handle.join().unwrap();
+}</code></pre>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">use std::sync::mpsc;
+
+fn main() {
+    let (tx, rx) = mpsc::channel();
+
+    thread::spawn(move || {
+        tx.send(String::from("hi from worker")).unwrap();
+    });
+
+    let msg = rx.recv().unwrap();
+    println!("got: {}", msg);
+}</code></pre>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">use std::sync::{Arc, Mutex};
+use std::thread;
+
+fn main() {
+    let counter = Arc::new(Mutex::new(0));
+    let mut handles = vec![];
+
+    for _ in 0..10 {
+        let c = Arc::clone(&amp;counter);
+        let h = thread::spawn(move || {
+            let mut num = c.lock().unwrap();
+            *num += 1;
+        });
+        handles.push(h);
+    }
+
+    for h in handles { h.join().unwrap(); }
+    println!("result = {}", *counter.lock().unwrap());
+}</code></pre>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Concurrency primitives</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li><code class="kbd">std::thread</code> — native OS threads.</li>
+              <li><code class="kbd">mpsc</code> — multi-producer single-consumer channels.</li>
+              <li><code class="kbd">Mutex</code> — mutual exclusion around shared data.</li>
+              <li><code class="kbd">Arc</code> — atomically reference-counted shared ownership.</li>
+              <li><code class="kbd">RwLock</code> — many readers or one writer.</li>
+            </ul>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#testing">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#unsafe">Next: Unsafe Rust &amp; FFI &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="unsafe">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 15</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Unsafe Rust &amp; FFI</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Unsafe Rust lets you dereference raw pointers, call functions in other languages, and implement low-level primitives. It does not turn off the borrow checker, but it allows five additional powers that you must verify manually.
+          </p>
+
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Unsafe superpowers</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li>Dereference raw pointers <code class="kbd">*const T</code> / <code class="kbd">*mut T</code>.</li>
+              <li>Call an <code class="kbd">unsafe</code> function or trait.</li>
+              <li>Implement an <code class="kbd">unsafe</code> trait.</li>
+              <li>Access or modify a mutable static variable.</li>
+              <li>Access fields of a <code class="kbd">union</code>.</li>
+            </ul>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">unsafe fn dangerous() {}
+
+fn main() {
+    unsafe {
+        dangerous();
+    }
+}
+
+// Safe wrapper around unsafe code
+fn split_at_mut(values: &amp;mut [i32], mid: usize) -> (&amp;mut [i32], &amp;mut [i32]) {
+    let len = values.len();
+    assert!(mid <= len);
+    let ptr = values.as_mut_ptr();
+    unsafe {
+        (
+            std::slice::from_raw_parts_mut(ptr, mid),
+            std::slice::from_raw_parts_mut(ptr.add(mid), len - mid),
+        )
+    }
+}</code></pre>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">extern "C" {
+    fn abs(input: i32) -> i32;
+}
+
+#[no_mangle]
+pub extern "C" fn rust_greet() {
+    println!("hello from Rust");
+}
+
+fn main() {
+    unsafe {
+        println!("C abs(-3) = {}", abs(-3));
+    }
+}</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#concurrency">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#async">Next: Async / Await &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="async">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 16</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Async / Await</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Async Rust lets a single thread run many concurrent tasks. An <code class="kbd">async</code> block returns a <code class="kbd">Future</code>; <code class="kbd">.await</code> yields control until the future is ready. You need a runtime such as <code class="kbd">tokio</code> to drive futures to completion.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">// Cargo.toml dependency: tokio = { version = "1", features = ["full"] }
+
+#[tokio::main]
+async fn main() {
+    let task = tokio::spawn(async {
+        println!("running in background");
+        42
+    });
+
+    let result = task.await.unwrap();
+    println!("result = {}", result);
+}</code></pre>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-rust">async fn fetch(url: &amp;str) -> Result&lt;String, reqwest::Error&gt; {
+    let body = reqwest::get(url).await?.text().await?;
+    Ok(body)
+}
+
+#[tokio::main]
+async fn main() {
+    match fetch("https://example.com").await {
+        Ok(body) => println!("{} bytes", body.len()),
+        Err(e) => eprintln!("failed: {}", e),
+    }
+}</code></pre>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Async building blocks</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li><code class="kbd">Future</code> — a value that may not be ready yet.</li>
+              <li><code class="kbd">.await</code> — pause until the future resolves.</li>
+              <li><code class="kbd">tokio::spawn</code> — run a future concurrently.</li>
+              <li><code class="kbd">tokio::select!</code> — wait for one of several futures.</li>
+            </ul>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#unsafe">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#crates">Next: Common Crates &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="crates">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 17</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Common Crates</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Crates.io hosts reusable libraries for almost every domain. Knowing a few well-known crates accelerates real-world Rust development.
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Serialization with serde</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-rust">use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize, Debug)]
+struct User {
+    name: String,
+    age: u8,
+}
+
+fn main() {
+    let u = User { name: String::from("Ada"), age: 30 };
+    let json = serde_json::to_string(&amp;u).unwrap();
+    println!("{}", json);
+}</code></pre>
+              </div>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">CLI parsing with clap</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-rust">use clap::Parser;
+
+#[derive(Parser)]
+struct Cli {
+    #[arg(short, long)]
+    name: String,
+}
+
+fn main() {
+    let args = Cli::parse();
+    println!("Hello, {}!", args.name);
+}</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Crate quick reference</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li><code class="kbd">tokio</code> — async runtime, networking, tasks.</li>
+              <li><code class="kbd">axum</code> / <code class="kbd">actix-web</code> — web frameworks.</li>
+              <li><code class="kbd">reqwest</code> — ergonomic HTTP client.</li>
+              <li><code class="kbd">serde</code> + <code class="kbd">serde_json</code> / <code class="kbd">toml</code> — serialization.</li>
+              <li><code class="kbd">rand</code> — random number generation.</li>
+              <li><code class="kbd">log</code> / <code class="kbd">tracing</code> — structured logging.</li>
+              <li><code class="kbd">thiserror</code> / <code class="kbd">anyhow</code> — ergonomic error handling.</li>
+            </ul>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#async">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#capstone">Next: Capstone Projects &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="capstone">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 18</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Capstone Projects</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            These three projects bring together ownership, concurrency, async, and the crate ecosystem. Build one, then return for the others.
+          </p>
+
+          <div class="card rounded-2xl p-6 mb-10">
+            <h3 class="text-2xl font-bold mb-4">Project A: Tiny Async HTTP/JSON API Server</h3>
+
+            <h4 class="text-xl font-semibold mb-2">1. What is this project?</h4>
+            <p class="text-[var(--muted)] mb-4">Build a small REST-like JSON API using Tokio and Axum. It serves a list of tasks, lets clients create new tasks, and returns JSON. The goal is to practice ownership across async boundaries and Cargo dependency management.</p>
+
+            <h4 class="text-xl font-semibold mb-2">2. What it covers?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li>Async/await with Tokio.</li>
+              <li>Shared state protected by <code class="kbd">Arc&lt;Mutex&lt;T&gt;&gt;</code>.</li>
+              <li>JSON serialization with serde.</li>
+              <li>HTTP routing with Axum handlers.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">3. How it is done?</h4>
+            <div class="code-block mb-4">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-toml"># Cargo.toml
+[package]
+name = "todo-api"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+axum = "0.7"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"</code></pre>
+            </div>
+            <div class="code-block mb-4">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-rust">use axum::{
+    extract::State, response::Json, routing::{get, post}, Router,
+};
+use serde::{Deserialize, Serialize};
+use std::sync::{Arc, Mutex};
+
+#[derive(Clone, Serialize, Deserialize)]
+struct Task { id: u64, title: String }
+
+#[derive(Default, Clone)]
+struct AppState {
+    tasks: Arc&lt;Mutex&lt;Vec&lt;Task&gt;&gt;&gt;,
+    next_id: Arc&lt;Mutex&lt;u64&gt;&gt;,
+}
+
+async fn list_tasks(State(state): State&lt;AppState&gt;) -> Json&lt;Vec&lt;Task&gt;&gt; {
+    let tasks = state.tasks.lock().unwrap().clone();
+    Json(tasks)
+}
+
+#[tokio::main]
+async fn main() {
+    let state = AppState::default();
+    let app = Router::new()
+        .route("/tasks", get(list_tasks).post(create_task))
+        .with_state(state);
+
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:3000")
+        .await.unwrap();
+    axum::serve(listener, app).await.unwrap();
+}
+
+async fn create_task(
+    State(state): State&lt;AppState&gt;,
+    Json(body): Json&lt;CreateTask&gt;,
+) -> Json&lt;Task&gt; {
+    let id = {
+        let mut next = state.next_id.lock().unwrap();
+        *next += 1;
+        *next
+    };
+    let task = Task { id, title: body.title };
+    state.tasks.lock().unwrap().push(task.clone());
+    Json(task)
+}
+
+#[derive(Deserialize)]
+struct CreateTask { title: String }</code></pre>
+            </div>
+
+            <h4 class="text-xl font-semibold mb-2">4. What did we learn?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li>Shared mutable state in async Rust needs explicit synchronization.</li>
+              <li>Axum extracts state and request bodies through handler signatures.</li>
+              <li>Serde derives turn structs into JSON automatically.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">5. How can I enhance?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li>Add DELETE /tasks/:id and PATCH /tasks/:id endpoints.</li>
+              <li>Persist tasks to a SQLite database with <code class="kbd">sqlx</code>.</li>
+              <li>Add structured logging with <code class="kbd">tracing</code>.</li>
+            </ul>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-10">
+            <h3 class="text-2xl font-bold mb-4">Project B: Concurrent Log Parser Pipeline</h3>
+
+            <h4 class="text-xl font-semibold mb-2">1. What is this project?</h4>
+            <p class="text-[var(--muted)] mb-4">Read a log file, send lines through a channel to worker threads, count log levels, and produce a summary. This shows ownership, message passing, and thread synchronization without data races.</p>
+
+            <h4 class="text-xl font-semibold mb-2">2. What it covers?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li>Producer/consumer pattern with channels.</li>
+              <li>Shared counters via <code class="kbd">Arc&lt;Mutex&lt;...&gt;&gt;</code>.</li>
+              <li>Iterator pipelines for parsing lines.</li>
+              <li>Graceful worker shutdown.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">3. How it is done?</h4>
+            <div class="code-block mb-4">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-rust">use std::collections::HashMap;
+use std::fs::File;
+use std::io::{BufRead, BufReader};
+use std::sync::{mpsc, Arc, Mutex};
+use std::thread;
+
+fn main() {
+    let (tx, rx) = mpsc::channel();
+    let rx = Arc::new(Mutex::new(rx));
+    let counts = Arc::new(Mutex::new(HashMap::new()));
+
+    let worker_count = 4;
+    let mut handles = vec![];
+
+    for _ in 0..worker_count {
+        let rx = Arc::clone(&amp;rx);
+        let counts = Arc::clone(&amp;counts);
+        let h = thread::spawn(move || {
+            loop {
+                let line = {
+                    let lock = rx.lock().unwrap();
+                    lock.recv()
+                };
+                match line {
+                    Ok(l) => {
+                        let level = l.split_whitespace()
+                            .nth(2).unwrap_or("UNKNOWN");
+                        let mut c = counts.lock().unwrap();
+                        *c.entry(level.to_string()).or_insert(0) += 1;
+                    }
+                    Err(_) => break,
+                }
+            }
+        });
+        handles.push(h);
+    }
+
+    let file = File::open("app.log").expect("open log");
+    for line in BufReader::new(file).lines() {
+        tx.send(line.unwrap()).unwrap();
+    }
+    drop(tx); // signal workers to stop
+
+    for h in handles { h.join().unwrap(); }
+    println!("{:?}", counts.lock().unwrap());
+}</code></pre>
+            </div>
+
+            <h4 class="text-xl font-semibold mb-2">4. What did we learn?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li>Channels decouple producers and consumers.</li>
+              <li>Dropping the transmitter closes the channel safely.</li>
+              <li>Mutexes should be held for the shortest time possible.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">5. How can I enhance?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li>Write results to a JSON or CSV file.</li>
+              <li>Parse timestamps and compute error rates per minute.</li>
+              <li>Use <code class="kbd">crossbeam</code> channels for higher throughput.</li>
+            </ul>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-10">
+            <h3 class="text-2xl font-bold mb-4">Project C: CLI Config Tool with clap and serde</h3>
+
+            <h4 class="text-xl font-semibold mb-2">1. What is this project?</h4>
+            <p class="text-[var(--muted)] mb-4">Build a command-line tool that reads and writes a TOML configuration file. Users can get, set, and list keys. The project exercises traits, error handling, and third-party crate integration.</p>
+
+            <h4 class="text-xl font-semibold mb-2">2. What it covers?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li>CLI parsing with derive macros (clap).</li>
+              <li>Structured config serialization with serde and toml.</li>
+              <li>Custom error types and the <code class="kbd">?</code> operator.</li>
+              <li>File I/O with <code class="kbd">std::fs</code>.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">3. How it is done?</h4>
+            <div class="code-block mb-4">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-toml"># Cargo.toml
+[package]
+name = "cfg-cli"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1.0", features = ["derive"] }
+toml = "0.8"</code></pre>
+            </div>
+            <div class="code-block mb-4">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-rust">use clap::{Parser, Subcommand};
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
+use std::fs;
+
+#[derive(Serialize, Deserialize, Default)]
+struct Config {
+    values: HashMap&lt;String, String&gt;,
+}
+
+#[derive(Parser)]
+#[command(name = "cfg-cli")]
+struct Cli {
+    #[command(subcommand)]
+    cmd: Commands,
+}
+
+#[derive(Subcommand)]
+enum Commands {
+    Get { key: String },
+    Set { key: String, value: String },
+    List,
+}
+
+fn load(path: &amp;str) -> Result&lt;Config, Box&lt;dyn std::error::Error&gt;&gt; {
+    if !std::path::Path::new(path).exists() {
+        return Ok(Config::default());
+    }
+    let text = fs::read_to_string(path)?;
+    Ok(toml::from_str(&amp;text)?)
+}
+
+fn save(path: &amp;str, cfg: &amp;Config) -> Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+    fs::write(path, toml::to_string_pretty(cfg)?)?;
+    Ok(())
+}
+
+fn main() -> Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+    let path = "config.toml";
+    let mut cfg = load(path)?;
+
+    match Cli::parse().cmd {
+        Commands::Get { key } => {
+            match cfg.values.get(&amp;key) {
+                Some(v) => println!("{} = {}", key, v),
+                None => println!("key not found"),
+            }
+        }
+        Commands::Set { key, value } => {
+            cfg.values.insert(key, value);
+            save(path, &amp;cfg)?;
+        }
+        Commands::List => {
+            for (k, v) in &amp;cfg.values {
+                println!("{} = {}", k, v);
+            }
+        }
+    }
+    Ok(())
+}</code></pre>
+            </div>
+
+            <h4 class="text-xl font-semibold mb-2">4. What did we learn?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li>Derive macros reduce boilerplate for CLI flags and config structs.</li>
+              <li><code class="kbd">Box&lt;dyn Error&gt;</code> is a quick way to propagate mixed error types.</li>
+              <li>Reading and writing files stays safe through ownership and <code class="kbd">?</code>.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">5. How can I enhance?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li>Support nested keys with dot syntax, e.g. <code class="kbd">db.host</code>.</li>
+              <li>Add an <code class="kbd">unset</code> command and default values.</li>
+              <li>Replace <code class="kbd">Box&lt;dyn Error&gt;</code> with <code class="kbd">thiserror</code> for typed errors.</li>
+            </ul>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#crates">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#quiz">Next: Knowledge Check &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="quiz">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 19</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Knowledge Check</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Eight questions to verify your Rust fundamentals.</p>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">1. Which Rust tool compiles code, runs tests, and manages dependencies?</h3>
+            <div class="quiz" data-answer="B">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. rustc</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. cargo</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. rustup</button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">2. What happens to a <code class="kbd">String</code> value when it is assigned to a new variable?</h3>
+            <div class="quiz" data-answer="A">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. Ownership moves to the new variable</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. A deep copy is made automatically</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. The original variable keeps ownership</button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">3. How many mutable references to the same data can exist at once?</h3>
+            <div class="quiz" data-answer="B">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. Any number</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. Exactly one</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. Up to three</button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">4. Which type represents a value that may not exist?</h3>
+            <div class="quiz" data-answer="C">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. <code class="kbd">Result&lt;T, E&gt;</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. <code class="kbd">Vec&lt;T&gt;</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. <code class="kbd">Option&lt;T&gt;</code></button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">5. What keyword propagates a <code class="kbd">Result</code> error to the caller?</h3>
+            <div class="quiz" data-answer="A">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. <code class="kbd">?</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. <code class="kbd">!</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. <code class="kbd">return</code></button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">6. Which trait is required to print a custom type with <code class="kbd">{}</code>?</h3>
+            <div class="quiz" data-answer="A">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. <code class="kbd">Display</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. <code class="kbd">Debug</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. <code class="kbd">Clone</code></button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">7. Which shared-state primitive owns data and counts references atomically?</h3>
+            <div class="quiz" data-answer="B">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. <code class="kbd">Rc</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. <code class="kbd">Arc</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. <code class="kbd">Box</code></button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="font-semibold mb-2">8. What does an <code class="kbd">async</code> function return?</h3>
+            <div class="quiz" data-answer="C">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. The final value immediately</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. A thread handle</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. A <code class="kbd">Future</code></button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-8 text-center mb-10">
+            <h3 class="text-2xl font-bold mb-3">Congratulations!</h3>
+            <p class="text-[var(--muted)] mb-5">You have covered Rust from ownership to async, modules, macros, and the crate ecosystem.</p>
+            <div class="flex justify-center gap-4 flex-wrap">
+              <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">Restart tutorial</a>
+              <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="https://doc.rust-lang.org/book/" target="_blank">Rust Book &rarr;</a>
+            </div>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#capstone">&larr; Previous</a>
+            <span></span>
+          </nav>
+        </section>
+
+      </div>
+      <footer class="border-t border-[var(--border)] px-6 py-8 text-center text-sm text-[var(--muted)]">
+        <p>Open in any browser. No build step required.</p>
+      </footer>
+    </main>
+  </div>
+  <script>
+    const html = document.documentElement;
+    const moon = document.getElementById('moon');
+    const sun = document.getElementById('sun');
+    const lightStylesheet = document.getElementById('hljs-light');
+    const darkStylesheet = document.getElementById('hljs-dark');
+
+    function applyTheme(theme) {
+      html.classList.remove('light', 'dark');
+      html.classList.add(theme);
+      if (theme === 'dark') {
+        lightStylesheet.disabled = true;
+        darkStylesheet.disabled = false;
+        moon.classList.add('hidden');
+        sun.classList.remove('hidden');
+      } else {
+        lightStylesheet.disabled = false;
+        darkStylesheet.disabled = true;
+        moon.classList.remove('hidden');
+        sun.classList.add('hidden');
+      }
+      localStorage.setItem('tutorials-theme', theme);
+    }
+
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      applyTheme(html.classList.contains('dark') ? 'light' : 'dark');
+    });
+
+    const saved = localStorage.getItem('tutorials-theme');
+    applyTheme(saved === 'dark' ? 'dark' : 'light');
+
+    function setStatus(status) {
+      localStorage.setItem('tutorial-rust-language-status', status);
+      updateButtons();
+    }
+
+    function updateButtons() {
+      const status = localStorage.getItem('tutorial-rust-language-status') || 'not-started';
+      const startBtns = document.querySelectorAll('[id^="btn-start"]');
+      const completeBtns = document.querySelectorAll('[id^="btn-complete"]');
+      startBtns.forEach(btn => { btn.textContent = status === 'in-progress' ? 'In Progress' : 'Start'; });
+      completeBtns.forEach(btn => { btn.textContent = status === 'completed' ? 'Completed' : 'Mark Complete'; });
+    }
+
+    document.querySelectorAll('[id^="btn-start"]').forEach(btn => btn.addEventListener('click', () => setStatus('in-progress')));
+    document.querySelectorAll('[id^="btn-complete"]').forEach(btn => btn.addEventListener('click', () => setStatus('completed')));
+    document.querySelectorAll('[id^="btn-reset"]').forEach(btn => btn.addEventListener('click', () => { localStorage.removeItem('tutorial-rust-language-status'); updateButtons(); }));
+    updateButtons();
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('menu-overlay');
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('hidden');
+    }
+
+    function copyCode(btn) {
+      const code = btn.nextElementSibling.querySelector('code');
+      navigator.clipboard.writeText(code.innerText).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+      });
+    }
+
+    const sections = document.querySelectorAll('section[id]');
+    const tocLinks = document.querySelectorAll('.toc-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach((link) => link.classList.remove('active'));
+          const active = document.querySelector(`.toc-link[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -60% 0px' });
+    sections.forEach((section) => observer.observe(section));
+
+    document.querySelectorAll('.quiz').forEach((quiz) => {
+      const correct = quiz.dataset.answer;
+      const feedback = quiz.nextElementSibling;
+      quiz.querySelectorAll('.quiz-opt').forEach((opt) => {
+        opt.addEventListener('click', () => {
+          quiz.querySelectorAll('.quiz-opt').forEach((o) => { o.classList.remove('selected', 'correct', 'wrong'); o.disabled = true; });
+          opt.classList.add('selected');
+          if (opt.dataset.val === correct) {
+            opt.classList.add('correct');
+            feedback.textContent = 'Correct! ✅';
+            feedback.className = 'quiz-feedback mt-3 font-medium text-[var(--success)]';
+          } else {
+            opt.classList.add('wrong');
+            feedback.textContent = `Not quite. The correct answer is ${correct}.`;
+            feedback.className = 'quiz-feedback mt-3 font-medium text-[var(--danger)]';
+          }
+        });
+      });
+    });
+
+    hljs.highlightAll();
+  </script>
+</body>
+</html>

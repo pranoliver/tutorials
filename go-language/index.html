@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Go Language: Fast, Reliable Systems Programming</title>
+  <link href="../assets/favicons/svg/Go.svg" rel="icon" type="image/svg+xml"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-light" rel="stylesheet"/>
+  <link disabled="" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" id="hljs-dark" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' }
+  </script>
+  <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="antialiased transition-colors duration-300 brand-go-language">
+  <a class="sr-only" href="#main">Skip to content</a>
+  <div class="fixed inset-0 bg-black/40 z-30 hidden lg:hidden" id="menu-overlay" onclick="toggleSidebar()"></div>
+  <div class="flex min-h-screen">
+    <aside class="fixed lg:sticky top-0 left-0 h-screen w-72 border-r border-[var(--border)] bg-[var(--panel)] z-40 overflow-y-auto p-6" id="sidebar">
+      <div class="flex items-center gap-3 mb-8">
+        <img alt="Go" class="w-10 h-10" src="../assets/favicons/svg/Go.svg"/>
+        <span class="text-xl font-bold">Go Language</span>
+      </div>
+      <nav class="space-y-1 text-sm" id="toc">
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">1. Introduction + Installation</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#modules">2. Packages, Modules &amp; Workspace</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#variables">3. Variables, Types &amp; Operators</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#control-flow">4. Control Flow</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#functions">5. Functions</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#structs">6. Structs, Methods &amp; Embedding</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#interfaces">7. Interfaces</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#goroutines">8. Goroutines, Channels &amp; Select</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#sync">9. Sync Package &amp; Patterns</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#errors">10. Error Handling</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#testing">11. Testing &amp; Benchmarking</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#stdlib">12. Standard Library: HTTP, JSON, SQL</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#advanced">13. Context, Reflection &amp; Advanced Topics</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#deployment">14. Deployment &amp; FFI</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#capstone">15. Capstone Projects</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#quiz">16. Knowledge Check</a>
+      </nav>
+      <div class="mt-8 pt-6 border-t border-[var(--border)]">
+        <p class="text-xs text-[var(--muted)]">Open in any browser. No build step required.</p>
+      </div>
+    </aside>
+    <main class="flex-1 min-w-0" id="main">
+      <header class="sticky top-0 z-20 border-b border-[var(--border)] bg-[var(--panel)]/90 backdrop-blur px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <button aria-label="Open menu" class="lg:hidden p-2 rounded-md border border-[var(--border)]" onclick="toggleSidebar()">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </button>
+          <h1 class="text-lg sm:text-xl font-bold tracking-tight">Go Language: Fast, Reliable Systems Programming</h1>
+        </div>
+        <div class="hidden sm:flex items-center gap-2 progress-controls" id="progress-controls">
+          <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-start">Start</button>
+          <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-complete">Mark Complete</button>
+          <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-reset">Reset</button>
+        </div>
+        <div class="sm:hidden flex items-center gap-2 progress-controls" id="progress-controls-mobile">
+          <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-start-mobile">Start</button>
+          <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-complete-mobile">Complete</button>
+          <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-reset-mobile">Reset</button>
+        </div>
+        <button aria-label="Toggle theme" class="p-2 rounded-full border border-[var(--border)] hover:bg-black/5 dark:hover:bg-white/5 transition" id="theme-toggle">
+          <svg aria-hidden="true" class="w-5 h-5" fill="none" id="moon" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <svg aria-hidden="true" class="w-5 h-5 hidden" fill="none" id="sun" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5"></circle>
+            <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </header>
+      <div class="max-w-4xl mx-auto px-6 py-10 space-y-20">
+
+        <section class="scroll-mt-24" id="intro">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 1</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Introduction + Installation</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Go is a statically typed, compiled language designed at Google for building fast, reliable, and efficient software at scale. Its minimalist syntax, powerful concurrency model, and excellent tooling make it ideal for cloud services, command-line tools, and distributed systems.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Why learn Go?</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+              <li><strong>Cloud native:</strong> Docker, Kubernetes, Terraform, and many CNCF projects are written in Go.</li>
+              <li><strong>Fast compilation:</strong> Go builds large codebases in seconds.</li>
+              <li><strong>Simple concurrency:</strong> goroutines and channels make parallel code readable.</li>
+              <li><strong>Single static binary:</strong> deploy one file with no runtime dependencies.</li>
+              <li><strong>Great tooling:</strong> built-in formatter, test runner, race detector, and module system.</li>
+            </ul>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Before you start</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li>A text editor and a terminal. New to the command line? Try the <a class="brand underline" href="../linux/index.html">Linux tutorial</a>.</li>
+              <li>Optional: <a class="brand underline" href="../github/index.html">Git basics</a> for saving projects.</li>
+              <li>No prior Go experience required.</li>
+            </ul>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Install the Go toolchain</h3>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border border-[var(--border)] rounded-xl overflow-hidden">
+              <thead class="bg-[var(--panel)]">
+                <tr>
+                  <th class="text-left px-4 py-3 font-semibold border-b border-[var(--border)]">Operating System</th>
+                  <th class="text-left px-4 py-3 font-semibold border-b border-[var(--border)]">Install Command</th>
+                  <th class="text-left px-4 py-3 font-semibold border-b border-[var(--border)]">Verify</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b border-[var(--border)]">
+                  <td class="px-4 py-4 align-top font-medium">Windows</td>
+                  <td class="px-4 py-4 align-top">
+                    <div class="code-block">
+                      <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                      <pre><code class="language-bash"># Winget
+winget install GoLang.Go
+# Or download the MSI from https://go.dev/dl/</code></pre>
+                    </div>
+                  </td>
+                  <td class="px-4 py-4 align-top">
+                    <div class="code-block">
+                      <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                      <pre><code class="language-bash">go version</code></pre>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="border-b border-[var(--border)]">
+                  <td class="px-4 py-4 align-top font-medium">macOS</td>
+                  <td class="px-4 py-4 align-top">
+                    <div class="code-block">
+                      <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                      <pre><code class="language-bash"># Homebrew
+brew install go
+# Or download the pkg from https://go.dev/dl/</code></pre>
+                    </div>
+                  </td>
+                  <td class="px-4 py-4 align-top">
+                    <div class="code-block">
+                      <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                      <pre><code class="language-bash">go version</code></pre>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-4 align-top font-medium">Linux</td>
+                  <td class="px-4 py-4 align-top">
+                    <div class="code-block">
+                      <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                      <pre><code class="language-bash"># Debian / Ubuntu
+sudo apt update
+sudo apt install golang-go
+
+# Fedora
+sudo dnf install golang</code></pre>
+                    </div>
+                  </td>
+                  <td class="px-4 py-4 align-top">
+                    <div class="code-block">
+                      <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                      <pre><code class="language-bash">go version</code></pre>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Hello, World</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">// hello.go
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, World!")
+}</code></pre>
+          </div>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-bash"># Run directly
+go run hello.go
+
+# Build a static binary
+go build -o hello hello.go
+./hello
+
+# On Windows
+hello.exe</code></pre>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">What <code class="kbd">go</code> does</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li><strong><code class="kbd">go run</code></strong> compiles and runs a program in one step.</li>
+              <li><strong><code class="kbd">go build</code></strong> produces a self-contained executable.</li>
+              <li><strong><code class="kbd">go fmt</code></strong> formats code to the community standard.</li>
+              <li><strong><code class="kbd">go test</code></strong> runs tests and benchmarks.</li>
+              <li><strong><code class="kbd">go mod</code></strong> manages dependencies and versions.</li>
+            </ul>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <span></span>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#modules">Next: Packages &amp; Modules &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="modules">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 2</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Packages, Modules &amp; Workspace</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Go programs are organized into packages, and collections of packages form modules. Modules let you version dependencies and build reproducibly anywhere.
+          </p>
+
+          <h3 class="text-xl font-semibold mb-4">Create a new module</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-bash">mkdir greet
+cd greet
+go mod init example.com/greet</code></pre>
+          </div>
+          <p class="text-[var(--muted)] mb-4">
+            This produces a <code class="kbd">go.mod</code> file that records the module path and the Go version. Add the source file below and run it with <code class="kbd">go run .</code>.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">// greet.go
+package main
+
+import (
+    "fmt"
+
+    "example.com/greet/greeting"
+)
+
+func main() {
+    fmt.Println(greeting.Hello("Ada"))
+}</code></pre>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">// greeting/greeting.go
+package greeting
+
+import "fmt"
+
+// Hello returns a friendly greeting.
+func Hello(name string) string {
+    return fmt.Sprintf("Hello, %s!", name)
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Package rules</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li>Every file starts with <code class="kbd">package name</code>.</li>
+                <li>Exported names begin with an uppercase letter.</li>
+                <li>Unexported names stay inside the package.</li>
+                <li>The <code class="kbd">main</code> package builds an executable.</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Useful commands</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-bash">go get example.com/pkg         # add dependency
+go mod tidy                    # clean go.mod / go.sum
+go list -m all                 # list modules
+go mod download                # fetch dependencies</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Workspaces</h3>
+          <p class="text-[var(--muted)] mb-4">
+            A workspace lets you work on multiple modules at once without publishing changes.
+          </p>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-bash">go work init ./greet ./greeting
+cat go.work</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#variables">Next: Variables &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="variables">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 3</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Variables, Types &amp; Operators</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Go has a small, orthogonal type system. Variables are declared with <code class="kbd">var</code>, <code class="kbd">:=</code>, or <code class="kbd">const</code>. Types are explicit but inference keeps code short.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">package main
+
+import "fmt"
+
+func main() {
+    var name string = "Ada"   // explicit
+    age := 30                 // inferred int
+    var pi = 3.14159          // inferred float64
+
+    const maxRetries = 3      // compile-time constant
+
+    var zeroValue int         // defaults to 0
+    var empty string          // defaults to ""
+
+    fmt.Printf("%s is %d, pi=%.2f\n", name, age, pi)
+    fmt.Println(zeroValue, empty, maxRetries)
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Basic types</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><code class="kbd">bool</code></li>
+                <li><code class="kbd">string</code></li>
+                <li><code class="kbd">int</code>, <code class="kbd">int8</code>, <code class="kbd">int16</code>, <code class="kbd">int32</code>, <code class="kbd">int64</code></li>
+                <li><code class="kbd">uint</code>, <code class="kbd">uintptr</code>, plus sized variants</li>
+                <li><code class="kbd">float32</code>, <code class="kbd">float64</code></li>
+                <li><code class="kbd">complex64</code>, <code class="kbd">complex128</code></li>
+                <li><code class="kbd">byte</code> (alias for uint8), <code class="kbd">rune</code> (alias for int32)</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Type conversions</h3>
+              <p class="text-[var(--muted)]">Go does not implicitly convert between numeric types. You must request each conversion explicitly.</p>
+              <div class="code-block mt-3">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-go">var i int = 42
+var f float64 = float64(i)
+var u uint = uint(f)
+_ = u</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Composite types</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">// Array (fixed length)
+var nums [3]int = [3]int{1, 2, 3}
+
+// Slice (dynamic view)
+fruits := []string{"apple", "banana"}
+fruits = append(fruits, "cherry")
+
+// Map
+scores := map[string]int{"Ada": 95, "Bob": 87}
+
+// Struct
+type Person struct {
+    Name string
+    Age  int
+}
+p := Person{Name: "Ada", Age: 30}</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Operators</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">a, b := 10, 3
+sum := a + b
+mod := a % b
+bit := a & b
+shift := a << 1
+
+// No ternary operator; use if/else
+max := a
+if b > a {
+    max = b
+}</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#modules">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#control-flow">Next: Control Flow &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="control-flow">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 4</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Control Flow</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Go keeps control flow simple: <code class="kbd">if</code>, <code class="kbd">for</code>, <code class="kbd">switch</code>, and <code class="kbd">defer</code>. There is no <code class="kbd">while</code> or <code class="kbd">do-while</code>; a bare <code class="kbd">for</code> loop handles those cases.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">package main
+
+import "fmt"
+
+func main() {
+    score := 85
+
+    if score >= 90 {
+        fmt.Println("A")
+    } else if score >= 80 {
+        fmt.Println("B")
+    } else {
+        fmt.Println("C or lower")
+    }
+
+    // if with a short statement
+    if v := score / 10; v == 8 {
+        fmt.Println("Decile 8")
+    }
+
+    // switch
+    switch score / 10 {
+    case 10:
+        fmt.Println("Perfect")
+    case 9:
+        fmt.Println("Excellent")
+    case 8:
+        fmt.Println("Good")
+    default:
+        fmt.Println("Keep practicing")
+    }
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">The only loop</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-go">// classic for
+for i := 0; i < 10; i++ {
+    fmt.Println(i)
+}
+
+// while-style
+n := 5
+for n > 0 {
+    fmt.Println(n)
+    n--
+}
+
+// infinite
+for {
+    break
+}
+
+// range over slice
+for i, v := range []int{1, 2, 3} {
+    fmt.Println(i, v)
+}</code></pre>
+              </div>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">defer</h3>
+              <p class="text-[var(--muted)]">A deferred function runs when the surrounding function returns, in last-in-first-out order. It is perfect for cleanup.</p>
+              <div class="code-block mt-3">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-go">f, err := os.Open("file.txt")
+if err != nil {
+    log.Fatal(err)
+}
+defer f.Close()
+// read from f...</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5 mb-8">
+            <h4 class="font-semibold mb-2">Real-world pattern: guard clause</h4>
+            <p class="text-[var(--muted)]">Return early on errors so the happy path stays at the left margin.</p>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">func safeDivide(a, b float64) (float64, error) {
+    if b == 0 {
+        return 0, errors.New("cannot divide by zero")
+    }
+    return a / b, nil
+}</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#variables">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#functions">Next: Functions &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="functions">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 5</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Functions</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Functions are first-class values in Go. They can return multiple values, accept variadic arguments, and be passed around like any other value.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">package main
+
+import (
+    "errors"
+    "fmt"
+)
+
+// Multiple return values
+func divide(a, b float64) (float64, error) {
+    if b == 0 {
+        return 0, errors.New("division by zero")
+    }
+    return a / b, nil
+}
+
+// Named return values
+func rectangle(w, h float64) (area, perimeter float64) {
+    area = w * h
+    perimeter = 2 * (w + h)
+    return // naked return
+}
+
+// Variadic
+func sum(nums ...int) int {
+    total := 0
+    for _, n := range nums {
+        total += n
+    }
+    return total
+}
+
+func main() {
+    result, err := divide(10, 2)
+    if err != nil {
+        fmt.Println("error:", err)
+        return
+    }
+    fmt.Println(result, rectangle(4, 5), sum(1, 2, 3))
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">First-class functions</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-go">func apply(a, b int, op func(int, int) int) int {
+    return op(a, b)
+}
+
+func main() {
+    add := func(x, y int) int { return x + y }
+    fmt.Println(apply(2, 3, add))
+}</code></pre>
+              </div>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Closures</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-go">func counter() func() int {
+    count := 0
+    return func() int {
+        count++
+        return count
+    }
+}
+
+func main() {
+    c := counter()
+    fmt.Println(c(), c(), c()) // 1 2 3
+}</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#control-flow">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#structs">Next: Structs &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="structs">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 6</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Structs, Methods &amp; Embedding</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Structs group fields into a single type. Methods attach behavior to a type, and embedding composes types without classical inheritance.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">package main
+
+import (
+    "fmt"
+    "math"
+)
+
+type Point struct {
+    X, Y float64
+}
+
+func (p Point) Distance(q Point) float64 {
+    dx := p.X - q.X
+    dy := p.Y - q.Y
+    return math.Sqrt(dx*dx + dy*dy)
+}
+
+func (p *Point) Move(dx, dy float64) {
+    p.X += dx
+    p.Y += dy
+}
+
+type Circle struct {
+    Center Point
+    Radius float64
+}
+
+func main() {
+    a := Point{0, 0}
+    b := Point{3, 4}
+    fmt.Println(a.Distance(b))
+
+    c := Circle{Center: a, Radius: 5}
+    fmt.Println(c.Center.X)
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Pointer vs value receivers</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li>Value receiver: method gets a copy; cannot modify the original.</li>
+                <li>Pointer receiver: method can modify the original and avoids copying large structs.</li>
+                <li>Be consistent for a given type.</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Embedding</h3>
+              <p class="text-[var(--muted)]">Embedding promotes the embedded type's fields and methods to the outer struct. It is Go's composition pattern.</p>
+              <div class="code-block mt-3">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-go">type Employee struct {
+    Name string
+}
+
+type Manager struct {
+    Employee    // embedded
+    Reports []string
+}
+
+m := Manager{}
+m.Name = "Ada" // promoted field</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Tags and JSON</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">type User struct {
+    ID        int       `json:"id"`
+    Email     string    `json:"email"`
+    CreatedAt time.Time `json:"created_at"`
+}</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#functions">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#interfaces">Next: Interfaces &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="interfaces">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 7</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Interfaces</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Interfaces in Go are satisfied implicitly. A type implements an interface by implementing its methods, with no explicit declaration. This leads to flexible, decoupled designs.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">package main
+
+import "fmt"
+
+type Speaker interface {
+    Speak() string
+}
+
+type Dog struct{}
+
+func (d Dog) Speak() string { return "Woof!" }
+
+type Cat struct{}
+
+func (c Cat) Speak() string { return "Meow!" }
+
+func Greet(s Speaker) {
+    fmt.Println(s.Speak())
+}
+
+func main() {
+    Greet(Dog{})
+    Greet(Cat{})
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Common interfaces</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><code class="kbd">error</code>: the built-in error interface.</li>
+                <li><code class="kbd">fmt.Stringer</code>: anything with <code class="kbd">String() string</code>.</li>
+                <li><code class="kbd">io.Reader</code> / <code class="kbd">io.Writer</code>: streams.</li>
+                <li><code class="kbd">context.Context</code>: cancellation and request metadata.</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Empty interface</h3>
+              <p class="text-[var(--muted)]"><code class="kbd">interface{}</code> (or <code class="kbd">any</code> since Go 1.18) can hold any value. Use it sparingly; prefer concrete types or type parameters.</p>
+              <div class="code-block mt-3">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-go">var x any = 42
+v, ok := x.(int) // type assertion
+if ok {
+    fmt.Println(v + 1)
+}</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Type switches</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">func describe(v any) {
+    switch t := v.(type) {
+    case int:
+        fmt.Printf("integer %d\n", t)
+    case string:
+        fmt.Printf("string %q\n", t)
+    default:
+        fmt.Printf("unknown %T\n", t)
+    }
+}</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#structs">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#goroutines">Next: Concurrency &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="goroutines">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 8</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Goroutines, Channels &amp; Select</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Concurrency is the heart of Go. Goroutines are lightweight threads managed by the runtime, and channels let them communicate safely. The mantra is: do not communicate by sharing memory; share memory by communicating.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func say(msg string) {
+    for i := 0; i < 3; i++ {
+        fmt.Println(msg)
+        time.Sleep(100 * time.Millisecond)
+    }
+}
+
+func main() {
+    go say("async")   // new goroutine
+    say("sync")       // main goroutine
+}</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Channels</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">func main() {
+    ch := make(chan string) // unbuffered
+
+    go func() {
+        ch <- "hello from a goroutine"
+    }()
+
+    msg := <-ch
+    fmt.Println(msg)
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Buffered channels</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-go">ch := make(chan int, 3)
+ch <- 1
+ch <- 2
+fmt.Println(<-ch)
+fmt.Println(<-ch)</code></pre>
+              </div>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Channel directions</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-go">func producer(out chan<- int) {
+    out <- 42
+}
+
+func consumer(in <-chan int) {
+    fmt.Println(<-in)
+}</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Select</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">func main() {
+    ch1 := make(chan string)
+    ch2 := make(chan string)
+
+    go func() { ch1 <- "first" }()
+    go func() { ch2 <- "second" }()
+
+    for i := 0; i < 2; i++ {
+        select {
+        case m := <-ch1:
+            fmt.Println("ch1:", m)
+        case m := <-ch2:
+            fmt.Println("ch2:", m)
+        case <-time.After(1 * time.Second):
+            fmt.Println("timeout")
+        }
+    }
+}</code></pre>
+          </div>
+
+          <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5 mb-8">
+            <h4 class="font-semibold mb-2">Closing channels</h4>
+            <p class="text-[var(--muted)]">Only the sender should close a channel. Receivers can detect closure with <code class="kbd">v, ok := <-ch</code>; <code class="kbd">ok</code> is false after close. Ranging over a channel stops when it closes.</p>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#interfaces">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#sync">Next: Sync &amp; Patterns &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="sync">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 9</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Sync Package &amp; Patterns</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Channels are not always the right tool. The <code class="kbd">sync</code> package provides mutexes, wait groups, and once semantics for shared-state concurrency.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">package main
+
+import (
+    "fmt"
+    "sync"
+)
+
+func main() {
+    var wg sync.WaitGroup
+    var mu sync.Mutex
+    counter := 0
+
+    for i := 0; i < 100; i++ {
+        wg.Add(1)
+        go func() {
+            defer wg.Done()
+            mu.Lock()
+            counter++
+            mu.Unlock()
+        }()
+    }
+
+    wg.Wait()
+    fmt.Println(counter)
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Sync primitives</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><code class="kbd">sync.Mutex</code>: exclusive lock.</li>
+                <li><code class="kbd">sync.RWMutex</code>: many readers, one writer.</li>
+                <li><code class="kbd">sync.WaitGroup</code>: wait for goroutines to finish.</li>
+                <li><code class="kbd">sync.Once</code>: run initialization exactly once.</li>
+                <li><code class="kbd">sync.Map</code>: concurrent map (use sparingly).</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Atomic counters</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-go">var count int64
+atomic.AddInt64(&count, 1)
+fmt.Println(atomic.LoadInt64(&count))</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Pipeline pattern</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">func gen(nums ...int) <-chan int {
+    out := make(chan int)
+    go func() {
+        for _, n := range nums {
+            out <- n
+        }
+        close(out)
+    }()
+    return out
+}
+
+func sq(in <-chan int) <-chan int {
+    out := make(chan int)
+    go func() {
+        for n := range in {
+            out <- n * n
+        }
+        close(out)
+    }()
+    return out
+}
+
+func main() {
+    for n := range sq(gen(2, 3, 4)) {
+        fmt.Println(n)
+    }
+}</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#goroutines">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#errors">Next: Error Handling &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="errors">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 10</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Error Handling</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Go treats errors as values. Functions return an <code class="kbd">error</code> alongside their primary result, and callers check it immediately. This keeps error paths explicit and composable.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">package main
+
+import (
+    "errors"
+    "fmt"
+)
+
+var ErrNotFound = errors.New("not found")
+
+type ValidationError struct {
+    Field string
+}
+
+func (e ValidationError) Error() string {
+    return fmt.Sprintf("invalid field: %s", e.Field)
+}
+
+func find(id int) (string, error) {
+    if id <= 0 {
+        return "", ValidationError{Field: "id"}
+    }
+    if id != 42 {
+        return "", ErrNotFound
+    }
+    return "answer", nil
+}
+
+func main() {
+    _, err := find(0)
+    if errors.Is(err, ErrNotFound) {
+        fmt.Println("not found")
+    } else {
+        fmt.Println(err)
+    }
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Error wrapping</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-go">if err != nil {
+    return fmt.Errorf("read config: %w", err)
+}
+
+// later
+if errors.Is(err, ErrNotFound) { ... }
+if var e *os.PathError; errors.As(err, &e) { ... }</code></pre>
+              </div>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Panic and recover</h3>
+              <p class="text-[var(--muted)]">Use panic for unrecoverable bugs, not for routine errors. <code class="kbd">recover</code> can catch a panic inside a deferred function to prevent a crash.</p>
+              <div class="code-block mt-3">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-go">func safe() {
+    defer func() {
+        if r := recover(); r != nil {
+            fmt.Println("recovered:", r)
+        }
+    }()
+    panic("boom")
+}</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#sync">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#testing">Next: Testing &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="testing">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 11</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Testing &amp; Benchmarking</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Go includes testing in the standard toolchain. Write tests in files ending with <code class="kbd">_test.go</code>, run them with <code class="kbd">go test</code>, and measure performance with benchmarks.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">// math.go
+package math
+
+func Add(a, b int) int {
+    return a + b
+}</code></pre>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">// math_test.go
+package math
+
+import "testing"
+
+func TestAdd(t *testing.T) {
+    got := Add(2, 3)
+    want := 5
+    if got != want {
+        t.Errorf("Add(2,3) = %d; want %d", got, want)
+    }
+}
+
+func TestAddTable(t *testing.T) {
+    cases := []struct {
+        a, b, want int
+    }{
+        {1, 2, 3},
+        {0, 0, 0},
+        {-1, 1, 0},
+    }
+    for _, c := range cases {
+        got := Add(c.a, c.b)
+        if got != c.want {
+            t.Errorf("Add(%d,%d) = %d; want %d", c.a, c.b, got, c.want)
+        }
+    }
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Benchmarks</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-go">func BenchmarkAdd(b *testing.B) {
+    for i := 0; i < b.N; i++ {
+        Add(2, 3)
+    }
+}</code></pre>
+              </div>
+              <p class="text-[var(--muted)] text-sm mt-2">Run with <code class="kbd">go test -bench=.</code></p>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Coverage and race</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-bash">go test ./...
+go test -cover ./...
+go test -race ./...</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Example tests</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">func ExampleAdd() {
+    fmt.Println(Add(2, 3))
+    // Output: 5
+}</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#errors">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#stdlib">Next: Standard Library &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="stdlib">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 12</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Standard Library: HTTP, JSON, SQL</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Go's standard library is famously productive. You can stand up an HTTP server, marshal JSON, and query a database with only the standard packages and a driver.
+          </p>
+
+          <h3 class="text-xl font-semibold mb-4">net/http</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">package main
+
+import (
+    "fmt"
+    "net/http"
+)
+
+func hello(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintf(w, "Hello, %s!\n", r.URL.Path[1:])
+}
+
+func main() {
+    http.HandleFunc("/", hello)
+    http.ListenAndServe(":8080", nil)
+}</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">encoding/json</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">package main
+
+import (
+    "encoding/json"
+    "fmt"
+)
+
+type User struct {
+    ID    int    `json:"id"`
+    Name  string `json:"name"`
+    Admin bool   `json:"admin,omitempty"`
+}
+
+func main() {
+    u := User{ID: 1, Name: "Ada"}
+    b, _ := json.Marshal(u)
+    fmt.Println(string(b))
+
+    var parsed User
+    json.Unmarshal(b, &parsed)
+}</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">database/sql</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">package main
+
+import (
+    "database/sql"
+    "fmt"
+    "log"
+
+    _ "github.com/mattn/go-sqlite3"
+)
+
+func main() {
+    db, err := sql.Open("sqlite3", "app.db")
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer db.Close()
+
+    rows, err := db.Query("SELECT id, name FROM users")
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer rows.Close()
+
+    for rows.Next() {
+        var id int
+        var name string
+        rows.Scan(&id, &name)
+        fmt.Println(id, name)
+    }
+}</code></pre>
+          </div>
+
+          <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5 mb-8">
+            <h4 class="font-semibold mb-2">SQL driver note</h4>
+            <p class="text-[var(--muted)]"><code class="kbd">database/sql</code> provides the interface; you import a concrete driver such as <code class="kbd">github.com/mattn/go-sqlite3</code> or <code class="kbd">github.com/lib/pq</code> for side effects only.</p>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#testing">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#advanced">Next: Advanced Topics &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="advanced">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 13</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Context, Reflection &amp; Advanced Topics</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            As programs grow, you need to propagate cancellation deadlines, inspect types at runtime, and handle signals and timeouts gracefully.
+          </p>
+
+          <h3 class="text-xl font-semibold mb-4">context</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">package main
+
+import (
+    "context"
+    "fmt"
+    "time"
+)
+
+func slow(ctx context.Context) error {
+    select {
+    case <-time.After(2 * time.Second):
+        fmt.Println("finished")
+        return nil
+    case <-ctx.Done():
+        return ctx.Err()
+    }
+}
+
+func main() {
+    ctx, cancel := context.WithTimeout(context.Background(), 500*time.Millisecond)
+    defer cancel()
+
+    if err := slow(ctx); err != nil {
+        fmt.Println("error:", err)
+    }
+}</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Reflection basics</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">package main
+
+import (
+    "fmt"
+    "reflect"
+)
+
+type User struct {
+    Name string `json:"name"`
+}
+
+func main() {
+    t := reflect.TypeOf(User{})
+    for i := 0; i < t.NumField(); i++ {
+        f := t.Field(i)
+        fmt.Println(f.Name, f.Tag.Get("json"))
+    }
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Generics</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-go">func Min[T constraints.Ordered](a, b T) T {
+    if a < b {
+        return a
+    }
+    return b
+}</code></pre>
+              </div>
+              <p class="text-[var(--muted)] text-sm mt-2">Go 1.18 introduced type parameters for writing generic algorithms.</p>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Signals</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-go">sig := make(chan os.Signal, 1)
+signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
+<-sig
+fmt.Println("shutting down")</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#stdlib">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#deployment">Next: Deployment &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="deployment">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 14</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Deployment &amp; FFI</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Go compiles to a single static binary that is easy to deploy. It also supports cgo for calling C libraries when you need to interoperate with native code.
+          </p>
+
+          <h3 class="text-xl font-semibold mb-4">Cross compilation</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-bash"># Build for Linux from macOS
+GOOS=linux GOARCH=amd64 go build -o app-linux .
+
+# Build for Windows
+GOOS=windows GOARCH=amd64 go build -o app.exe .
+
+# Build a smaller binary
+CGO_ENABLED=0 go build -ldflags="-s -w" -o app .</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Docker example</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-bash"># syntax=docker/dockerfile:1
+FROM golang:1.23 AS build
+WORKDIR /app
+COPY . .
+RUN CGO_ENABLED=0 go build -o server .
+
+FROM gcr.io/distroless/static-debian12
+COPY --from=build /app/server /server
+EXPOSE 8080
+ENTRYPOINT ["/server"]</code></pre>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">cgo / FFI mention</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-go">// #include &lt;math.h&gt;
+import "C"
+import "fmt"
+
+func main() {
+    fmt.Println(C.sqrt(2))
+}</code></pre>
+          </div>
+          <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5 mb-8">
+            <h4 class="font-semibold mb-2">cgo caveats</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li>cgo breaks pure-Go cross compilation.</li>
+              <li>C memory is not managed by Go's garbage collector.</li>
+              <li>Prefer pure Go packages; use cgo only when necessary.</li>
+            </ul>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#advanced">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#capstone">Next: Capstone Projects &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="capstone">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 15</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Capstone Projects</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            These three projects cover the most common Go domains: web services, concurrent pipelines, and command-line tooling. Complete them in any order, then extend.
+          </p>
+
+          <div class="card rounded-2xl p-6 mb-10">
+            <h3 class="text-2xl font-bold mb-4">Project A: RESTful URL Shortener / Key-Value Service</h3>
+
+            <h4 class="text-xl font-semibold mb-2">1. What is this project?</h4>
+            <p class="text-[var(--muted)] mb-4">Build an HTTP service that stores short key-value pairs. Clients POST a JSON payload to create a short key and GET a key to retrieve the original value. In-memory storage keeps the project self-contained.</p>
+
+            <h4 class="text-xl font-semibold mb-2">2. What it covers?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li><code class="kbd">net/http</code> handlers and routing.</li>
+              <li><code class="kbd">encoding/json</code> marshaling and unmarshaling.</li>
+              <li>Maps protected by a mutex for concurrent access.</li>
+              <li>Basic REST conventions: POST to create, GET to read.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">3. How it is done?</h4>
+            <div class="code-block mb-4">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-go">package main
+
+import (
+    "encoding/json"
+    "net/http"
+    "sync"
+)
+
+type Store struct {
+    mu   sync.RWMutex
+    data map[string]string
+}
+
+func (s *Store) Set(key, value string) {
+    s.mu.Lock()
+    defer s.mu.Unlock()
+    s.data[key] = value
+}
+
+func (s *Store) Get(key string) (string, bool) {
+    s.mu.RLock()
+    defer s.mu.RUnlock()
+    v, ok := s.data[key]
+    return v, ok
+}
+
+type createReq struct {
+    Key   string `json:"key"`
+    Value string `json:"value"`
+}
+
+func main() {
+    store := &Store{data: make(map[string]string)}
+
+    http.HandleFunc("/kv", func(w http.ResponseWriter, r *http.Request) {
+        switch r.Method {
+        case http.MethodPost:
+            var req createReq
+            if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+                http.Error(w, err.Error(), http.StatusBadRequest)
+                return
+            }
+            store.Set(req.Key, req.Value)
+            w.WriteHeader(http.StatusCreated)
+        default:
+            http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+        }
+    })
+
+    http.HandleFunc("/kv/", func(w http.ResponseWriter, r *http.Request) {
+        key := r.URL.Path[len("/kv/"):]
+        v, ok := store.Get(key)
+        if !ok {
+            http.NotFound(w, r)
+            return
+        }
+        json.NewEncoder(w).Encode(map[string]string{"value": v})
+    })
+
+    http.ListenAndServe(":8080", nil)
+}</code></pre>
+            </div>
+
+            <h4 class="text-xl font-semibold mb-2">4. What did we learn?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li>HTTP handlers are functions with a signature, not classes.</li>
+              <li>JSON maps naturally to Go structs with tags.</li>
+              <li>Shared maps need synchronization to avoid data races.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">5. How can I enhance?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li>Persist data to a file or SQLite database.</li>
+              <li>Generate short random keys instead of user-supplied keys.</li>
+              <li>Add redirects from <code class="kbd">/s/{key}</code> to the original URL.</li>
+            </ul>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-10">
+            <h3 class="text-2xl font-bold mb-4">Project B: Concurrent Worker Pool / Pipeline</h3>
+
+            <h4 class="text-xl font-semibold mb-2">1. What is this project?</h4>
+            <p class="text-[var(--muted)] mb-4">Build a fixed-size worker pool that reads jobs from a channel, processes them concurrently, and sends results to another channel. This is a foundational pattern for backends, crawlers, and ETL jobs.</p>
+
+            <h4 class="text-xl font-semibold mb-2">2. What it covers?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li>Goroutines and channels for job distribution.</li>
+              <li><code class="kbd">sync.WaitGroup</code> to wait for workers.</li>
+              <li>Controlled concurrency with a fixed pool size.</li>
+              <li>Graceful shutdown after all jobs finish.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">3. How it is done?</h4>
+            <div class="code-block mb-4">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-go">package main
+
+import (
+    "fmt"
+    "sync"
+)
+
+type Job struct {
+    ID    int
+    Input int
+}
+
+type Result struct {
+    JobID int
+    Value int
+}
+
+func worker(id int, jobs <-chan Job, results chan<- Result, wg *sync.WaitGroup) {
+    defer wg.Done()
+    for j := range jobs {
+        fmt.Printf("worker %d processing job %d\n", id, j.ID)
+        results <- Result{JobID: j.ID, Value: j.Input * j.Input}
+    }
+}
+
+func main() {
+    const numJobs = 20
+    const numWorkers = 4
+
+    jobs := make(chan Job, numJobs)
+    results := make(chan Result, numJobs)
+    var wg sync.WaitGroup
+
+    for w := 1; w <= numWorkers; w++ {
+        wg.Add(1)
+        go worker(w, jobs, results, &wg)
+    }
+
+    for j := 1; j <= numJobs; j++ {
+        jobs <- Job{ID: j, Input: j}
+    }
+    close(jobs)
+
+    go func() {
+        wg.Wait()
+        close(results)
+    }()
+
+    for r := range results {
+        fmt.Printf("result: job=%d value=%d\n", r.JobID, r.Value)
+    }
+}</code></pre>
+            </div>
+
+            <h4 class="text-xl font-semibold mb-2">4. What did we learn?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li>A worker pool limits resource usage while still running concurrently.</li>
+              <li>Closing the jobs channel signals workers to stop.</li>
+              <li>A separate goroutine can close the results channel after workers finish.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">5. How can I enhance?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li>Add a context so jobs can be cancelled mid-flight.</li>
+              <li>Collect per-worker metrics and throughput.</li>
+              <li>Retry failed jobs with exponential backoff.</li>
+            </ul>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-10">
+            <h3 class="text-2xl font-bold mb-4">Project C: CLI Tool with Flags and JSON Config</h3>
+
+            <h4 class="text-xl font-semibold mb-2">1. What is this project?</h4>
+            <p class="text-[var(--muted)] mb-4">Build a command-line tool that loads settings from a JSON file and accepts cobra-style flags for host, port, and verbose mode. This mirrors real Go CLIs and microservice starters.</p>
+
+            <h4 class="text-xl font-semibold mb-2">2. What it covers?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li><code class="kbd">flag</code> package for parsing arguments.</li>
+              <li><code class="kbd">os</code> and <code class="kbd">encoding/json</code> for config files.</li>
+              <li>Merging config defaults, file values, and CLI overrides.</li>
+              <li>Subcommand structure using the standard flag set.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">3. How it is done?</h4>
+            <div class="code-block mb-4">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-go">package main
+
+import (
+    "encoding/json"
+    "flag"
+    "fmt"
+    "os"
+)
+
+type Config struct {
+    Host    string `json:"host"`
+    Port    int    `json:"port"`
+    Verbose bool   `json:"verbose"`
+}
+
+func loadConfig(path string) (Config, error) {
+    var cfg Config
+    data, err := os.ReadFile(path)
+    if err != nil {
+        return cfg, err
+    }
+    if err := json.Unmarshal(data, &cfg); err != nil {
+        return cfg, err
+    }
+    return cfg, nil
+}
+
+func main() {
+    cfg := Config{Host: "localhost", Port: 8080}
+
+    configPath := flag.String("config", "", "path to JSON config")
+    host := flag.String("host", "", "server host")
+    port := flag.Int("port", 0, "server port")
+    verbose := flag.Bool("verbose", false, "enable verbose logging")
+    flag.Parse()
+
+    if *configPath != "" {
+        loaded, err := loadConfig(*configPath)
+        if err != nil {
+            fmt.Fprintln(os.Stderr, "config error:", err)
+            os.Exit(1)
+        }
+        cfg = loaded
+    }
+    if *host != "" {
+        cfg.Host = *host
+    }
+    if *port != 0 {
+        cfg.Port = *port
+    }
+    if *verbose {
+        cfg.Verbose = true
+    }
+
+    fmt.Printf("running on %s:%d (verbose=%v)\n", cfg.Host, cfg.Port, cfg.Verbose)
+}</code></pre>
+            </div>
+
+            <h4 class="text-xl font-semibold mb-2">4. What did we learn?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li>Flags provide a simple CLI without external dependencies.</li>
+              <li>Config files make tools reusable across environments.</li>
+              <li>Layered overrides let CLI flags win over config files.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">5. How can I enhance?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li>Replace <code class="kbd">flag</code> with <code class="kbd">cobra</code> and add subcommands.</li>
+              <li>Support environment variables via <code class="kbd">os.Getenv</code>.</li>
+              <li>Validate the merged config before starting the application.</li>
+            </ul>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#deployment">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#quiz">Next: Knowledge Check &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="quiz">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 16</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Knowledge Check</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Eight questions to test your Go fundamentals.</p>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">1. What keyword declares a variable and infers its type?</h3>
+            <div class="quiz" data-answer="B">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. <code class="kbd">var</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. <code class="kbd">:=</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. <code class="kbd">const</code></button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">2. Which statement is true about interfaces in Go?</h3>
+            <div class="quiz" data-answer="A">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. Types implement interfaces implicitly</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. A type must declare which interfaces it implements</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. Interfaces can only contain one method</button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">3. What does <code class="kbd">defer</code> do?</h3>
+            <div class="quiz" data-answer="B">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. Runs a function immediately</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. Schedules a function to run when the surrounding function returns</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. Creates a new goroutine</button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">4. How do you start a new goroutine?</h3>
+            <div class="quiz" data-answer="C">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. <code class="kbd">thread myFunc()</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. <code class="kbd">spawn myFunc()</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. <code class="kbd">go myFunc()</code></button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">5. Which package is used for mutual exclusion?</h3>
+            <div class="quiz" data-answer="B">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. <code class="kbd">mutex</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. <code class="kbd">sync</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. <code class="kbd">lock</code></button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">6. What is the idiomatic way to check for errors?</h3>
+            <div class="quiz" data-answer="A">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. <code class="kbd">if err != nil { ... }</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. <code class="kbd">try { ... } catch(e) { ... }</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. <code class="kbd">on error goto</code></button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">7. Which standard package provides HTTP client and server types?</h3>
+            <div class="quiz" data-answer="A">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. <code class="kbd">net/http</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. <code class="kbd">http</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. <code class="kbd">web</code></button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="font-semibold mb-2">8. What does the <code class="kbd">context</code> package primarily provide?</h3>
+            <div class="quiz" data-answer="B">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. Dependency injection</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. Cancellation, deadlines, and request-scoped values</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. HTTP routing</button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-8 text-center mb-10">
+            <h3 class="text-2xl font-bold mb-3">Congratulations!</h3>
+            <p class="text-[var(--muted)] mb-5">You have worked through Go from packages to deployment and built a solid foundation for cloud-native systems programming.</p>
+            <div class="flex justify-center gap-4 flex-wrap">
+              <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">Restart tutorial</a>
+              <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="https://go.dev/doc/" target="_blank">Go Documentation &rarr;</a>
+            </div>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#capstone">&larr; Previous</a>
+            <span></span>
+          </nav>
+        </section>
+
+      </div>
+      <footer class="border-t border-[var(--border)] px-6 py-8 text-center text-sm text-[var(--muted)]">
+        <p>Open in any browser. No build step required.</p>
+      </footer>
+    </main>
+  </div>
+  <script>
+    const html = document.documentElement;
+    const moon = document.getElementById('moon');
+    const sun = document.getElementById('sun');
+    const lightStylesheet = document.getElementById('hljs-light');
+    const darkStylesheet = document.getElementById('hljs-dark');
+
+    function applyTheme(theme) {
+      html.classList.remove('light', 'dark');
+      html.classList.add(theme);
+      if (theme === 'dark') {
+        lightStylesheet.disabled = true;
+        darkStylesheet.disabled = false;
+        moon.classList.add('hidden');
+        sun.classList.remove('hidden');
+      } else {
+        lightStylesheet.disabled = false;
+        darkStylesheet.disabled = true;
+        moon.classList.remove('hidden');
+        sun.classList.add('hidden');
+      }
+      localStorage.setItem('tutorials-theme', theme);
+    }
+
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      applyTheme(html.classList.contains('dark') ? 'light' : 'dark');
+    });
+
+    const saved = localStorage.getItem('tutorials-theme');
+    applyTheme(saved === 'dark' ? 'dark' : 'light');
+
+    function setStatus(status) {
+      localStorage.setItem('tutorial-go-language-status', status);
+      updateButtons();
+    }
+
+    function updateButtons() {
+      const status = localStorage.getItem('tutorial-go-language-status') || 'not-started';
+      const startBtns = document.querySelectorAll('[id^="btn-start"]');
+      const completeBtns = document.querySelectorAll('[id^="btn-complete"]');
+      startBtns.forEach(btn => { btn.textContent = status === 'in-progress' ? 'In Progress' : 'Start'; });
+      completeBtns.forEach(btn => { btn.textContent = status === 'completed' ? 'Completed' : 'Mark Complete'; });
+    }
+
+    document.querySelectorAll('[id^="btn-start"]').forEach(btn => btn.addEventListener('click', () => setStatus('in-progress')));
+    document.querySelectorAll('[id^="btn-complete"]').forEach(btn => btn.addEventListener('click', () => setStatus('completed')));
+    document.querySelectorAll('[id^="btn-reset"]').forEach(btn => btn.addEventListener('click', () => { localStorage.removeItem('tutorial-go-language-status'); updateButtons(); }));
+    updateButtons();
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('menu-overlay');
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('hidden');
+    }
+
+    function copyCode(btn) {
+      const code = btn.nextElementSibling.querySelector('code');
+      navigator.clipboard.writeText(code.innerText).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+      });
+    }
+
+    const sections = document.querySelectorAll('section[id]');
+    const tocLinks = document.querySelectorAll('.toc-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach((link) => link.classList.remove('active'));
+          const active = document.querySelector(`.toc-link[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -60% 0px' });
+    sections.forEach((section) => observer.observe(section));
+
+    document.querySelectorAll('.quiz').forEach((quiz) => {
+      const correct = quiz.dataset.answer;
+      const feedback = quiz.nextElementSibling;
+      quiz.querySelectorAll('.quiz-opt').forEach((opt) => {
+        opt.addEventListener('click', () => {
+          quiz.querySelectorAll('.quiz-opt').forEach((o) => { o.classList.remove('selected', 'correct', 'wrong'); o.disabled = true; });
+          opt.classList.add('selected');
+          if (opt.dataset.val === correct) {
+            opt.classList.add('correct');
+            feedback.textContent = 'Correct! ✅';
+            feedback.className = 'quiz-feedback mt-3 font-medium text-[var(--success)]';
+          } else {
+            opt.classList.add('wrong');
+            feedback.textContent = `Not quite. The correct answer is ${correct}.`;
+            feedback.className = 'quiz-feedback mt-3 font-medium text-[var(--danger)]';
+          }
+        });
+      });
+    });
+
+    hljs.highlightAll();
+  </script>
+</body>
+</html>

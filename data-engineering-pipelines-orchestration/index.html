@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Data Pipelines &amp; Orchestration</title>
+  <link href="../assets/favicons/data-engineering-pipelines-orchestration.svg" rel="icon" type="image/svg+xml"/>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-light" rel="stylesheet"/>
+  <link disabled="" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" id="hljs-dark" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js">
+  </script>
+  <script>
+   tailwind.config = { darkMode: 'class' }
+  </script>
+  <link href="../assets/styles.css" rel="stylesheet"/>
+ </head>
+ <body class="antialiased transition-colors duration-300 brand-data-engineering-pipelines-orchestration">
+  <a class="sr-only" href="#main" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Skip to content</a>
+  <div class="fixed inset-0 bg-black/40 z-30 hidden lg:hidden" id="menu-overlay" onclick="toggleSidebar()">
+  </div>
+  <div class="flex min-h-screen">
+   <aside class="fixed lg:sticky top-0 left-0 h-screen w-72 border-r border-[var(--border)] bg-[var(--panel)] z-40 overflow-y-auto p-6" id="sidebar">
+    <div class="flex items-center gap-3 mb-8">
+     <img alt="Data Engineering" class="w-10 h-10" src="../assets/favicons/data-engineering-pipelines-orchestration.svg"/>
+     <span class="text-xl font-bold">DE Pipelines</span>
+    </div>
+    <nav class="space-y-1 text-sm" id="toc">
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">1. Introduction</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#ingestion">2. Data Ingestion Patterns</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#etl-elt">3. ETL vs ELT vs Reverse ETL</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#python-pipelines">4. Building Pipelines with Python</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#airflow">5. Apache Airflow</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#dbt">6. dbt for Transformations</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#quality">7. Data Quality &amp; Idempotency</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#project">8. Capstone: SaaS ELT Pipeline</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#quiz">9. Knowledge Check</a>
+    </nav>
+    <div class="mt-8 pt-6 border-t border-[var(--border)]">
+     <p class="text-xs text-[var(--muted)]">Open in any browser. No build step required.</p>
+    </div>
+   </aside>
+   <main class="flex-1 min-w-0" id="main">
+    <header class="sticky top-0 z-20 border-b border-[var(--border)] bg-[var(--panel)]/90 backdrop-blur px-6 py-4 flex items-center justify-between">
+     <div class="flex items-center gap-3">
+      <button aria-label="Open menu" class="lg:hidden p-2 rounded-md border border-[var(--border)]" onclick="toggleSidebar()">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path>
+       </svg>
+      </button>
+      <h1 class="text-lg sm:text-xl font-bold tracking-tight">Data Pipelines &amp; Orchestration</h1>
+     </div>
+     <div class="hidden sm:flex items-center gap-2 progress-controls" id="progress-controls">
+      <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-start">Start</button>
+      <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-complete">Mark Complete</button>
+      <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-reset">Reset</button>
+     </div>
+     <div class="sm:hidden flex items-center gap-2 progress-controls" id="progress-controls-mobile">
+      <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-start-mobile">Start</button>
+      <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-complete-mobile">Complete</button>
+      <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-reset-mobile">Reset</button>
+     </div>
+     <button aria-label="Toggle theme" class="p-2 rounded-full border border-[var(--border)] hover:bg-black/5 dark:hover:bg-white/5 transition" id="theme-toggle">
+      <svg aria-hidden="true" class="w-5 h-5" fill="none" id="moon" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+       <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <svg aria-hidden="true" class="w-5 h-5 hidden" fill="none" id="sun" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+       <circle cx="12" cy="12" r="5"></circle>
+       <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+     </button>
+    </header>
+    <div class="max-w-4xl mx-auto px-6 py-10 space-y-20">
+     <section class="scroll-mt-24" id="intro">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 1</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Introduction</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Data pipelines move data from sources to destinations, transforming it along the way. Orchestrators schedule, monitor, and retry those pipelines. This tutorial explains batch and streaming ingestion, ETL/ELT/reverse ETL, and how to build reliable pipelines with Python, Airflow, and dbt.</p>
+      <div class="card rounded-2xl p-6 mb-8">
+       <h3 class="text-xl font-semibold mb-3">Before you start</h3>
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+        <li>Basic Python and SQL.</li>
+        <li>A local or Docker Postgres instance for exercises.</li>
+        <li>Optional: familiarity with <a class="underline" href="../python-basics/index.html" target="_blank">Python Fundamentals</a> and <a class="underline" href="../sql-databases/index.html" target="_blank">SQL &amp; Databases</a>.</li>
+       </ul>
+      </div>
+      <div class="card rounded-2xl p-6 mb-8">
+       <h3 class="text-xl font-semibold mb-3">What you'll learn</h3>
+       <ul class="grid sm:grid-cols-2 gap-3 text-[var(--muted)]">
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>Batch, streaming, sync, and async ingestion</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>ETL, ELT, and reverse ETL patterns</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>Python extract/load scripts</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>Apache Airflow DAGs</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>dbt models and tests</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>Idempotency and data quality checks</li>
+       </ul>
+      </div>
+      <div class="card rounded-2xl p-6 mb-8">
+       <h3 class="text-xl font-semibold mb-3">Real-world impact</h3>
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+        <li><strong>Stripe</strong> runs thousands of Airflow DAGs to prepare financial data for reporting and compliance.</li>
+        <li><strong>Flink + Kafka</strong> power real-time fraud detection pipelines at many fintechs.</li>
+        <li><strong>dbt Labs</strong> transformed how analytics teams version-control and test SQL transformations.</li>
+       </ul>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <span></span>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#ingestion">Next: Data Ingestion &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="ingestion">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 2</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Data Ingestion Patterns</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Ingestion is how data enters your platform. It can be batch or streaming, synchronous or asynchronous, push or pull. The right pattern depends on latency, volume, source capabilities, and cost.</p>
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Batch vs streaming</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>Batch</strong>: process bounded datasets on a schedule. Higher latency, lower cost.</li>
+         <li><strong>Streaming</strong>: process records as they arrive. Lower latency, more operational complexity.</li>
+        </ul>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Sync vs async</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>Synchronous</strong>: caller waits for completion (REST API, query).</li>
+         <li><strong>Asynchronous</strong>: source emits events, pipeline consumes later (queues, streams).</li>
+        </ul>
+       </div>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-bash"># Save as extract.py, then run with uv
+cat << 'EOF' > extract.py
+# Simple batch extract: read CSV and return records
+import csv
+
+def extract_csv(path):
+    with open(path, newline="") as f:
+        return list(csv.DictReader(f))
+
+records = extract_csv("events.csv")
+print(f"Extracted {len(records)} records")
+EOF
+
+uv run extract.py</code></pre>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#etl-elt">Next: ETL vs ELT &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="etl-elt">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 3</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">ETL vs ELT vs Reverse ETL</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">ETL transforms data before loading. ELT loads raw data first and transforms inside the warehouse. Reverse ETL moves warehouse data back into operational systems.</p>
+      <div class="grid sm:grid-cols-3 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">ETL</h3>
+        <p class="text-[var(--muted)]">Transform before load. Used when raw data must be cleaned, masked, or aggregated before storage.</p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">ELT</h3>
+        <p class="text-[var(--muted)]">Load raw, transform with SQL/dbt in the warehouse. Faster to build, easier to audit, scales with warehouse power.</p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Reverse ETL</h3>
+        <p class="text-[var(--muted)]">Sync warehouse insights to SaaS tools (CRM, ads, support) so operations can act on them.</p>
+       </div>
+      </div>
+      <div class="card rounded-2xl p-6 mb-8 flex flex-col items-center">
+       <h3 class="text-xl font-semibold mb-4 w-full">Data flow patterns</h3>
+       <svg aria-label="Diagram showing ETL, ELT, and reverse ETL flows" class="diagram" viewBox="0 0 720 180">
+        <rect fill="#0369a1" height="40" opacity="0.2" rx="6" stroke="#0369a1" stroke-width="2" width="90" x="30" y="20"></rect>
+        <text fill="#0369a1" font-size="11" font-weight="700" text-anchor="middle" x="75" y="44">Source</text>
+        <path d="M120 40 L 160 40" marker-end="url(#arrow)" stroke="var(--border)" stroke-width="2"></path>
+        <rect fill="#0369a1" height="40" opacity="0.2" rx="6" stroke="#0369a1" stroke-width="2" width="90" x="170" y="20"></rect>
+        <text fill="#0369a1" font-size="11" font-weight="700" text-anchor="middle" x="215" y="44">Transform</text>
+        <path d="M260 40 L 300 40" marker-end="url(#arrow)" stroke="var(--border)" stroke-width="2"></path>
+        <rect fill="#0369a1" height="40" opacity="0.2" rx="6" stroke="#0369a1" stroke-width="2" width="90" x="310" y="20"></rect>
+        <text fill="#0369a1" font-size="11" font-weight="700" text-anchor="middle" x="355" y="44">Load</text>
+        <path d="M400 40 L 440 40" marker-end="url(#arrow)" stroke="var(--border)" stroke-width="2"></path>
+        <rect fill="#0369a1" height="40" opacity="0.2" rx="6" stroke="#0369a1" stroke-width="2" width="110" x="450" y="20"></rect>
+        <text fill="#0369a1" font-size="11" font-weight="700" text-anchor="middle" x="505" y="44">Warehouse</text>
+        <text fill="var(--muted)" font-size="12" text-anchor="middle" x="360" y="85">ETL: transform before load</text>
+        <path d="M505 95 L 505 120" stroke="var(--border)" stroke-width="2"></path>
+        <path d="M505 120 L 355 120" marker-end="url(#arrow)" stroke="var(--border)" stroke-width="2"></path>
+        <rect fill="#0369a1" height="40" opacity="0.2" rx="6" stroke="#0369a1" stroke-width="2" width="100" x="250" y="130"></rect>
+        <text fill="#0369a1" font-size="11" font-weight="700" text-anchor="middle" x="300" y="154">SaaS Tool</text>
+        <text fill="var(--muted)" font-size="12" text-anchor="middle" x="360" y="170">Reverse ETL: warehouse to operations</text>
+        <defs>
+         <marker id="arrow" markerHeight="10" markerUnits="strokeWidth" markerWidth="10" orient="auto" refX="8" refY="3">
+          <path d="M0,0 L0,6 L9,3 z" fill="var(--border)"></path>
+         </marker>
+        </defs>
+       </svg>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#ingestion">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#python-pipelines">Next: Python Pipelines &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="python-pipelines">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 4</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Building Pipelines with Python</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Python is the lingua franca of data engineering. Libraries like <code class="kbd">pandas</code>, <code class="kbd">psycopg2</code>, and <code class="kbd">requests</code> let you extract, transform, and load data with a few lines of code.</p>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-bash"># Save as load_json_to_staging.py, then run with uv
+cat << 'EOF' > load_json_to_staging.py
+# Minimal ELT: load raw JSON events into a Postgres staging table
+import json
+import psycopg2
+
+conn = psycopg2.connect(
+    host="localhost", dbname="events_db",
+    user="de_user", password="de_pass"
+)
+
+def load_json_to_staging(path, conn):
+    with open(path) as f, conn.cursor() as cur:
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS staging_events (
+                event_id TEXT PRIMARY KEY,
+                payload JSONB NOT NULL,
+                loaded_at TIMESTAMPTZ DEFAULT now()
+            );
+        """)
+        for line in f:
+            record = json.loads(line)
+            cur.execute(
+                "INSERT INTO staging_events (event_id, payload) VALUES (%s, %s)",
+                (record["event_id"], json.dumps(record))
+            )
+        conn.commit()
+
+load_json_to_staging("events.jsonl", conn)
+conn.close()
+EOF
+
+uv run --with psycopg2 load_json_to_staging.py</code></pre>
+      </div>
+      <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5">
+       <h4 class="font-semibold mb-2">Extract best practices</h4>
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+        <li>Use incremental extracts when possible (last modified timestamp).</li>
+        <li>Capture raw payloads before transformation for auditability.</li>
+        <li>Handle API rate limits with retries and backoff.</li>
+       </ul>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#etl-elt">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#airflow">Next: Airflow &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="airflow">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 5</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Apache Airflow</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Apache Airflow is an open-source orchestrator. You define workflows as DAGs (directed acyclic graphs) of tasks written in Python. Airflow handles scheduling, retries, dependencies, and observability.</p>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-python"># Minimal Airflow DAG (requires airflow installed)
+from datetime import datetime, timedelta
+from airflow import DAG
+from airflow.operators.python import PythonOperator
+
+def extract(): print("Extracting events...")
+def load(): print("Loading raw events...")
+def transform(): print("Running dbt...")
+
+with DAG(
+    "saas_elt",
+    start_date=datetime(2024, 9, 1),
+    schedule_interval="@daily",
+    catchup=False,
+    default_args={"retries": 2, "retry_delay": timedelta(minutes=5)},
+) as dag:
+    t1 = PythonOperator(task_id="extract", python_callable=extract)
+    t2 = PythonOperator(task_id="load", python_callable=load)
+    t3 = PythonOperator(task_id="transform", python_callable=transform)
+
+    t1 >> t2 >> t3</code></pre>
+      </div>
+      <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5 mb-6">
+       <h4 class="font-semibold mb-2">Running with uv</h4>
+       <p class="text-[var(--muted)]">A DAG file is normally parsed by Airflow rather than executed directly. Install Airflow as a persistent tool with <code class="kbd">uv tool install apache-airflow</code>, or run a syntax check with <code class="kbd">uv run --with apache-airflow dag.py</code>.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Airflow concepts</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>DAG</strong>: a workflow definition.</li>
+         <li><strong>Task</strong>: a single unit of work in a DAG.</li>
+         <li><strong>Operator</strong>: a template for a task (Python, SQL, Bash, etc.).</li>
+         <li><strong>Scheduler</strong>: decides when to run DAGs.</li>
+        </ul>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Alternatives</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>Luigi</strong>: Spotify's Python task pipeline.</li>
+         <li><strong>Prefect</strong>: modern, code-first orchestrator.</li>
+         <li><strong>Dagster</strong>: asset-oriented data orchestration.</li>
+        </ul>
+       </div>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#python-pipelines">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#dbt">Next: dbt &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="dbt">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 6</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">dbt for Transformations</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">dbt (data build tool) lets you write data transformations as SQL <strong>select</strong> statements. It adds version control, documentation, tests, and a dependency graph on top of your warehouse.</p>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-sql">-- models/staging/stg_events.sql
+SELECT
+  payload->>'event_id' AS event_id,
+  (payload->>'user_id')::INT AS user_id,
+  payload->>'event_type' AS event_type,
+  payload->>'page' AS page,
+  (payload->>'ts')::TIMESTAMPTZ AS event_ts
+FROM staging_events
+
+-- models/marts/fct_page_views.sql
+SELECT
+  event_id,
+  user_id,
+  page,
+  event_ts,
+  DATE_TRUNC('day', event_ts) AS event_date
+FROM {{ ref('stg_events') }}
+WHERE event_type = 'page_view'</code></pre>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-yaml"># models/schema.yml: add tests to dbt models
+version: 2
+models:
+  - name: stg_events
+    columns:
+      - name: event_id
+        tests:
+          - unique
+          - not_null
+      - name: user_id
+        tests:
+          - not_null</code></pre>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#airflow">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#quality">Next: Quality &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="quality">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 7</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Data Quality &amp; Idempotency</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Reliable pipelines are idempotent: running them twice produces the same result. Data quality checks catch issues before downstream consumers trust the data.</p>
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Idempotency techniques</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li>Use <code class="kbd">INSERT ... ON CONFLICT</code> or <code class="kbd">MERGE</code>.</li>
+         <li>Partition tables by load date and overwrite partitions.</li>
+         <li>Track watermark/offset and resume from the last successful point.</li>
+        </ul>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Quality checks</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li>Schema validation: expected columns and types.</li>
+         <li>Range checks: no negative prices, valid timestamps.</li>
+         <li>Uniqueness and referential integrity.</li>
+         <li>Freshness: data arrived within the expected window.</li>
+        </ul>
+       </div>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-bash"># Save as upsert_events.py, then run with uv
+cat << 'EOF' > upsert_events.py
+# Idempotent load: upsert events by event_id
+import psycopg2
+import json
+
+conn = psycopg2.connect(
+    host="localhost", dbname="events_db",
+    user="de_user", password="de_pass"
+)
+
+def upsert_event(cur, event_id, payload):
+    cur.execute("""
+        INSERT INTO staging_events (event_id, payload)
+        VALUES (%s, %s)
+        ON CONFLICT (event_id) DO UPDATE SET payload = EXCLUDED.payload;
+    """, (event_id, json.dumps(payload)))
+
+with conn.cursor() as cur:
+    upsert_event(cur, "evt_42", {"page": "/pricing"})
+    conn.commit()
+
+conn.close()
+# This makes the pipeline safe to rerun for the same input file.
+EOF
+
+uv run --with psycopg2 upsert_events.py</code></pre>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#dbt">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#project">Next: Capstone &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="project">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 8</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Capstone: SaaS ELT Pipeline</h2>
+      <h3 class="text-xl font-semibold mb-3">1. What is this project?</h3>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">You will build an end-to-end ELT pipeline for a SaaS events dataset. The pipeline extracts events from CSV/JSON, loads them into Postgres, cleans them with dbt, and runs daily under Airflow.</p>
+      <h3 class="text-xl font-semibold mb-3">2. What it covers?</h3>
+      <div class="card rounded-2xl p-6 mb-8">
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+        <li>Extract events from CSV/JSON sources with Python.</li>
+        <li>Load raw data into Postgres staging tables.</li>
+        <li>Write dbt models for cleaned facts and dimensions.</li>
+        <li>Add an Airflow DAG for daily orchestration.</li>
+        <li>Add data quality checks and idempotency.</li>
+       </ul>
+      </div>
+      <h3 class="text-xl font-semibold mb-3">3. How it is done?</h3>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Use Python to read source files, Postgres as the warehouse, dbt for transformations, and Airflow to schedule. The examples are simplified to run locally.</p>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-bash"># extract.py: read CSV and JSONL into a list of dicts
+cat << 'EOF' > extract.py
+import csv, json
+
+def extract_csv(path):
+    with open(path, newline="") as f:
+        return list(csv.DictReader(f))
+
+def extract_jsonl(path):
+    rows = []
+    with open(path) as f:
+        for line in f:
+            rows.append(json.loads(line))
+    return rows
+
+raw_events = extract_csv("events.csv") + extract_jsonl("events.jsonl")
+print(f"Loaded {len(raw_events)} raw events")
+EOF
+
+uv run extract.py</code></pre>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-bash"># load.py: idempotent load into Postgres staging
+cat << 'EOF' > load.py
+import psycopg2, json, csv
+
+def extract_csv(path):
+    with open(path, newline="") as f:
+        return list(csv.DictReader(f))
+
+def extract_jsonl(path):
+    rows = []
+    with open(path) as f:
+        for line in f:
+            rows.append(json.loads(line))
+    return rows
+
+raw_events = extract_csv("events.csv") + extract_jsonl("events.jsonl")
+
+conn = psycopg2.connect(host="localhost", dbname="events_db",
+                        user="de_user", password="de_pass")
+cur = conn.cursor()
+cur.execute("""
+CREATE TABLE IF NOT EXISTS staging_events (
+    event_id TEXT PRIMARY KEY,
+    user_id INT,
+    event_type TEXT,
+    page TEXT,
+    event_ts TIMESTAMPTZ,
+    loaded_at TIMESTAMPTZ DEFAULT now()
+);
+""")
+
+for row in raw_events:
+    cur.execute("""
+        INSERT INTO staging_events (event_id, user_id, event_type, page, event_ts)
+        VALUES (%s, %s, %s, %s, %s)
+        ON CONFLICT (event_id) DO UPDATE SET
+            user_id = EXCLUDED.user_id,
+            event_type = EXCLUDED.event_type,
+            page = EXCLUDED.page,
+            event_ts = EXCLUDED.event_ts;
+    """, (row["event_id"], row["user_id"], row["event_type"],
+          row.get("page"), row.get("event_ts")))
+
+conn.commit()
+conn.close()
+EOF
+
+uv run --with psycopg2 load.py</code></pre>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-sql">-- models/staging/stg_events.sql
+SELECT
+    event_id,
+    user_id,
+    LOWER(TRIM(event_type)) AS event_type,
+    page,
+    event_ts
+FROM staging_events
+WHERE user_id IS NOT NULL
+  AND event_ts IS NOT NULL
+
+-- models/marts/fct_events.sql
+SELECT
+    event_id,
+    user_id,
+    event_type,
+    page,
+    event_ts,
+    DATE_TRUNC('day', event_ts) AS event_date
+FROM {{ ref('stg_events') }}</code></pre>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-yaml"># models/schema.yml
+version: 2
+models:
+  - name: stg_events
+    columns:
+      - name: event_id
+        tests:
+          - unique
+          - not_null
+      - name: user_id
+        tests:
+          - not_null
+  - name: fct_events
+    columns:
+      - name: event_id
+        tests:
+          - unique
+          - not_null
+      - name: event_type
+        tests:
+          - accepted_values:
+              values: ['page_view', 'click', 'signup']</code></pre>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-python"># dag.py: Airflow orchestration
+from datetime import datetime, timedelta
+from airflow import DAG
+from airflow.operators.bash import BashOperator
+
+with DAG(
+    "saas_elt",
+    start_date=datetime(2024, 9, 1),
+    schedule_interval="@daily",
+    catchup=False,
+    default_args={"retries": 1, "retry_delay": timedelta(minutes=5)},
+) as dag:
+    extract_load = BashOperator(
+        task_id="extract_load",
+        bash_command="uv run --with psycopg2 /opt/pipeline/load.py"
+    )
+    dbt_run = BashOperator(
+        task_id="dbt_run",
+        bash_command="uv run --with dbt-core,dbt-postgres dbt run --select marts"
+    )
+    dbt_test = BashOperator(
+        task_id="dbt_test",
+        bash_command="uv run --with dbt-core,dbt-postgres dbt test"
+    )
+
+    extract_load >> dbt_run >> dbt_test</code></pre>
+      </div>
+      <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5 mb-6">
+       <h4 class="font-semibold mb-2">Running with uv</h4>
+       <p class="text-[var(--muted)]">Install Airflow as a persistent tool with <code class="kbd">uv tool install apache-airflow</code>, or validate the DAG file with <code class="kbd">uv run --with apache-airflow dag.py</code>. The BashOperator commands above use <code class="kbd">uv run --with</code> so dependencies are resolved inline.</p>
+      </div>
+      <h3 class="text-xl font-semibold mb-3">4. What did we learn from this capstone project?</h3>
+      <div class="card rounded-2xl p-6 mb-8">
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+        <li>ELT keeps raw data accessible while letting SQL transformations be versioned and tested.</li>
+        <li>Idempotent loads prevent duplicates when a pipeline reruns.</li>
+        <li>dbt tests turn assumptions into CI-checkable rules.</li>
+        <li>Airflow turns a set of scripts into a scheduled, observable workflow.</li>
+       </ul>
+      </div>
+      <h3 class="text-xl font-semibold mb-3">5. How can I enhance this project in the future?</h3>
+      <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5">
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+        <li>Add partitioning by event_date to the fact table.</li>
+        <li>Move sources to S3 and trigger extraction on file arrival.</li>
+        <li>Add Great Expectations or Soda for richer data quality checks.</li>
+        <li>Containerize the pipeline with Docker and run in Kubernetes.</li>
+        <li>Emit lineage metadata to a catalog like DataHub or OpenLineage.</li>
+       </ul>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#quality">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#quiz">Next: Quiz &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="quiz">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Knowledge Check</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Test Your Understanding</h2>
+      <div class="space-y-8">
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">1. In ELT, transformations typically happen:</p>
+        <div class="quiz" data-answer="B">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Before loading data</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. After loading raw data into the warehouse</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. In the source application</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Only in a BI tool</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">2. What does idempotent mean for a data pipeline?</p>
+        <div class="quiz" data-answer="C">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. It runs faster every time</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. It never retries failures</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Running it twice produces the same result</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. It deletes data after each run</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">3. In Airflow, a DAG is:</p>
+        <div class="quiz" data-answer="A">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. A directed acyclic graph of tasks</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. A database access group</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. A single Python function</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. A SQL transformation model</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">4. dbt models are written as:</p>
+        <div class="quiz" data-answer="B">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Python classes</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. SQL SELECT statements</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Bash scripts</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. YAML-only definitions</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">5. Reverse ETL moves data:</p>
+        <div class="quiz" data-answer="D">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. From APIs into a data lake</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Between two warehouses</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. From logs into a stream</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. From a warehouse into operational systems</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">6. Which is an example of a data quality check?</p>
+        <div class="quiz" data-answer="B">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Increasing the number of workers</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Ensuring event_id is unique and not null</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Changing the brand color in a dashboard</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Adding a new data source</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">7. Batch ingestion is best when:</p>
+        <div class="quiz" data-answer="A">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Latency of minutes/hours is acceptable</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Events must be processed within milliseconds</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. There is no source data</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Only JSON is used</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">8. Which Airflow component executes a task?</p>
+        <div class="quiz" data-answer="C">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Scheduler</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Webserver</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Worker</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. DAG file</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+      </div>
+     </section>
+    </div>
+   </main>
+  </div>
+  <script>
+   const html = document.documentElement; const moon = document.getElementById('moon'); const sun = document.getElementById('sun'); const lightStylesheet = document.getElementById('hljs-light'); const darkStylesheet = document.getElementById('hljs-dark'); function applyTheme(theme) { html.classList.remove('light', 'dark'); html.classList.add(theme); if (theme === 'dark') { lightStylesheet.disabled = true; darkStylesheet.disabled = false; moon.classList.add('hidden'); sun.classList.remove('hidden'); } else { lightStylesheet.disabled = false; darkStylesheet.disabled = true; moon.classList.remove('hidden'); sun.classList.add('hidden'); } localStorage.setItem('tutorials-theme', theme); } document.getElementById('theme-toggle').addEventListener('click', () => { applyTheme(html.classList.contains('dark') ? 'light' : 'dark'); }); const saved = localStorage.getItem('tutorials-theme'); applyTheme(saved === 'dark' ? 'dark' : 'light');
+   function setStatus(status) { localStorage.setItem('tutorial-data-engineering-pipelines-orchestration-status', status); updateButtons(); }
+   function updateButtons() { const status = localStorage.getItem('tutorial-data-engineering-pipelines-orchestration-status') || 'not-started'; document.querySelectorAll('[id^="btn-start"]').forEach(btn => { btn.textContent = status === 'in-progress' ? 'In Progress' : 'Start'; }); document.querySelectorAll('[id^="btn-complete"]').forEach(btn => { btn.textContent = status === 'completed' ? 'Completed' : 'Mark Complete'; }); }
+   document.querySelectorAll('[id^="btn-start"]').forEach(btn => btn.addEventListener('click', () => setStatus('in-progress')));
+   document.querySelectorAll('[id^="btn-complete"]').forEach(btn => btn.addEventListener('click', () => setStatus('completed')));
+   document.querySelectorAll('[id^="btn-reset"]').forEach(btn => btn.addEventListener('click', () => { localStorage.removeItem('tutorial-data-engineering-pipelines-orchestration-status'); updateButtons(); }));
+   updateButtons();
+   function toggleSidebar() { const sidebar = document.getElementById('sidebar'); const overlay = document.getElementById('menu-overlay'); sidebar.classList.toggle('open'); overlay.classList.toggle('hidden'); }
+   function copyCode(btn) { const code = btn.nextElementSibling.querySelector('code'); navigator.clipboard.writeText(code.innerText).then(() => { btn.textContent = 'Copied!'; btn.classList.add('copied'); setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500); }); }
+   const sections = document.querySelectorAll('section[id]'); const tocLinks = document.querySelectorAll('.toc-link'); const observer = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (entry.isIntersecting) { tocLinks.forEach((link) => link.classList.remove('active')); const active = document.querySelector(`.toc-link[href="#${entry.target.id}"]`); if (active) active.classList.add('active'); } }); }, { rootMargin: '-20% 0px -60% 0px' }); sections.forEach((section) => observer.observe(section));
+   document.querySelectorAll('.quiz').forEach((quiz) => { const correct = quiz.dataset.answer; const feedback = quiz.nextElementSibling; quiz.querySelectorAll('.quiz-opt').forEach((opt) => { opt.addEventListener('click', () => { quiz.querySelectorAll('.quiz-opt').forEach((o) => { o.classList.remove('selected', 'correct', 'wrong'); o.disabled = true; }); opt.classList.add('selected'); if (opt.dataset.val === correct) { opt.classList.add('correct'); feedback.textContent = 'Correct! ✅'; feedback.className = 'quiz-feedback mt-3 font-medium text-[var(--success)]'; } else { opt.classList.add('wrong'); feedback.textContent = `Not quite. The correct answer is ${correct}.`; feedback.className = 'quiz-feedback mt-3 font-medium text-[var(--danger)]'; } }); }); }); hljs.highlightAll();
+  </script>
+ </body>
+</html>

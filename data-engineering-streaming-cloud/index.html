@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Streaming Data &amp; Cloud</title>
+  <link href="../assets/favicons/data-engineering-streaming-cloud.svg" rel="icon" type="image/svg+xml"/>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-light" rel="stylesheet"/>
+  <link disabled="" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" id="hljs-dark" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js">
+  </script>
+  <script>
+   tailwind.config = { darkMode: 'class' }
+  </script>
+  <link href="../assets/styles.css" rel="stylesheet"/>
+ </head>
+ <body class="antialiased transition-colors duration-300 brand-data-engineering-streaming-cloud">
+  <a class="sr-only" href="#main" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Skip to content</a>
+  <div class="fixed inset-0 bg-black/40 z-30 hidden lg:hidden" id="menu-overlay" onclick="toggleSidebar()">
+  </div>
+  <div class="flex min-h-screen">
+   <aside class="fixed lg:sticky top-0 left-0 h-screen w-72 border-r border-[var(--border)] bg-[var(--panel)] z-40 overflow-y-auto p-6" id="sidebar">
+    <div class="flex items-center gap-3 mb-8">
+     <img alt="Data Engineering" class="w-10 h-10" src="../assets/favicons/data-engineering-streaming-cloud.svg"/>
+     <span class="text-xl font-bold">DE Streaming</span>
+    </div>
+    <nav class="space-y-1 text-sm" id="toc">
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">1. Introduction</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#messaging">2. Messaging Systems</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#stream-processing">3. Stream Processing</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#spark-hadoop">4. Spark &amp; Hadoop Basics</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#cloud-services">5. Cloud Data Services</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#choosing">6. Choosing Cloud Technologies</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#cluster">7. Cluster Computing &amp; Serverless</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#project">8. Capstone: Real-Time SaaS Event Pipeline</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#quiz">9. Knowledge Check</a>
+    </nav>
+    <div class="mt-8 pt-6 border-t border-[var(--border)]">
+     <p class="text-xs text-[var(--muted)]">Open in any browser. No build step required.</p>
+    </div>
+   </aside>
+   <main class="flex-1 min-w-0" id="main">
+    <header class="sticky top-0 z-20 border-b border-[var(--border)] bg-[var(--panel)]/90 backdrop-blur px-6 py-4 flex items-center justify-between">
+     <div class="flex items-center gap-3">
+      <button aria-label="Open menu" class="lg:hidden p-2 rounded-md border border-[var(--border)]" onclick="toggleSidebar()">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path>
+       </svg>
+      </button>
+      <h1 class="text-lg sm:text-xl font-bold tracking-tight">Streaming Data &amp; Cloud</h1>
+     </div>
+     <div class="hidden sm:flex items-center gap-2 progress-controls" id="progress-controls">
+      <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-start">Start</button>
+      <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-complete">Mark Complete</button>
+      <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-reset">Reset</button>
+     </div>
+     <div class="sm:hidden flex items-center gap-2 progress-controls" id="progress-controls-mobile">
+      <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-start-mobile">Start</button>
+      <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-complete-mobile">Complete</button>
+      <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-reset-mobile">Reset</button>
+     </div>
+     <button aria-label="Toggle theme" class="p-2 rounded-full border border-[var(--border)] hover:bg-black/5 dark:hover:bg-white/5 transition" id="theme-toggle">
+      <svg aria-hidden="true" class="w-5 h-5" fill="none" id="moon" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+       <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <svg aria-hidden="true" class="w-5 h-5 hidden" fill="none" id="sun" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+       <circle cx="12" cy="12" r="5"></circle>
+       <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+     </button>
+    </header>
+    <div class="max-w-4xl mx-auto px-6 py-10 space-y-20">
+     <section class="scroll-mt-24" id="intro">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 1</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Introduction</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Streaming data and cloud platforms power the real-time layer of modern data architecture. This tutorial covers messaging systems like Kafka, stream processing with Spark, the Hadoop ecosystem, and the key data services of AWS, Azure, and GCP.</p>
+      <div class="card rounded-2xl p-6 mb-8">
+       <h3 class="text-xl font-semibold mb-3">Before you start</h3>
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+        <li>Comfortable with Python and basic SQL.</li>
+        <li>Conceptual understanding of ETL/ELT from the pipelines tutorial.</li>
+        <li>Optional: <a class="underline" href="../cloud-providers/index.html" target="_blank">Cloud Providers</a> for provider fundamentals.</li>
+       </ul>
+      </div>
+      <div class="card rounded-2xl p-6 mb-8">
+       <h3 class="text-xl font-semibold mb-3">What you'll learn</h3>
+       <ul class="grid sm:grid-cols-2 gap-3 text-[var(--muted)]">
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>Messages vs streams and async vs sync communication</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>Apache Kafka topics, partitions, and consumers</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>Spark Structured Streaming and RDD/DataFrame basics</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>Hadoop, HDFS, YARN, and MapReduce concepts</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>Cloud data services on AWS, Azure, and GCP</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>A real-time SaaS event pipeline capstone</li>
+       </ul>
+      </div>
+      <div class="card rounded-2xl p-6 mb-8">
+       <h3 class="text-xl font-semibold mb-3">Real-world impact</h3>
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+        <li><strong>LinkedIn</strong> created Kafka to handle trillions of events per day for activity streams.</li>
+        <li><strong>Uber</strong> uses Spark Streaming to process geolocation and pricing events in real time.</li>
+        <li><strong>Netflix</strong> runs massive Spark jobs on AWS for recommendations and content encoding.</li>
+       </ul>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <span></span>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#messaging">Next: Messaging Systems &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="messaging">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 2</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Messaging Systems</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Messaging systems decouple producers from consumers. A message queue delivers each message to one consumer; a stream lets many consumers read the same events, retaining them for replay.</p>
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Message queues</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>RabbitMQ</strong>: traditional broker with routing and acknowledgments.</li>
+         <li><strong>AWS SQS</strong>: fully managed queue service.</li>
+         <li>Good for job distribution and task queues.</li>
+        </ul>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Stream platforms</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>Apache Kafka</strong>: distributed commit log, high throughput, replayable.</li>
+         <li><strong>AWS Kinesis, Azure Event Hubs</strong>: managed streaming.</li>
+         <li>Good for event sourcing, metrics, and real-time analytics.</li>
+        </ul>
+       </div>
+      </div>
+      <div class="card rounded-2xl p-6 mb-8 flex flex-col items-center">
+       <h3 class="text-xl font-semibold mb-4 w-full">Kafka topic and partitions</h3>
+       <svg aria-label="Diagram showing Kafka topic split into partitions" class="diagram" viewBox="0 0 720 160">
+        <rect fill="#0891b2" height="80" opacity="0.2" rx="8" stroke="#0891b2" stroke-width="2" width="640" x="40" y="30"></rect>
+        <text fill="#0891b2" font-size="13" font-weight="700" text-anchor="middle" x="360" y="55">Topic: saas-events</text>
+        <line stroke="#0891b2" stroke-width="2" x1="253" x2="253" y1="70" y2="110"></line>
+        <line stroke="#0891b2" stroke-width="2" x1="466" x2="466" y1="70" y2="110"></line>
+        <text fill="var(--muted)" font-size="11" text-anchor="middle" x="146" y="95">Partition 0</text>
+        <text fill="var(--muted)" font-size="11" text-anchor="middle" x="360" y="95">Partition 1</text>
+        <text fill="var(--muted)" font-size="11" text-anchor="middle" x="573" y="95">Partition 2</text>
+       </svg>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-bash"># Kafka CLI basics
+kafka-topics.sh --create --topic saas-events --bootstrap-server localhost:9092
+kafka-topics.sh --describe --topic saas-events --bootstrap-server localhost:9092
+kafka-console-producer.sh --topic saas-events --bootstrap-server localhost:9092
+kafka-console-consumer.sh --topic saas-events --from-beginning \
+  --bootstrap-server localhost:9092</code></pre>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#stream-processing">Next: Stream Processing &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="stream-processing">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 3</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Stream Processing</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Stream processing reads events continuously, applies transformations or aggregations, and emits results with low latency. It is the opposite of batch processing, which waits for a bounded dataset to finish.</p>
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Stream vs batch</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>Batch</strong>: bounded input, high throughput, higher latency.</li>
+         <li><strong>Stream</strong>: unbounded input, continuous processing, lower latency.</li>
+         <li><strong>Micro-batch</strong>: a hybrid with small fixed intervals.</li>
+        </ul>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Windowing</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>Tumbling</strong>: fixed, non-overlapping windows.</li>
+         <li><strong>Sliding</strong>: overlapping windows.</li>
+         <li><strong>Session</strong>: windows that close after a gap of inactivity.</li>
+        </ul>
+       </div>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#messaging">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#spark-hadoop">Next: Spark &amp; Hadoop &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="spark-hadoop">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 4</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Spark &amp; Hadoop Basics</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Apache Spark is the dominant engine for large-scale batch and stream processing. Hadoop introduced the core ideas of distributed storage (HDFS) and processing (MapReduce, YARN) that Spark builds upon.</p>
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Hadoop ecosystem</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>HDFS</strong>: distributed file system.</li>
+         <li><strong>YARN</strong>: resource manager for cluster jobs.</li>
+         <li><strong>MapReduce</strong>: early batch processing paradigm.</li>
+        </ul>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Spark abstractions</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>RDD</strong>: resilient distributed dataset, low-level.</li>
+         <li><strong>DataFrame</strong>: columnar API with Catalyst optimization.</li>
+         <li><strong>Dataset</strong>: typed DataFrame (Scala/Java).</li>
+        </ul>
+       </div>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-bash"># Save as spark_batch.py, then run with uv
+cat << 'EOF' > spark_batch.py
+# PySpark batch example: count events by type
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import col
+
+spark = SparkSession.builder.appName("EventCounts").getOrCreate()
+
+df = spark.read.json("s3a://saas-events/raw/")
+df.groupBy("event_type").count().show()
+EOF
+
+uv run --with pyspark spark_batch.py</code></pre>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#stream-processing">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#cloud-services">Next: Cloud Services &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="cloud-services">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 5</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Cloud Data Services</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">AWS, Azure, and GCP each offer a rich set of managed data services. The names differ, but the categories are the same: object storage, data warehouse, relational database, ETL/orchestration, and messaging.</p>
+      <div class="card rounded-2xl p-6 mb-8">
+       <h3 class="text-xl font-semibold mb-3">Service mapping</h3>
+       <div class="overflow-x-auto">
+        <table class="compare-table w-full">
+         <thead>
+          <tr>
+           <th>Category</th>
+           <th>AWS</th>
+           <th>Azure</th>
+           <th>GCP</th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>Object storage</td>
+           <td>S3</td>
+           <td>Blob Storage</td>
+           <td>Cloud Storage</td>
+          </tr>
+          <tr>
+           <td>Data warehouse</td>
+           <td>Redshift</td>
+           <td>Synapse</td>
+           <td>BigQuery</td>
+          </tr>
+          <tr>
+           <td>Managed Postgres/MySQL</td>
+           <td>RDS, Aurora</td>
+           <td>Azure Database</td>
+           <td>Cloud SQL</td>
+          </tr>
+          <tr>
+           <td>ETL/Integration</td>
+           <td>Glue</td>
+           <td>Data Factory</td>
+           <td>Dataflow, Cloud Data Fusion</td>
+          </tr>
+          <tr>
+           <td>Messaging/Streaming</td>
+           <td>Kinesis, SNS, SQS</td>
+           <td>Event Hubs, Service Bus</td>
+           <td>Pub/Sub</td>
+          </tr>
+         </tbody>
+        </table>
+       </div>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#spark-hadoop">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#choosing">Next: Choosing Cloud &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="choosing">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 6</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Choosing Cloud Technologies</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Cloud choices should be driven by data volume, latency, query patterns, team expertise, and cost. Avoid picking a service because it is trendy; pick it because it fits the access pattern.</p>
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">When to use what</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>Object storage</strong>: data lake landing zone, backups, archives.</li>
+         <li><strong>Data warehouse</strong>: SQL analytics, BI, large aggregations.</li>
+         <li><strong>Managed OLTP</strong>: applications that need transactions.</li>
+         <li><strong>Stream service</strong>: real-time ingestion and event-driven apps.</li>
+        </ul>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Serverless options</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>AWS Lambda + S3 + Athena</strong>: event-driven ETL.</li>
+         <li><strong>Google BigQuery</strong>: serverless warehouse.</li>
+         <li><strong>Azure Functions + Blob + Synapse</strong>: similar serverless stack.</li>
+        </ul>
+       </div>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#cloud-services">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#cluster">Next: Cluster Computing &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="cluster">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 7</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Cluster Computing &amp; Serverless</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Cluster computing distributes work across many nodes. Managed Kubernetes, Spark clusters, and serverless functions let data engineers scale without managing hardware. See <a class="underline" href="../kubernetes/index.html" target="_blank">Kubernetes</a> and <a class="underline" href="../docker/index.html" target="_blank">Docker</a> for fundamentals.</p>
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Cluster models</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>Long-lived clusters</strong>: always-on Spark/Kubernetes for steady workloads.</li>
+         <li><strong>Job clusters</strong>: spin up for a specific job, then terminate.</li>
+         <li><strong>Serverless</strong>: pay per query or per invocation.</li>
+        </ul>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Trade-offs</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li>Clusters give control and predictable performance.</li>
+         <li>Serverless reduces operational overhead and scales to zero.</li>
+         <li>Cold starts and per-query costs can surprise at scale.</li>
+        </ul>
+       </div>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#choosing">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#project">Next: Capstone &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="project">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 8</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Capstone: Real-Time SaaS Event Pipeline</h2>
+      <h3 class="text-xl font-semibold mb-3">1. What is this project?</h3>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">You will build a conceptual real-time pipeline: produce simulated SaaS events to Kafka, consume and parse them, aggregate with PySpark Structured Streaming, write to a target table, and monitor lag and throughput. For a local browser-safe demo, the sink uses SQLite instead of a real cloud warehouse.</p>
+      <h3 class="text-xl font-semibold mb-3">2. What it covers?</h3>
+      <div class="card rounded-2xl p-6 mb-8">
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+        <li>Produce simulated SaaS events to a Kafka topic.</li>
+        <li>Consume and parse events with a Kafka consumer.</li>
+        <li>Aggregate events with PySpark Structured Streaming.</li>
+        <li>Write results to a target table/cloud sink concept.</li>
+        <li>Monitor lag and throughput.</li>
+       </ul>
+      </div>
+      <h3 class="text-xl font-semibold mb-3">3. How it is done?</h3>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Install Kafka and PySpark locally, create a topic, run the producer and consumer, then add the Spark streaming aggregation. The SQLite sink is a stand-in for BigQuery or Redshift.</p>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-bash"># producer.py: simulate SaaS events to Kafka
+cat << 'EOF' > producer.py
+import json, time, random
+from kafka import KafkaProducer
+
+producer = KafkaProducer(
+    bootstrap_servers=['localhost:9092'],
+    value_serializer=lambda v: json.dumps(v).encode('utf-8')
+)
+
+event_types = ['page_view', 'click', 'signup']
+while True:
+    event = {
+        'event_id': f"evt_{random.randint(1, 1000000)}",
+        'user_id': random.randint(1, 1000),
+        'event_type': random.choice(event_types),
+        'page': random.choice(['/', '/pricing', '/docs']),
+        'ts': time.time()
+    }
+    producer.send('saas-events', event)
+    time.sleep(0.5)
+EOF
+
+uv run --with kafka-python producer.py</code></pre>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-bash"># consumer.py: read from Kafka and parse JSON
+cat << 'EOF' > consumer.py
+import json
+from kafka import KafkaConsumer
+
+consumer = KafkaConsumer(
+    'saas-events',
+    bootstrap_servers=['localhost:9092'],
+    auto_offset_reset='earliest',
+    value_deserializer=lambda m: json.loads(m.decode('utf-8'))
+)
+
+for msg in consumer:
+    print(msg.value)
+    # In production, write parsed records to a sink.
+EOF
+
+uv run --with kafka-python consumer.py</code></pre>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-bash"># spark_stream.py: aggregate events with Structured Streaming
+cat << 'EOF' > spark_stream.py
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import from_json, col, window, count
+from pyspark.sql.types import StructType, StringType, IntegerType, DoubleType
+
+schema = StructType() \
+    .add("event_id", StringType()) \
+    .add("user_id", IntegerType()) \
+    .add("event_type", StringType()) \
+    .add("page", StringType()) \
+    .add("ts", DoubleType())
+
+spark = SparkSession.builder \
+    .appName("SaaSStreaming") \
+    .getOrCreate()
+
+raw = spark.readStream.format("kafka") \
+    .option("kafka.bootstrap.servers", "localhost:9092") \
+    .option("subscribe", "saas-events") \
+    .load()
+
+parsed = raw.select(from_json(col("value").cast("string"), schema).alias("data")) \
+    .select("data.*") \
+    .withColumn("event_ts", col("ts").cast("timestamp"))
+
+agg = parsed.withWatermark("event_ts", "1 minute") \
+    .groupBy(window("event_ts", "1 minute"), "event_type") \
+    .agg(count("*").alias("event_count"))
+
+query = agg.writeStream.outputMode("append") \
+    .format("console") \
+    .option("truncate", "false") \
+    .start()
+
+query.awaitTermination()
+EOF
+
+uv run --with pyspark spark_stream.py</code></pre>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-sql">-- SQLite sink for local demo (stand-in for BigQuery/Redshift)
+CREATE TABLE IF NOT EXISTS minute_event_counts (
+    window_start TEXT,
+    window_end TEXT,
+    event_type TEXT,
+    event_count INT,
+    inserted_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Monitoring query: check throughput
+SELECT window_start, SUM(event_count) AS total
+FROM minute_event_counts
+GROUP BY window_start
+ORDER BY window_start DESC
+LIMIT 10;
+
+-- Lag check: compare Kafka consumer offset to latest offset
+-- Use kafka-consumer-groups.sh --describe --group saas-consumer</code></pre>
+      </div>
+      <h3 class="text-xl font-semibold mb-3">4. What did we learn from this capstone project?</h3>
+      <div class="card rounded-2xl p-6 mb-8">
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+        <li>Kafka topics and partitions provide scalable, durable event streams.</li>
+        <li>Spark Structured Streaming bridges batch and streaming APIs.</li>
+        <li>Watermarks and windows handle late-arriving data.</li>
+        <li>Monitoring lag and throughput is essential for production streaming.</li>
+       </ul>
+      </div>
+      <h3 class="text-xl font-semibold mb-3">5. How can I enhance this project in the future?</h3>
+      <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5">
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+        <li>Replace the SQLite sink with BigQuery/Redshift streaming inserts.</li>
+        <li>Add exactly-once semantics with idempotent writes.</li>
+        <li>Use Kafka Connect to ingest from databases or object storage.</li>
+        <li>Deploy on a managed Kubernetes cluster with Strimzi or Confluent.</li>
+        <li>Add auto-scaling based on consumer lag metrics.</li>
+       </ul>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#cluster">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#quiz">Next: Quiz &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="quiz">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Knowledge Check</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Test Your Understanding</h2>
+      <div class="space-y-8">
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">1. Kafka retains messages in ordered structures called:</p>
+        <div class="quiz" data-answer="B">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Queues</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Partitions</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Buckets</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Tables</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">2. In Spark, a DataFrame is optimized through:</p>
+        <div class="quiz" data-answer="A">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Catalyst optimizer</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. B-tree indexes</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. MapReduce shuffle</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Kafka partitions</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">3. HDFS is primarily:</p>
+        <div class="quiz" data-answer="C">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. A stream processor</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. A message broker</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. A distributed file system</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. A SQL engine</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">4. Which AWS service is a managed data warehouse?</p>
+        <div class="quiz" data-answer="B">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. S3</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Redshift</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Kinesis</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Glue</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">5. What is the GCP equivalent of object storage?</p>
+        <div class="quiz" data-answer="C">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. BigQuery</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Dataflow</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Cloud Storage</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Pub/Sub</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">6. A fixed, non-overlapping time window is called:</p>
+        <div class="quiz" data-answer="A">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Tumbling window</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Sliding window</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Session window</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Global window</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">7. Serverless data processing reduces:</p>
+        <div class="quiz" data-answer="B">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Code reuse</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Operational overhead of cluster management</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Data security</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Network latency</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">8. Which term describes a stream processor handling unbounded input continuously?</p>
+        <div class="quiz" data-answer="C">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Batch processing</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. ETL pipeline</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Stream processing</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Reverse ETL</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+      </div>
+     </section>
+    </div>
+   </main>
+  </div>
+  <script>
+   const html = document.documentElement; const moon = document.getElementById('moon'); const sun = document.getElementById('sun'); const lightStylesheet = document.getElementById('hljs-light'); const darkStylesheet = document.getElementById('hljs-dark'); function applyTheme(theme) { html.classList.remove('light', 'dark'); html.classList.add(theme); if (theme === 'dark') { lightStylesheet.disabled = true; darkStylesheet.disabled = false; moon.classList.add('hidden'); sun.classList.remove('hidden'); } else { lightStylesheet.disabled = false; darkStylesheet.disabled = true; moon.classList.remove('hidden'); sun.classList.add('hidden'); } localStorage.setItem('tutorials-theme', theme); } document.getElementById('theme-toggle').addEventListener('click', () => { applyTheme(html.classList.contains('dark') ? 'light' : 'dark'); }); const saved = localStorage.getItem('tutorials-theme'); applyTheme(saved === 'dark' ? 'dark' : 'light');
+   function setStatus(status) { localStorage.setItem('tutorial-data-engineering-streaming-cloud-status', status); updateButtons(); }
+   function updateButtons() { const status = localStorage.getItem('tutorial-data-engineering-streaming-cloud-status') || 'not-started'; document.querySelectorAll('[id^="btn-start"]').forEach(btn => { btn.textContent = status === 'in-progress' ? 'In Progress' : 'Start'; }); document.querySelectorAll('[id^="btn-complete"]').forEach(btn => { btn.textContent = status === 'completed' ? 'Completed' : 'Mark Complete'; }); }
+   document.querySelectorAll('[id^="btn-start"]').forEach(btn => btn.addEventListener('click', () => setStatus('in-progress')));
+   document.querySelectorAll('[id^="btn-complete"]').forEach(btn => btn.addEventListener('click', () => setStatus('completed')));
+   document.querySelectorAll('[id^="btn-reset"]').forEach(btn => btn.addEventListener('click', () => { localStorage.removeItem('tutorial-data-engineering-streaming-cloud-status'); updateButtons(); }));
+   updateButtons();
+   function toggleSidebar() { const sidebar = document.getElementById('sidebar'); const overlay = document.getElementById('menu-overlay'); sidebar.classList.toggle('open'); overlay.classList.toggle('hidden'); }
+   function copyCode(btn) { const code = btn.nextElementSibling.querySelector('code'); navigator.clipboard.writeText(code.innerText).then(() => { btn.textContent = 'Copied!'; btn.classList.add('copied'); setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500); }); }
+   const sections = document.querySelectorAll('section[id]'); const tocLinks = document.querySelectorAll('.toc-link'); const observer = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (entry.isIntersecting) { tocLinks.forEach((link) => link.classList.remove('active')); const active = document.querySelector(`.toc-link[href="#${entry.target.id}"]`); if (active) active.classList.add('active'); } }); }, { rootMargin: '-20% 0px -60% 0px' }); sections.forEach((section) => observer.observe(section));
+   document.querySelectorAll('.quiz').forEach((quiz) => { const correct = quiz.dataset.answer; const feedback = quiz.nextElementSibling; quiz.querySelectorAll('.quiz-opt').forEach((opt) => { opt.addEventListener('click', () => { quiz.querySelectorAll('.quiz-opt').forEach((o) => { o.classList.remove('selected', 'correct', 'wrong'); o.disabled = true; }); opt.classList.add('selected'); if (opt.dataset.val === correct) { opt.classList.add('correct'); feedback.textContent = 'Correct! ✅'; feedback.className = 'quiz-feedback mt-3 font-medium text-[var(--success)]'; } else { opt.classList.add('wrong'); feedback.textContent = `Not quite. The correct answer is ${correct}.`; feedback.className = 'quiz-feedback mt-3 font-medium text-[var(--danger)]'; } }); }); }); hljs.highlightAll();
+  </script>
+ </body>
+</html>

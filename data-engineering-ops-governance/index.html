@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>DataOps &amp; Governance</title>
+  <link href="../assets/favicons/data-engineering-ops-governance.svg" rel="icon" type="image/svg+xml"/>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-light" rel="stylesheet"/>
+  <link disabled="" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" id="hljs-dark" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dockerfile.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js">
+  </script>
+  <script>
+   tailwind.config = { darkMode: 'class' }
+  </script>
+  <link href="../assets/styles.css" rel="stylesheet"/>
+ </head>
+ <body class="antialiased transition-colors duration-300 brand-data-engineering-ops-governance">
+  <a class="sr-only" href="#main" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Skip to content</a>
+  <div class="fixed inset-0 bg-black/40 z-30 hidden lg:hidden" id="menu-overlay" onclick="toggleSidebar()">
+  </div>
+  <div class="flex min-h-screen">
+   <aside class="fixed lg:sticky top-0 left-0 h-screen w-72 border-r border-[var(--border)] bg-[var(--panel)] z-40 overflow-y-auto p-6" id="sidebar">
+    <div class="flex items-center gap-3 mb-8">
+     <img alt="Data Engineering" class="w-10 h-10" src="../assets/favicons/data-engineering-ops-governance.svg"/>
+     <span class="text-xl font-bold">DE Ops</span>
+    </div>
+    <nav class="space-y-1 text-sm" id="toc">
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">1. Introduction</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#serving">2. Data Serving &amp; BI</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#reverse-etl">3. Reverse ETL</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#cicd">4. Containers &amp; CI/CD for Data</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#monitoring">5. Monitoring Data Pipelines</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#lineage">6. Lineage &amp; Metadata</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#governance">7. Quality, Security, Privacy</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#project">8. Capstone: Governed Healthcare FHIR Platform</a>
+     <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#quiz">9. Knowledge Check</a>
+    </nav>
+    <div class="mt-8 pt-6 border-t border-[var(--border)]">
+     <p class="text-xs text-[var(--muted)]">Open in any browser. No build step required.</p>
+    </div>
+   </aside>
+   <main class="flex-1 min-w-0" id="main">
+    <header class="sticky top-0 z-20 border-b border-[var(--border)] bg-[var(--panel)]/90 backdrop-blur px-6 py-4 flex items-center justify-between">
+     <div class="flex items-center gap-3">
+      <button aria-label="Open menu" class="lg:hidden p-2 rounded-md border border-[var(--border)]" onclick="toggleSidebar()">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path>
+       </svg>
+      </button>
+      <h1 class="text-lg sm:text-xl font-bold tracking-tight">DataOps &amp; Governance</h1>
+     </div>
+     <div class="hidden sm:flex items-center gap-2 progress-controls" id="progress-controls">
+      <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-start">Start</button>
+      <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-complete">Mark Complete</button>
+      <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-reset">Reset</button>
+     </div>
+     <div class="sm:hidden flex items-center gap-2 progress-controls" id="progress-controls-mobile">
+      <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-start-mobile">Start</button>
+      <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-complete-mobile">Complete</button>
+      <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-reset-mobile">Reset</button>
+     </div>
+     <button aria-label="Toggle theme" class="p-2 rounded-full border border-[var(--border)] hover:bg-black/5 dark:hover:bg-white/5 transition" id="theme-toggle">
+      <svg aria-hidden="true" class="w-5 h-5" fill="none" id="moon" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+       <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <svg aria-hidden="true" class="w-5 h-5 hidden" fill="none" id="sun" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+       <circle cx="12" cy="12" r="5"></circle>
+       <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+     </button>
+    </header>
+    <div class="max-w-4xl mx-auto px-6 py-10 space-y-20">
+     <section class="scroll-mt-24" id="intro">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 1</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Introduction</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">DataOps and governance turn fragile data pipelines into reliable, observable, and compliant systems. This tutorial covers data serving, reverse ETL, BI tools, CI/CD, monitoring, lineage, metadata, data quality, privacy, and security. The capstone builds a governed healthcare FHIR data platform.</p>
+      <div class="card rounded-2xl p-6 mb-8">
+       <h3 class="text-xl font-semibold mb-3">Before you start</h3>
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+        <li>Familiarity with pipelines, Docker, and SQL.</li>
+        <li>Optional: <a class="underline" href="../docker/index.html" target="_blank">Docker</a>, <a class="underline" href="../devops-cicd/index.html" target="_blank">DevOps CI/CD</a>, and <a class="underline" href="../monitoring/index.html" target="_blank">Monitoring &amp; Observability</a>.</li>
+        <li>No healthcare data or cloud account required.</li>
+       </ul>
+      </div>
+      <div class="card rounded-2xl p-6 mb-8">
+       <h3 class="text-xl font-semibold mb-3">What you'll learn</h3>
+       <ul class="grid sm:grid-cols-2 gap-3 text-[var(--muted)]">
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>Data serving patterns and BI tools</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>Reverse ETL use cases</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>CI/CD and containers for data platforms</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>Monitoring, alerting, and lineage</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>PII masking, encryption, GDPR, EU AI Act</li>
+        <li class="flex items-start gap-2"><span class="brand text-lg">&checkmark;</span>Governed FHIR platform capstone</li>
+       </ul>
+      </div>
+      <div class="card rounded-2xl p-6 mb-8">
+       <h3 class="text-xl font-semibold mb-3">Real-world impact</h3>
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+        <li><strong>Segment</strong> uses reverse ETL to send warehouse insights back to marketing tools.</li>
+        <li><strong>Netflix</strong> data platforms use lineage and quality checks to protect downstream ML models.</li>
+        <li><strong>Healthcare providers</strong> combine encryption, masking, and access logs to comply with HIPAA and GDPR.</li>
+       </ul>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <span></span>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#serving">Next: Data Serving &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="serving">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 2</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Data Serving &amp; BI</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Data serving is the last stage of the data lifecycle. The goal is to put trustworthy data in front of decision makers through dashboards, reports, APIs, and self-service analytics.</p>
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">BI tools</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>Tableau, Power BI, Looker</strong>: enterprise BI.</li>
+         <li><strong>Streamlit</strong>: Python-native data apps.</li>
+         <li><strong>Superset, Metabase</strong>: open-source BI.</li>
+        </ul>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Data products</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li>Dashboards and KPIs.</li>
+         <li>Feature stores for ML. See <a class="underline" href="../machine-learning-python/index.html" target="_blank">Machine Learning with Python</a>.</li>
+         <li>Reverse ETL syncs to operational tools.</li>
+        </ul>
+       </div>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-bash"># dau_dashboard.py: Streamlit app to show daily active users
+cat << 'EOF' > dau_dashboard.py
+import streamlit as st
+import pandas as pd
+
+st.title("SaaS Daily Active Users")
+df = pd.read_sql("""
+    SELECT event_date, COUNT(DISTINCT user_key) AS dau
+    FROM fact_events
+    GROUP BY event_date
+    ORDER BY event_date
+"", conn)
+st.line_chart(df.set_index("event_date"))
+EOF
+
+uv run --with streamlit,pandas dau_dashboard.py
+
+# Or use a pyproject.toml so dependencies are declared once:
+cat << 'EOF' > pyproject.toml
+[project]
+name = "de-ops-dashboard"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "streamlit",
+    "pandas",
+    "psycopg2-binary",
+]
+EOF
+
+uv run streamlit run dau_dashboard.py</code></pre>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#reverse-etl">Next: Reverse ETL &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="reverse-etl">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 3</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Reverse ETL</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Reverse ETL moves curated data from the warehouse into operational systems. It closes the loop so that analytics directly powers actions in CRM, support, advertising, and product tools.</p>
+      <div class="card rounded-2xl p-6 mb-8">
+       <h3 class="text-xl font-semibold mb-3">Common reverse ETL use cases</h3>
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+        <li>Sync customer lifetime value scores to Salesforce.</li>
+        <li>Send churn-risk segments to an email marketing platform.</li>
+        <li>Update ad audiences in Facebook/Google Ads.</li>
+        <li>Route high-priority support tickets based on customer tier.</li>
+       </ul>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-sql">-- Segment/audience to sync to CRM
+SELECT
+    user_id,
+    segment_name,
+    last_activity_date,
+    predicted_churn_risk
+FROM mlt_user_segments
+WHERE segment_name = 'high_value_at_risk';
+-- In practice, a reverse ETL tool (Census, Hightouch)
+-- syncs this result to the CRM on a schedule.</code></pre>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#serving">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#cicd">Next: CI/CD &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="cicd">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 4</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Containers &amp; CI/CD for Data</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Data pipelines should be versioned, tested, and deployed like application code. Docker packages dependencies, and CI/CD automates testing and deployment. See <a class="underline" href="../docker/index.html" target="_blank">Docker</a>, <a class="underline" href="../kubernetes/index.html" target="_blank">Kubernetes</a>, and <a class="underline" href="../devops-cicd/index.html" target="_blank">DevOps CI/CD</a>.</p>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-dockerfile"># Dockerfile for a Python data pipeline
+FROM ghcr.io/astral-sh/uv:0.4-python3.11-alpine
+
+WORKDIR /app
+COPY pyproject.toml .
+COPY pipeline/ ./pipeline/
+
+RUN uv pip install --system .
+
+CMD ["uv", "run", "python", "-m", "pipeline.etl"]</code></pre>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-yaml"># .github/workflows/data-pipeline.yml
+name: data-pipeline-ci
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+        with:
+          version: "0.4"
+      - run: uv run --with pytest pytest tests/
+      - run: uv run --with dbt-core,dbt-postgres dbt parse
+      - run: uv run --with dbt-core,dbt-postgres dbt test --select staging
+      # Deploy step would run only on main branch.</code></pre>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#reverse-etl">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#monitoring">Next: Monitoring &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="monitoring">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 5</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Monitoring Data Pipelines</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">You cannot trust data you cannot observe. Monitoring covers freshness, volume, schema changes, failures, and latency. Alerts should fire before stakeholders notice a problem.</p>
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Key metrics</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>Freshness</strong>: last successful run time.</li>
+         <li><strong>Volume</strong>: rows processed vs expected.</li>
+         <li><strong>Latency</strong>: end-to-end pipeline duration.</li>
+         <li><strong>Error rate</strong>: failed tasks per DAG.</li>
+        </ul>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Tools</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li>Airflow UI and statsd/Prometheus metrics.</li>
+         <li>dbt Cloud / dbt artifacts for test results.</li>
+         <li>Data observability: Monte Carlo, Bigeye, Soda.</li>
+        </ul>
+       </div>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-bash"># check_freshness.py: alert if no new events in 2 hours
+cat << 'EOF' > check_freshness.py
+import datetime
+import psycopg2
+
+def check_freshness(conn, threshold_hours=2):
+    cur = conn.cursor()
+    cur.execute("SELECT MAX(event_ts) FROM fact_events")
+    last_ts = cur.fetchone()[0]
+    if last_ts is None:
+        return False
+    age = datetime.datetime.utcnow() - last_ts
+    return age < datetime.timedelta(hours=threshold_hours)
+
+conn = psycopg2.connect(host="localhost", dbname="events_db",
+                        user="de_user", password="de_pass")
+print("Fresh:", check_freshness(conn))
+conn.close()
+EOF
+
+uv run --with psycopg2 check_freshness.py
+</code></pre>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#cicd">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#lineage">Next: Lineage &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="lineage">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 6</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Lineage &amp; Metadata</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Data lineage tracks where data came from, how it was transformed, and where it is used. Metadata management catalogs tables, schemas, owners, and quality signals so teams can discover and trust data.</p>
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Why lineage matters</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li>Impact analysis before schema changes.</li>
+         <li>Root-cause analysis when a dashboard breaks.</li>
+         <li>Compliance: prove where PII flows.</li>
+        </ul>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Metadata tools</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>DataHub, OpenMetadata, Amundsen</strong>: open-source catalogs.</li>
+         <li><strong>dbt docs</strong>: lineage from model dependencies.</li>
+         <li><strong>OpenLineage</strong>: open standard for lineage events.</li>
+        </ul>
+       </div>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-python"># Minimal lineage record stored in a metadata table
+lineage_record = {
+    "run_id": "run_20240912_001",
+    "source": "staging_events",
+    "target": "fct_events",
+    "transformation": "dbt model: fct_events",
+    "run_by": "airflow",
+    "started_at": "2024-09-12T02:00:00Z",
+    "status": "success"
+}
+# In production, emit this to OpenLineage or a metadata catalog.</code></pre>
+      </div>
+      <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5 mb-6">
+       <h4 class="font-semibold mb-2">Running with uv</h4>
+       <p class="text-[var(--muted)]">To emit the lineage record to a catalog API, save it as <code class="kbd">record_lineage.py</code> and run with the <code class="kbd">requests</code> package:</p>
+       <p class="text-[var(--muted)] mt-2"><code class="kbd">uv run --with requests record_lineage.py</code></p>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#monitoring">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#governance">Next: Governance &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="governance">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 7</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Quality, Security, Privacy</h2>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Governance is the set of policies, controls, and practices that keep data accurate, secure, and compliant. It covers data quality, masking, encryption, access control, and regulations like GDPR and the EU AI Act.</p>
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Security controls</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>Encryption</strong>: at rest and in transit.</li>
+         <li><strong>Authentication vs authorization</strong>: who you are vs what you can do.</li>
+         <li><strong>Masking/obfuscation</strong>: hide PII for non-production use.</li>
+        </ul>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <h3 class="text-xl font-semibold mb-3">Regulations</h3>
+        <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+         <li><strong>GDPR</strong>: EU data protection, right to erasure, consent.</li>
+         <li><strong>EU AI Act</strong>: risk-based rules for AI systems.</li>
+         <li><strong>HIPAA</strong>: US healthcare data privacy and security.</li>
+        </ul>
+       </div>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-bash"># mask_pii.py: mask PII before loading to a lower environment
+cat << 'EOF' > mask_pii.py
+import hashlib
+
+def mask_email(email):
+    local, domain = email.split("@")
+    return f"{local[:2]}***@{domain}"
+
+def tokenize(value):
+    return hashlib.sha256(value.encode()).hexdigest()[:16]
+
+# Example usage
+print(mask_email("jane.doe@hospital.org"))
+print(tokenize("patient_123"))
+EOF
+
+uv run mask_pii.py</code></pre>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#lineage">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#project">Next: Capstone &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="project">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 8</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Capstone: Governed Healthcare FHIR Data Platform</h2>
+      <h3 class="text-xl font-semibold mb-3">1. What is this project?</h3>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">You will Dockerize the FHIR ETL pipeline from the foundations tutorial, add lineage tracking, implement PII masking and encryption for PHI, add data quality checks and monitoring alerts, and build a simple Streamlit governance dashboard.</p>
+      <h3 class="text-xl font-semibold mb-3">2. What it covers?</h3>
+      <div class="card rounded-2xl p-6 mb-8">
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+        <li>Dockerize the FHIR ETL pipeline.</li>
+        <li>Add data lineage tracking and a metadata catalog.</li>
+        <li>Implement PII masking and encryption for PHI.</li>
+        <li>Add data quality checks and monitoring alerts.</li>
+        <li>Build a Streamlit governance dashboard.</li>
+       </ul>
+      </div>
+      <h3 class="text-xl font-semibold mb-3">3. How it is done?</h3>
+      <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Package the pipeline in Docker, record lineage in a small SQLite catalog, mask emails, encrypt sensitive fields, run quality checks after load, and surface results in Streamlit.</p>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-dockerfile"># Dockerfile for the governed FHIR pipeline
+FROM python:3.11-slim
+COPY --from=ghcr.io/astral-sh/uv:0.4 /uv /bin/uv
+
+WORKDIR /app
+COPY pyproject.toml .
+COPY . /app
+RUN uv pip install --system .
+
+CMD ["uv", "run", "python", "fhir_pipeline.py"]</code></pre>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-bash"># fhir_pipeline.py: mask + encrypt + quality + lineage
+cat << 'EOF' > fhir_pipeline.py
+import sqlite3, json, hashlib
+from cryptography.fernet import Fernet
+
+key = Fernet.generate_key()
+cipher = Fernet(key)
+
+def mask_email(email):
+    local, domain = email.split("@")
+    return f"{local[:2]}***@{domain}"
+
+def encrypt(text):
+    return cipher.encrypt(text.encode()).decode()
+
+def decrypt(token):
+    return cipher.decrypt(token.encode()).decode()
+
+def record_lineage(conn, source, target, status):
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS lineage (
+            run_id INTEGER PRIMARY KEY,
+            source TEXT,
+            target TEXT,
+            status TEXT,
+            run_at TEXT DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+    conn.execute(
+        "INSERT INTO lineage (source, target, status) VALUES (?, ?, ?)",
+        (source, target, status)
+    )
+    conn.commit()
+
+def quality_check(conn):
+    cur = conn.execute("""
+        SELECT COUNT(*) FROM dim_patient
+        WHERE full_name IS NULL OR email IS NULL
+    """)
+    bad = cur.fetchone()[0]
+    return bad == 0
+
+# Example transform
+patient = {"patient_id": "P001", "full_name": "Jane Doe",
+           "email": "jane.doe@hospital.org"}
+patient["email_masked"] = mask_email(patient["email"])
+patient["email_encrypted"] = encrypt(patient["email"])
+print(patient)
+EOF
+
+uv run --with cryptography fhir_pipeline.py</code></pre>
+      </div>
+      <div class="code-block mb-6">
+       <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+       <pre><code class="language-bash"># dashboard.py: Streamlit governance dashboard
+cat << 'EOF' > dashboard.py
+import streamlit as st
+import sqlite3
+
+st.title("FHIR Data Governance Dashboard")
+conn = sqlite3.connect("fhir_catalog.db")
+
+st.subheader("Lineage")
+lineage = conn.execute("SELECT * FROM lineage ORDER BY run_at DESC LIMIT 10").fetchall()
+st.dataframe(lineage)
+
+st.subheader("Data Quality")
+ok = conn.execute("""
+    SELECT COUNT(*) = 0 FROM dim_patient
+    WHERE full_name IS NULL OR email IS NULL
+""").fetchone()[0]
+st.metric("Quality Check", "Pass" if ok else "Fail")
+
+st.subheader("PII Masking Sample")
+st.write("jane.doe@hospital.org → j.***@hospital.org")
+EOF
+
+uv run --with streamlit dashboard.py
+# Or launch the Streamlit server directly:
+uv run --with streamlit streamlit run dashboard.py
+</code></pre>
+      </div>
+      <h3 class="text-xl font-semibold mb-3">4. What did we learn from this capstone project?</h3>
+      <div class="card rounded-2xl p-6 mb-8">
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+        <li>Docker makes the pipeline reproducible across environments.</li>
+        <li>Lineage records support audits and root-cause analysis.</li>
+        <li>Masking and encryption reduce PHI exposure risk.</li>
+        <li>Quality checks and a governance dashboard build trust with users and regulators.</li>
+       </ul>
+      </div>
+      <h3 class="text-xl font-semibold mb-3">5. How can I enhance this project in the future?</h3>
+      <div class="bg-[var(--panel)] border border-[var(--border)] rounded-xl p-5">
+       <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+        <li>Replace SQLite with Postgres and a real metadata catalog like DataHub.</li>
+        <li>Add role-based access control and audit logging.</li>
+        <li>Integrate Soda or Great Expectations for data contracts.</li>
+        <li>Add Prometheus/Grafana metrics and PagerDuty alerts.</li>
+        <li>Extend the dashboard with GDPR deletion request tracking.</li>
+       </ul>
+      </div>
+      <nav class="flex justify-between mt-10">
+       <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#governance">&larr; Previous</a>
+       <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#quiz">Next: Quiz &rarr;</a>
+      </nav>
+     </section>
+     <section class="scroll-mt-24" id="quiz">
+      <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Knowledge Check</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Test Your Understanding</h2>
+      <div class="space-y-8">
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">1. Reverse ETL moves data from where to where?</p>
+        <div class="quiz" data-answer="C">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. From a source API into a data lake</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. From a stream into a warehouse</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. From a warehouse into operational systems</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. From a BI tool into a database</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">2. Which metric best tells you if a pipeline is delivering data on time?</p>
+        <div class="quiz" data-answer="B">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Disk utilization</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Data freshness</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Number of tables</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Dashboard color scheme</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">3. Data lineage is most useful for:</p>
+        <div class="quiz" data-answer="B">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Generating random test data</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Impact analysis and root-cause debugging</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Replacing a data warehouse</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Storing raw log files</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">4. Dockerizing a data pipeline improves:</p>
+        <div class="quiz" data-answer="C">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Query execution speed only</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. The number of dashboard colors</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Reproducibility across environments</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Network bandwidth</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">5. PII masking is an example of:</p>
+        <div class="quiz" data-answer="B">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Data normalization</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Data obfuscation for privacy</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Schema evolution</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Reverse ETL</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">6. GDPR is primarily concerned with:</p>
+        <div class="quiz" data-answer="A">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Data protection and privacy rights in the EU</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Cloud pricing standards</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. SQL query optimization</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Kubernetes cluster sizing</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">7. In CI/CD for data, what should happen before deploying dbt models?</p>
+        <div class="quiz" data-answer="C">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Delete the production database</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. Increase dashboard refresh rate</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Run tests and parse the project</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. Disable all monitors</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+       <div class="card rounded-2xl p-6">
+        <p class="font-semibold mb-3">8. Authentication answers the question:</p>
+        <div class="quiz" data-answer="A">
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="A">A. Who are you?</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="B">B. What can you do?</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="C">C. Where is the data?</button>
+         <button class="quiz-opt w-full text-left px-4 py-3 rounded-xl border border-[var(--border)] mb-2 hover:bg-black/5 dark:hover:bg-white/5 transition" data-val="D">D. How fresh is the data?</button>
+        </div>
+        <p class="quiz-feedback mt-3 font-medium text-[var(--muted)]"></p>
+       </div>
+      </div>
+     </section>
+    </div>
+   </main>
+  </div>
+  <script>
+   const html = document.documentElement; const moon = document.getElementById('moon'); const sun = document.getElementById('sun'); const lightStylesheet = document.getElementById('hljs-light'); const darkStylesheet = document.getElementById('hljs-dark'); function applyTheme(theme) { html.classList.remove('light', 'dark'); html.classList.add(theme); if (theme === 'dark') { lightStylesheet.disabled = true; darkStylesheet.disabled = false; moon.classList.add('hidden'); sun.classList.remove('hidden'); } else { lightStylesheet.disabled = false; darkStylesheet.disabled = true; moon.classList.remove('hidden'); sun.classList.add('hidden'); } localStorage.setItem('tutorials-theme', theme); } document.getElementById('theme-toggle').addEventListener('click', () => { applyTheme(html.classList.contains('dark') ? 'light' : 'dark'); }); const saved = localStorage.getItem('tutorials-theme'); applyTheme(saved === 'dark' ? 'dark' : 'light');
+   function setStatus(status) { localStorage.setItem('tutorial-data-engineering-ops-governance-status', status); updateButtons(); }
+   function updateButtons() { const status = localStorage.getItem('tutorial-data-engineering-ops-governance-status') || 'not-started'; document.querySelectorAll('[id^="btn-start"]').forEach(btn => { btn.textContent = status === 'in-progress' ? 'In Progress' : 'Start'; }); document.querySelectorAll('[id^="btn-complete"]').forEach(btn => { btn.textContent = status === 'completed' ? 'Completed' : 'Mark Complete'; }); }
+   document.querySelectorAll('[id^="btn-start"]').forEach(btn => btn.addEventListener('click', () => setStatus('in-progress')));
+   document.querySelectorAll('[id^="btn-complete"]').forEach(btn => btn.addEventListener('click', () => setStatus('completed')));
+   document.querySelectorAll('[id^="btn-reset"]').forEach(btn => btn.addEventListener('click', () => { localStorage.removeItem('tutorial-data-engineering-ops-governance-status'); updateButtons(); }));
+   updateButtons();
+   function toggleSidebar() { const sidebar = document.getElementById('sidebar'); const overlay = document.getElementById('menu-overlay'); sidebar.classList.toggle('open'); overlay.classList.toggle('hidden'); }
+   function copyCode(btn) { const code = btn.nextElementSibling.querySelector('code'); navigator.clipboard.writeText(code.innerText).then(() => { btn.textContent = 'Copied!'; btn.classList.add('copied'); setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500); }); }
+   const sections = document.querySelectorAll('section[id]'); const tocLinks = document.querySelectorAll('.toc-link'); const observer = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (entry.isIntersecting) { tocLinks.forEach((link) => link.classList.remove('active')); const active = document.querySelector(`.toc-link[href="#${entry.target.id}"]`); if (active) active.classList.add('active'); } }); }, { rootMargin: '-20% 0px -60% 0px' }); sections.forEach((section) => observer.observe(section));
+   document.querySelectorAll('.quiz').forEach((quiz) => { const correct = quiz.dataset.answer; const feedback = quiz.nextElementSibling; quiz.querySelectorAll('.quiz-opt').forEach((opt) => { opt.addEventListener('click', () => { quiz.querySelectorAll('.quiz-opt').forEach((o) => { o.classList.remove('selected', 'correct', 'wrong'); o.disabled = true; }); opt.classList.add('selected'); if (opt.dataset.val === correct) { opt.classList.add('correct'); feedback.textContent = 'Correct! ✅'; feedback.className = 'quiz-feedback mt-3 font-medium text-[var(--success)]'; } else { opt.classList.add('wrong'); feedback.textContent = `Not quite. The correct answer is ${correct}.`; feedback.className = 'quiz-feedback mt-3 font-medium text-[var(--danger)]'; } }); }); }); hljs.highlightAll();
+  </script>
+ </body>
+</html>

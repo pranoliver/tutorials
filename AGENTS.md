@@ -78,12 +78,12 @@ Every `index.html` should include:
 - Tutorial cards are generated as plain HTML inside `#tutorial-grid`.
 - Each card uses:
   - `data-id="{tutorial-id}"`
-  - `data-category="{foundation|frontend|backend|devops|security}"`
+  - `data-category="{foundation|frontend|backend|devops|security|data}"`
   - `data-duration="{N} hrs"`
   - Sequential `#N` badge from `#1` to the current highest number.
 - Category pills must use `category-{category}` class names; those colors are defined in `assets/styles.css`.
-- Progress tracking relies on the `TUTORIALS` array in the page script; every new tutorial must be added there (including AI-track tutorials).
-- Filter buttons must match the set of `data-category` values exactly. The AI / ML / LLM track uses category `ai` and sequential badge labels `AI-1`, `AI-2`, etc.
+- Progress tracking relies on the `TUTORIALS` array in the page script; every new tutorial must be added there (including AI-track and Data Engineering track tutorials).
+- Filter buttons must match the set of `data-category` values exactly. Dedicated tracks use their own badge prefixes: the AI / ML / LLM track uses category `ai` and badge labels `AI-1`, `AI-2`, etc.; the Data Engineering track uses category `data` and badge labels `DE-1`, `DE-2`, etc.
 
 ## Stylesheet (`assets/styles.css`) Conventions
 
@@ -96,6 +96,7 @@ Every `index.html` should include:
     --devops: #f59e0b;
     --foundation: #8b5cf6;
     --security: #ef4444;
+    --data: #0ea5e9;
     /* ... */
   }
   ```

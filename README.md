@@ -3,7 +3,7 @@
 A collection of beginner-friendly interactive technology tutorials. Each tutorial is a self-contained HTML page with copyable code blocks, quizzes, diagrams, and capstone projects.
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-![Tutorials](https://img.shields.io/badge/tutorials-34-green.svg)
+![Tutorials](https://img.shields.io/badge/tutorials-43-green.svg)
 ![HTML](https://img.shields.io/badge/HTML-5-orange?logo=html5)
 ![CSS](https://img.shields.io/badge/CSS-3-blue?logo=css3)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES2022-yellow?logo=javascript)
@@ -44,6 +44,7 @@ A collection of beginner-friendly interactive technology tutorials. Each tutoria
 ![Helm](https://img.shields.io/badge/Helm-0F1689?logo=helm&logoColor=white)
 ![Jira](https://img.shields.io/badge/Jira-0052CC?logo=jira&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black)
+![Rust](https://img.shields.io/badge/Rust-CE412B?logo=rust&logoColor=white)
 ![Nginx](https://img.shields.io/badge/Nginx-009639?logo=nginx&logoColor=white)
 ![OAuth](https://img.shields.io/badge/OAuth%2FOIDC%2FJWT-3C3C3C?logo=auth0&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=white)
@@ -63,36 +64,50 @@ Then visit: [http://localhost:8000](http://localhost:8000)
 ## 📖 Available Tutorials
 
 | # | 🎓 Tutorial | 📝 Description | 🔗 Link |
-|---|-----------|----------------|---------|
+|---|---|-----------|----------------|---------|
 | 1 | 🐧 [Linux Command Line](linux/) | Master the terminal: files, permissions, processes, networking, SSH, scripting, and systemd. | [Open tutorial](linux/index.html) |
 | 2 | 🌐 [HTML & CSS Fundamentals](html-css/) | A complete beginner guide to modern HTML5, CSS3, Flexbox, Grid, responsive design, and a portfolio project. | [Open tutorial](html-css/index.html) |
 | 3 | ♿ [Web Accessibility](web-accessibility/) | Semantic HTML, ARIA, keyboard navigation, screen readers, contrast, and real-world a11y patterns from Gov.uk, Apple, and BBC. | [Open tutorial](web-accessibility/index.html) |
 | 4 | ⚡ [JavaScript Basics](javascript-basics/) | A beginner-friendly guide to JavaScript fundamentals with interactive playgrounds and a to-do list app. | [Open tutorial](javascript-basics/index.html) |
-| 5 | 🐍 [Python Fundamentals](python-basics/) | Master Python from syntax to advanced features and build a CLI expense tracker. | [Open tutorial](python-basics/index.html) |
-| 6 | 🐙 [Git & GitHub](github/) | Complete beginner guide to version control with Git and collaboration on GitHub. | [Open tutorial](github/index.html) |
-| 7 | 📋 [Jira](jira/) | Agile project management with Jira: boards, sprints, workflows, JQL, automation, dashboards, and a SaaS launch capstone. | [Open tutorial](jira/index.html) |
-| 8 | 🟢 [Node.js & Express](nodejs-express/) | Build REST APIs with Node.js, Express, PostgreSQL, JWT authentication, and automated tests. | [Open tutorial](nodejs-express/index.html) |
-| 9 | 🌐 [WebSockets & Real-Time Apps](websockets-realtime/) | Build live chat, dashboards, and collaborative features with Socket.io: events, rooms, presence, and scaling. | [Open tutorial](websockets-realtime/index.html) |
-| 10 | 🐘 [SQL & Databases](sql-databases/) | Learn SQL with PostgreSQL using a real online store database: joins, analytics, transactions, and indexes. | [Open tutorial](sql-databases/index.html) |
-| 11 | ◈ [GraphQL APIs](graphql/) | Build flexible APIs with queries, mutations, schemas, resolvers, Apollo Server, and a blog API capstone. | [Open tutorial](graphql/index.html) |
-| 12 | 🕸️ [Graph Databases with Neo4j](graph-databases/) | Hands-on Neo4j: install with Docker, write Cypher, model nodes and relationships, and build a movie recommendation graph. | [Open tutorial](graph-databases/index.html) |
-| 13 | 🟥 [Redis & Caching](redis-caching/) | Speed up real-world apps with caching strategies, Redis data structures, sessions, and sliding-window rate limiting. | [Open tutorial](redis-caching/index.html) |
-| 14 | ⚛️ [React: Modern Frontend](react/) | Build user interfaces with components, hooks, routing, and a Kanban task board. | [Open tutorial](react/index.html) |
-| 15 | 🧠 [State Management](state-management/) | Redux Toolkit, Zustand, and React Query with real-world examples from Instagram, Vercel, and Netflix. | [Open tutorial](state-management/index.html) |
-| 16 | 🔷 [TypeScript](typescript/) | Add static types to JavaScript with real-world React and Node.js examples; capstone: typed e-commerce cart. | [Open tutorial](typescript/index.html) |
-| 17 | 🐳 [Docker: Containers to Production](docker/) | Advanced guide to containers: Linux OS, PostgreSQL, Nginx, Dockerfiles, Compose, and CI/CD. | [Open tutorial](docker/index.html) |
-| 18 | ☸️ [Kubernetes](kubernetes/) | Orchestrate containers with pods, deployments, services, ConfigMaps, Secrets, Helm charts, and real-world scaling patterns. | [Open tutorial](kubernetes/index.html) |
-| 19 | ☁️ [Cloud Providers](cloud-providers/) | AWS / Azure / GCP fundamentals side-by-side: compute, storage, networking, IAM, databases, serverless, security, and cost. | [Open tutorial](cloud-providers/index.html) |
-| 20 | 📊 [Monitoring & Observability](monitoring/) | Deep dive into Prometheus metrics, Grafana dashboards, PromQL, Alertmanager, and log aggregation with Loki. | [Open tutorial](monitoring/index.html) |
-| 21 | 🏗️ [Terraform: Infrastructure as Code](terraform/) | Provision AWS, Azure, or GCP infrastructure as code with modules, workspaces, and a multi-tier AWS stack capstone. | [Open tutorial](terraform/index.html) |
-| 22 | 🚀 [DevOps CI/CD](devops-cicd/) | Automate software delivery with GitHub Actions, Docker, environments, deployment strategies, monitoring, and IaC. | [Open tutorial](devops-cicd/index.html) |
-| 23 | 🔶 [Jenkins](jenkins/) | CI/CD pipelines, declarative Jenkinsfiles, multibranch pipelines, shared libraries, Docker agents, plugins, and a Node.js API capstone. | [Open tutorial](jenkins/index.html) |
-| 24 | ⚙️ [Microservices Basics](microservices-basics/) | Service boundaries, inter-service communication, API gateways, resilience, sagas, and a food delivery system capstone. | [Open tutorial](microservices-basics/index.html) |
-| 25 | 🍃 [MongoDB & NoSQL](mongodb-nosql/) | Document databases, BSON, CRUD, modeling, aggregation, indexing, replica sets, sharding, and food delivery analytics. | [Open tutorial](mongodb-nosql/index.html) |
-| 26 | ⚡ [Database Optimization](database-optimization/) | Deep dive into indexing, EXPLAIN plans, partitioning, monitoring, and optimizing a real e-commerce store. | [Open tutorial](database-optimization/index.html) |
-| 27 | ▲ [Next.js Full-Stack](nextjs-fullstack/) | SSR, SSG, ISR, App Router, API routes, dynamic routes, and deployment to Vercel with an e-commerce store capstone. | [Open tutorial](nextjs-fullstack/index.html) |
-| 28 | 🛡️ [OWASP Top 10](owasp-top-10/) | Common web vulnerabilities and real-world defenses: access control, injection, crypto failures, SSRF, and secure SDLC habits. | [Open tutorial](owasp-top-10/index.html) |
-| 29 | 🔐 [Secure Authentication](secure-authentication/) | OAuth 2.0, OpenID Connect, SSO, MFA, RBAC, ABAC, secure sessions, and real-world breach lessons with a SaaS identity capstone. | [Open tutorial](secure-authentication/index.html) |
+| 5 | 🔵 [C Language](c-language/) | From zero to systems programming: memory, pointers, build systems, debugging, and three capstone projects (KV store, mini shell, custom allocator). | [Open tutorial](c-language/index.html) |
+| 6 | ⚪ [C++ Language](cpp-language/) | Modern C++ from fundamentals to advanced OOP, templates, STL, concurrency, and three capstone projects (event server, custom containers, game ECS). | [Open tutorial](cpp-language/index.html) |
+| 7 | 🐍 [Python Fundamentals](python-basics/) | Master Python from syntax to advanced features and build a CLI expense tracker. | [Open tutorial](python-basics/index.html) |
+| 8 | 🦀 [Rust Language](rust-language/) | Systems programming with memory safety and concurrency: ownership, borrowing, lifetimes, traits, async, and three capstone projects (HTTP API, log pipeline, CLI config tool). | [Open tutorial](rust-language/index.html) |
+| 9 | 🐹 [Go Language](go-language/) | Fast, simple systems and backend programming: goroutines, channels, interfaces, modules, stdlib, testing, and three capstone projects (URL shortener, worker pool, CLI tool). | [Open tutorial](go-language/index.html) |
+| 10 | 🐙 [Git & GitHub](github/) | Complete beginner guide to version control with Git and collaboration on GitHub. | [Open tutorial](github/index.html) |
+| 11 | 📋 [Jira](jira/) | Agile project management with Jira: boards, sprints, workflows, JQL, automation, dashboards, and a SaaS launch capstone. | [Open tutorial](jira/index.html) |
+| 12 | 🟢 [Node.js & Express](nodejs-express/) | Build REST APIs with Node.js, Express, PostgreSQL, JWT authentication, and automated tests. | [Open tutorial](nodejs-express/index.html) |
+| 13 | 🌐 [WebSockets & Real-Time Apps](websockets-realtime/) | Build live chat, dashboards, and collaborative features with Socket.io: events, rooms, presence, and scaling. | [Open tutorial](websockets-realtime/index.html) |
+| 14 | 🐘 [SQL & Databases](sql-databases/) | Learn SQL with PostgreSQL using a real online store database: joins, analytics, transactions, and indexes. | [Open tutorial](sql-databases/index.html) |
+| 15 | ◈ [GraphQL APIs](graphql/) | Build flexible APIs with queries, mutations, schemas, resolvers, Apollo Server, and a blog API capstone. | [Open tutorial](graphql/index.html) |
+| 16 | 🕸️ [Graph Databases with Neo4j](graph-databases/) | Hands-on Neo4j: install with Docker, write Cypher, model nodes and relationships, and build a movie recommendation graph. | [Open tutorial](graph-databases/index.html) |
+| 17 | 🟥 [Redis & Caching](redis-caching/) | Speed up real-world apps with caching strategies, Redis data structures, sessions, and sliding-window rate limiting. | [Open tutorial](redis-caching/index.html) |
+| 18 | ⚛️ [React: Modern Frontend](react/) | Build user interfaces with components, hooks, routing, and a Kanban task board. | [Open tutorial](react/index.html) |
+| 19 | 🧠 [State Management](state-management/) | Redux Toolkit, Zustand, and React Query with real-world examples from Instagram, Vercel, and Netflix. | [Open tutorial](state-management/index.html) |
+| 20 | 🔷 [TypeScript](typescript/) | Add static types to JavaScript with real-world React and Node.js examples; capstone: typed e-commerce cart. | [Open tutorial](typescript/index.html) |
+| 21 | 🐳 [Docker: Containers to Production](docker/) | Advanced guide to containers: Linux OS, PostgreSQL, Nginx, Dockerfiles, Compose, and CI/CD. | [Open tutorial](docker/index.html) |
+| 22 | ☸️ [Kubernetes](kubernetes/) | Orchestrate containers with pods, deployments, services, ConfigMaps, Secrets, Helm charts, and real-world scaling patterns. | [Open tutorial](kubernetes/index.html) |
+| 23 | ☁️ [Cloud Providers](cloud-providers/) | AWS / Azure / GCP fundamentals side-by-side: compute, storage, networking, IAM, databases, serverless, security, and cost. | [Open tutorial](cloud-providers/index.html) |
+| 24 | 📊 [Monitoring & Observability](monitoring/) | Deep dive into Prometheus metrics, Grafana dashboards, PromQL, Alertmanager, and log aggregation with Loki. | [Open tutorial](monitoring/index.html) |
+| 25 | 🏗️ [Terraform: Infrastructure as Code](terraform/) | Provision AWS, Azure, or GCP infrastructure as code with modules, workspaces, and a multi-tier AWS stack capstone. | [Open tutorial](terraform/index.html) |
+| 26 | 🚀 [DevOps CI/CD](devops-cicd/) | Automate software delivery with GitHub Actions, Docker, environments, deployment strategies, monitoring, and IaC. | [Open tutorial](devops-cicd/index.html) |
+| 27 | 🔶 [Jenkins](jenkins/) | CI/CD pipelines, declarative Jenkinsfiles, multibranch pipelines, shared libraries, Docker agents, plugins, and a Node.js API capstone. | [Open tutorial](jenkins/index.html) |
+| 28 | ⚙️ [Microservices Basics](microservices-basics/) | Service boundaries, inter-service communication, API gateways, resilience, sagas, and a food delivery system capstone. | [Open tutorial](microservices-basics/index.html) |
+| 29 | 🍃 [MongoDB & NoSQL](mongodb-nosql/) | Document databases, BSON, CRUD, modeling, aggregation, indexing, replica sets, sharding, and food delivery analytics. | [Open tutorial](mongodb-nosql/index.html) |
+| 30 | ⚡ [Database Optimization](database-optimization/) | Deep dive into indexing, EXPLAIN plans, partitioning, monitoring, and optimizing a real e-commerce store. | [Open tutorial](database-optimization/index.html) |
+| 31 | ▲ [Next.js Full-Stack](nextjs-fullstack/) | SSR, SSG, ISR, App Router, API routes, dynamic routes, and deployment to Vercel with an e-commerce store capstone. | [Open tutorial](nextjs-fullstack/index.html) |
+| 32 | 🛡️ [OWASP Top 10](owasp-top-10/) | Common web vulnerabilities and real-world defenses: access control, injection, crypto failures, SSRF, and secure SDLC habits. | [Open tutorial](owasp-top-10/index.html) |
+| 33 | 🔐 [Secure Authentication](secure-authentication/) | OAuth 2.0, OpenID Connect, SSO, MFA, RBAC, ABAC, secure sessions, and real-world breach lessons with a SaaS identity capstone. | [Open tutorial](secure-authentication/index.html) |
+
+## 🗄️ Data Engineering Track
+
+| # | 🎓 Tutorial | 📝 Description | 🔗 Link |
+|---|-----------|----------------|---------|
+| DE-1 | 🏥 [Data Engineering Foundations](data-engineering-foundations/) | The data engineering lifecycle, OLTP vs OLAP, modeling, normalization, SCDs, Python/SQL/Linux/Git basics, and a Healthcare FHIR data foundation capstone. | [Open tutorial](data-engineering-foundations/index.html) |
+| DE-2 | 📊 [Data Storage & Warehouses](data-engineering-storage-warehouses/) | Relational and NoSQL stores, CAP theorem, data lakes, warehouses, marts, mesh, lakehouse, and a SaaS event analytics warehouse capstone. | [Open tutorial](data-engineering-storage-warehouses/index.html) |
+| DE-3 | 🔄 [Data Pipelines & Orchestration](data-engineering-pipelines-orchestration/) | ETL vs ELT vs reverse ETL, batch vs streaming, ingestion patterns, Apache Airflow, dbt, data quality, and a SaaS ELT pipeline capstone. | [Open tutorial](data-engineering-pipelines-orchestration/index.html) |
+| DE-4 | ⚡ [Streaming Data & Cloud](data-engineering-streaming-cloud/) | Kafka, RabbitMQ, SNS/SQS, Spark Structured Streaming, Hadoop basics, AWS/Azure/GCP data services, and a real-time SaaS event pipeline capstone. | [Open tutorial](data-engineering-streaming-cloud/index.html) |
+| DE-5 | 🛡️ [DataOps & Governance](data-engineering-ops-governance/) | Docker/Kubernetes for data platforms, CI/CD, lineage, metadata, data quality, PII masking, GDPR, BI, and a governed Healthcare FHIR data platform capstone. | [Open tutorial](data-engineering-ops-governance/index.html) |
 
 ## 🤖 AI / ML / LLM Track
 
@@ -158,11 +173,11 @@ Then open `http://localhost:8000` in your browser.
 
 - 🎨 **Frontend developer:** Linux → HTML/CSS → Web Accessibility → JavaScript → React → State Management → TypeScript → Next.js → GitHub
 - 🤖 **AI / ML engineer:** Python → Machine Learning with Python → Large Language Models (LLMs) → RAG: Document Q&A → Fine-Tuning LLMs → AI Agents
-- 🖥️ **Backend developer:** Linux → JavaScript → Python → Node.js & Express → WebSockets → SQL → GraphQL → Graph Databases → Redis & Caching → MongoDB & NoSQL → Database Optimization → TypeScript → Docker → Kubernetes → DevOps → Microservices
-- 🌟 **Full-stack developer:** Follow the numbered order from #1 to #29, then explore the AI / ML / LLM Track.
-- ⚙️ **DevOps / Platform engineer:** Linux → Git & GitHub → SQL → Redis → MongoDB → Database Optimization → Docker → Kubernetes → Node.js → WebSockets → TypeScript → Next.js → DevOps CI/CD → Microservices
-- 🏗️ **System architect:** Node.js & Express → SQL → Redis → MongoDB → Database Optimization → Docker → DevOps → Microservices → Cloud Providers → Kubernetes → Monitoring
-- 🗄️ **Data engineer:** SQL → GraphQL → Redis → MongoDB & NoSQL → Database Optimization → Machine Learning with Python
+- 🖥️ **Backend developer:** Linux → C → C++ → Python → Rust → Go → JavaScript → Node.js & Express → WebSockets → SQL → GraphQL → Graph Databases → Redis & Caching → MongoDB & NoSQL → Database Optimization → TypeScript → Docker → Kubernetes → DevOps → Microservices
+- 🌟 **Full-stack developer:** Follow the numbered order from #1 to #33, then explore the AI / ML / LLM Track.
+- ⚙️ **DevOps / Platform engineer:** Linux → C → C++ → Git & GitHub → SQL → Redis → MongoDB → Database Optimization → Docker → Kubernetes → Node.js → WebSockets → TypeScript → Next.js → DevOps CI/CD → Microservices
+- 🏗️ **System architect:** C → C++ → Node.js & Express → SQL → Redis → MongoDB → Database Optimization → Docker → DevOps → Microservices → Cloud Providers → Kubernetes → Monitoring
+- 🗄️ **Data engineer:** Linux → C → C++ → Python → Rust → Go → SQL → Data Engineering Foundations → Data Storage & Warehouses → Data Pipelines & Orchestration → Streaming Data & Cloud → DataOps & Governance
 
 ## ✨ Features
 
@@ -190,10 +205,15 @@ tutorials/
 │   └── diagrams/           # 📊 Standalone SVG diagrams per tutorial
 └── linux/                  # 🐧 Linux Command Line
 └── html-css/               # 🌐 HTML & CSS Fundamentals
-└── web-accessibility/        # ♿ Web Accessibility
+└── web-accessibility/      # ♿ Web Accessibility
 └── javascript-basics/      # ⚡ JavaScript Basics
+└── c-language/             # 🔵 C Language
+└── cpp-language/           # ⚪ C++ Language
 └── python-basics/          # 🐍 Python Fundamentals
+└── rust-language/          # 🦀 Rust Language
+└── go-language/            # 🐹 Go Language
 └── github/                 # 🐙 Git & GitHub
+└── jira/                   # 📋 Jira
 └── nodejs-express/         # 🟢 Node.js & Express
 └── websockets-realtime/    # 🌐 WebSockets & Real-Time Apps
 └── sql-databases/          # 🐘 SQL & Databases
@@ -209,20 +229,23 @@ tutorials/
 └── monitoring/             # 📊 Monitoring & Observability
 └── terraform/              # 🏗️ Terraform: Infrastructure as Code
 └── devops-cicd/            # 🚀 DevOps CI/CD
+└── jenkins/                # 🔶 Jenkins
 └── microservices-basics/   # ⚙️ Microservices Basics
 └── mongodb-nosql/          # 🍃 MongoDB & NoSQL
-└── database-optimization/  # ⚡ Database Optimization
+└── database-optimization/    # ⚡ Database Optimization
 └── nextjs-fullstack/       # ▲ Next.js Full-Stack
-└── owasp-top-10/          # 🛡️ OWASP Top 10
-└── secure-authentication/ # 🔐 Secure Authentication
-└── jenkins/               # 🔶 Jenkins
-└── jira/                  # 📋 Jira
-└── machine-learning-python/  # 🔥 Machine Learning with Python (AI / ML / LLM Track)
-└── llms/                   # 🤖 Large Language Models (AI / ML / LLM Track)
-└── ai-rag-retrieval/       # 🔍 RAG: Document Q&A (AI / ML / LLM Track)
-└── ai-fine-tuning/         # 🎯 Fine-Tuning LLMs (AI / ML / LLM Track)
-└── ai-agents/              # 🤖 AI Agents (AI / ML / LLM Track)
-```
+└── owasp-top-10/           # 🛡️ OWASP Top 10
+└── secure-authentication/  # 🔐 Secure Authentication
+└── data-engineering-foundations/       # 🏥 Data Engineering Foundations
+└── data-engineering-storage-warehouses/  # 📊 Data Storage & Warehouses
+└── data-engineering-pipelines-orchestration/  # 🔄 Data Pipelines & Orchestration
+└── data-engineering-streaming-cloud/   # ⚡ Streaming Data & Cloud
+└── data-engineering-ops-governance/    # 🛡️ DataOps & Governance
+└── machine-learning-python/  # 🔥 Machine Learning with Python
+└── llms/                   # 🤖 Large Language Models (LLMs)
+└── ai-rag-retrieval/       # 🔍 RAG: Document Q&A
+└── ai-fine-tuning/         # 🎯 Fine-Tuning LLMs
+└── ai-agents/              # 🤖 AI Agents
 
 ## 🤝 Adding More Tutorials
 

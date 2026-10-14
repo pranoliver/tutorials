@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>C++: Modern Systems &amp; Object-Oriented Programming</title>
+  <link href="../assets/favicons/svg/C++-(CPlusPlus).svg" rel="icon" type="image/svg+xml"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-light" rel="stylesheet"/>
+  <link disabled="" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" id="hljs-dark" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cmake.min.js"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' }
+  </script>
+  <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="antialiased transition-colors duration-300 brand-cpp-language">
+  <a class="sr-only" href="#main">Skip to content</a>
+  <div class="fixed inset-0 bg-black/40 z-30 hidden lg:hidden" id="menu-overlay" onclick="toggleSidebar()"></div>
+  <div class="flex min-h-screen">
+    <aside class="fixed lg:sticky top-0 left-0 h-screen w-72 border-r border-[var(--border)] bg-[var(--panel)] z-40 overflow-y-auto p-6" id="sidebar">
+      <div class="flex items-center gap-3 mb-8">
+        <img alt="C++" class="w-10 h-10" src="../assets/favicons/svg/C++-(CPlusPlus).svg"/>
+        <span class="text-xl font-bold">C++ Language</span>
+      </div>
+      <nav class="space-y-1 text-sm" id="toc">
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">1. Introduction + Installation</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#basics">2. C++ Basics: Beyond C</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#functions">3. Functions in C++</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#classes">4. Classes &amp; OOP</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#inheritance">5. Inheritance &amp; Polymorphism</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#operator-overloading">6. Operator Overloading &amp; RAII</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#templates">7. Templates &amp; Generic Programming</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#stl">8. STL Deep Dive</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#smart-pointers">9. Smart Pointers &amp; Move Semantics</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#lambdas">10. Lambdas &amp; Functional Programming</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#error-handling">11. Error Handling</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#concurrency">12. Concurrency</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#io">13. I/O &amp; Filesystem</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#cmake">14. CMake &amp; Build Systems</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#modern">15. Modern C++17/20 &amp; Performance</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#capstone">16. Capstone Projects</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#quiz">17. Knowledge Check</a>
+      </nav>
+      <div class="mt-8 pt-6 border-t border-[var(--border)]">
+        <p class="text-xs text-[var(--muted)]">Open in any browser. No build step required.</p>
+      </div>
+    </aside>
+    <main class="flex-1 min-w-0" id="main">
+      <header class="sticky top-0 z-20 border-b border-[var(--border)] bg-[var(--panel)]/90 backdrop-blur px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <button aria-label="Open menu" class="lg:hidden p-2 rounded-md border border-[var(--border)]" onclick="toggleSidebar()">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </button>
+          <h1 class="text-lg sm:text-xl font-bold tracking-tight">C++: Modern Systems &amp; Object-Oriented Programming</h1>
+        </div>
+        <div class="hidden sm:flex items-center gap-2 progress-controls" id="progress-controls">
+          <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-start">Start</button>
+          <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-complete">Mark Complete</button>
+          <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-reset">Reset</button>
+        </div>
+        <div class="sm:hidden flex items-center gap-2 progress-controls" id="progress-controls-mobile">
+          <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-start-mobile">Start</button>
+          <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-complete-mobile">Complete</button>
+          <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-reset-mobile">Reset</button>
+        </div>
+        <button aria-label="Toggle theme" class="p-2 rounded-full border border-[var(--border)] hover:bg-black/5 dark:hover:bg-white/5 transition" id="theme-toggle">
+          <svg aria-hidden="true" class="w-5 h-5" fill="none" id="moon" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <svg aria-hidden="true" class="w-5 h-5 hidden" fill="none" id="sun" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5"></circle>
+            <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </header>
+      <div class="max-w-4xl mx-auto px-6 py-10 space-y-20">
+
+        <section class="scroll-mt-24" id="intro">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 1</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Introduction + Installation</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            C++ is a multi-paradigm systems language that evolved from C. It adds object-oriented, generic, and functional features while keeping the ability to write low-level, high-performance code.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Why learn C++?</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+              <li><strong>Games:</strong> Unreal Engine and many custom engines are C++.</li>
+              <li><strong>Browsers:</strong> Chrome, Firefox, and Safari use C++ for rendering and JavaScript engines.</li>
+              <li><strong>Databases:</strong> MySQL, MongoDB, and countless financial systems.</li>
+              <li><strong>HFT and embedded:</strong> Zero-cost abstractions with deterministic performance.</li>
+            </ul>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Before you start</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li>Familiarity with C or another programming language is helpful.</li>
+              <li>New to the command line? Try the <a class="brand underline" href="../linux/index.html">Linux tutorial</a>.</li>
+              <li>Track your code with <a class="brand underline" href="../github/index.html">Git &amp; GitHub</a>.</li>
+            </ul>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Install a C++ compiler</h3>
+
+          <div class="space-y-4 mb-8">
+            <div class="card rounded-xl p-5">
+              <h4 class="font-semibold mb-2">Windows</h4>
+              <p class="text-sm text-[var(--muted)] mb-3">Install Visual Studio with the <code class="kbd">Desktop development with C++</code> workload, or MinGW-w64.</p>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-bash"># MinGW-w64 via MSYS2 (inside MSYS2 terminal)
+pacman -S mingw-w64-ucrt-x86_64-gcc
+
+# Verify
+g++ --version
+cl.exe  # MSVC</code></pre>
+              </div>
+            </div>
+
+            <div class="card rounded-xl p-5">
+              <h4 class="font-semibold mb-2">macOS</h4>
+              <p class="text-sm text-[var(--muted)] mb-3">Install Xcode Command Line Tools or the latest Clang/GCC from Homebrew.</p>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-bash">xcode-select --install
+brew install gcc
+
+# Verify
+clang++ --version</code></pre>
+              </div>
+            </div>
+
+            <div class="card rounded-xl p-5">
+              <h4 class="font-semibold mb-2">Linux</h4>
+              <p class="text-sm text-[var(--muted)] mb-3">Install <code class="kbd">g++</code> or <code class="kbd">clang++</code> through your package manager.</p>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-bash"># Debian / Ubuntu
+sudo apt update
+sudo apt install build-essential cmake
+
+# Fedora
+sudo dnf install gcc-c++ cmake
+
+# Verify
+g++ --version</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Hello, World in C++</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-cpp">// hello.cpp
+#include &lt;iostream&gt;
+
+int main() {
+    std::cout &lt;&lt; "Hello, World!\n";
+    return 0;
+}</code></pre>
+          </div>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-bash"># Compile and run (C++17)
+g++ -std=c++17 -Wall -Wextra -O2 -o hello hello.cpp
+./hello
+
+# With Clang
+clang++ -std=c++17 -Wall -Wextra -O2 -o hello hello.cpp</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <span></span>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#basics">Next: C++ Basics &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="basics">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 2</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">C++ Basics: Beyond C</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            C++ keeps C's low-level control and adds safety, expressiveness, and convenience. These core ideas appear in every C++ program.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+namespace math {
+    constexpr double pi = 3.141592653589793;
+}
+
+using IntList = int[10];   // type alias
+
+int main() {
+    int x = 42;
+    int &amp;ref = x;          // reference: alias for x
+    ref = 100;
+
+    const int max = 100;    // read-only
+    auto y = x;             // int
+    decltype(y) z = 0;      // int
+
+    std::string s = "C++ is powerful";
+    std::cout &lt;&lt; s &lt;&lt; "\n";
+    std::cout &lt;&lt; math::pi &lt;&lt; "\n";
+
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">References vs pointers</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li>A reference must be initialized and cannot be rebound.</li>
+                <li>References are safer syntax for aliasing.</li>
+                <li>Pointers can be null and can be reassigned.</li>
+                <li>Prefer references when null is not expected.</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3"><code class="kbd">nullptr</code> and <code class="kbd">constexpr</code></h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><code class="kbd">nullptr</code> is the type-safe null pointer.</li>
+                <li><code class="kbd">constexpr</code> values are known at compile time.</li>
+                <li><code class="kbd">const</code> makes an object read-only at runtime.</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4"><code class="kbd">const</code> correctness</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-cpp">const int a = 5;              // a cannot change
+const int *p = &amp;a;            // data is const, pointer is not
+int b = 10;
+int *const q = &amp;b;             // pointer is const, data is not
+const int *const r = &amp;a;      // both const
+
+void print(const std::string &amp;s);  // promise not to modify s</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#functions">Next: Functions &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="functions">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 3</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Functions in C++</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            C++ functions are more flexible than C functions thanks to overloading, default arguments, references, and compile-time evaluation.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+// Default argument
+void greet(const std::string &amp;name, const std::string &amp;greeting = "Hello") {
+    std::cout &lt;&lt; greeting &lt;&lt; ", " &lt;&lt; name &lt;&lt; "!\n";
+}
+
+// Overloaded functions
+int add(int a, int b) { return a + b; }
+double add(double a, double b) { return a + b; }
+
+// Pass by value, reference, const reference
+void demo(int v, int &amp;r, const int &amp;cr) {
+    r = v + cr;
+}
+
+// constexpr function
+constexpr int square(int x) { return x * x; }
+
+int main() {
+    greet("Ada");
+    std::cout &lt;&lt; add(2, 3) &lt;&lt; " " &lt;&lt; add(2.5, 3.5) &lt;&lt; "\n";
+    std::cout &lt;&lt; square(12) &lt;&lt; "\n";   // evaluated at compile time
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Passing style cheat sheet</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li><code class="kbd">T x</code>: copy. Safe but expensive for big objects.</li>
+              <li><code class="kbd">T &amp;x</code>: mutable reference. Caller sees changes.</li>
+              <li><code class="kbd">const T &amp;x</code>: read-only reference. Cheap and safe.</li>
+            </ul>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#basics">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#classes">Next: Classes &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="classes">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 4</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Classes &amp; OOP</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            A class bundles data and behavior. Constructors create objects, destructors clean them up, and access specifiers control who can touch what.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+class BankAccount {
+public:
+    BankAccount(const std::string &amp;owner, double balance)
+        : owner_(owner), balance_(balance) {
+        std::cout &lt;&lt; "Account created for " &lt;&lt; owner_ &lt;&lt; "\n";
+    }
+
+    void deposit(double amount) {
+        if (amount &gt; 0) balance_ += amount;
+    }
+
+    double balance() const { return balance_; }
+
+private:
+    std::string owner_;
+    double balance_;
+};
+
+int main() {
+    BankAccount acc("Alice", 100.0);
+    acc.deposit(50.0);
+    std::cout &lt;&lt; "Balance: " &lt;&lt; acc.balance() &lt;&lt; "\n";
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Classes vs structs</h3>
+              <p class="text-[var(--muted)]">The only difference is default access: <code class="kbd">class</code> defaults to <code class="kbd">private</code>, <code class="kbd">struct</code> defaults to <code class="kbd">public</code>. Use <code class="kbd">struct</code> for plain data aggregates.</p>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3"><code class="kbd">this</code> and static members</h3>
+              <p class="text-[var(--muted)]"><code class="kbd">this</code> is a pointer to the current object. Static members belong to the class, not an instance.</p>
+              <div class="code-block mt-3">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-cpp">class Widget {
+public:
+    static int count;
+    Widget() { ++count; }
+};
+int Widget::count = 0;</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#functions">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#inheritance">Next: Inheritance &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="inheritance">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 5</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Inheritance &amp; Polymorphism</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Inheritance lets a new class reuse and extend an existing class. Polymorphism lets you treat derived objects through base pointers.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+class Shape {
+public:
+    virtual ~Shape() = default;
+    virtual double area() const = 0;   // pure virtual
+};
+
+class Circle : public Shape {
+public:
+    Circle(double r) : radius_(r) {}
+    double area() const override { return 3.14159 * radius_ * radius_; }
+private:
+    double radius_;
+};
+
+class Rectangle : public Shape {
+public:
+    Rectangle(double w, double h) : width_(w), height_(h) {}
+    double area() const override { return width_ * height_; }
+private:
+    double width_, height_;
+};
+
+int main() {
+    std::unique_ptr&lt;Shape&gt; s1 = std::make_unique&lt;Circle&gt;(5.0);
+    std::unique_ptr&lt;Shape&gt; s2 = std::make_unique&lt;Rectangle&gt;(4.0, 6.0);
+    std::cout &lt;&lt; s1-&gt;area() &lt;&lt; "\n";
+    std::cout &lt;&lt; s2-&gt;area() &lt;&lt; "\n";
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Inheritance access levels</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><code class="kbd">public</code> inheritance: <code class="kbd">is-a</code> relationship.</li>
+                <li><code class="kbd">protected</code> inheritance: less common.</li>
+                <li><code class="kbd">private</code> inheritance: implementation reuse, not <code class="kbd">is-a</code>.</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Virtual base classes</h3>
+              <p class="text-[var(--muted)]">Multiple inheritance can create a diamond. Virtual inheritance ensures the base class is shared, not duplicated.</p>
+            </div>
+          </div>
+
+          <h3 class="text-xl font-semibold mb-4">Slicing problem</h3>
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-cpp">Circle c(5.0);
+Shape s = c;       // BAD: only Shape part is copied
+Shape &amp;ref = c;   // OK: reference to whole Circle
+Shape *ptr = &amp;c;  // OK: polymorphism works</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#classes">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#operator-overloading">Next: Operator Overloading &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="operator-overloading">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 6</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Operator Overloading &amp; RAII</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Operator overloading lets your types act like built-in types. RAII ties resource lifetime to object lifetime so cleanup is automatic.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-cpp">#include &lt;iostream&gt;
+
+class Fraction {
+public:
+    Fraction(int n, int d) : num_(n), den_(d) {}
+
+    Fraction operator+(const Fraction &amp;other) const {
+        return Fraction(num_ * other.den_ + other.num_ * den_,
+                        den_ * other.den_);
+    }
+
+    bool operator==(const Fraction &amp;other) const {
+        return num_ * other.den_ == other.num_ * den_;
+    }
+
+    friend std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, const Fraction &amp;f) {
+        return os &lt;&lt; f.num_ &lt;&lt; "/" &lt;&lt; f.den_;
+    }
+
+private:
+    int num_, den_;
+};
+
+int main() {
+    Fraction a(1, 2), b(1, 3);
+    std::cout &lt;&lt; (a + b) &lt;&lt; "\n";
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Rule of 0 / 3 / 5</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><strong>Rule of 0:</strong> class manages no resources; compiler-generated functions are fine.</li>
+                <li><strong>Rule of 3:</strong> if you write destructor, copy constructor, or copy assignment, write all three.</li>
+                <li><strong>Rule of 5:</strong> add move constructor and move assignment for performance.</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">RAII</h3>
+              <p class="text-[var(--muted)]">Acquire resources in a constructor and release them in the destructor. This turns manual resource management into automatic cleanup, even when exceptions occur.</p>
+            </div>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#inheritance">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#templates">Next: Templates &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="templates">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 7</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Templates &amp; Generic Programming</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Templates let you write one piece of code that works for many types. They are the engine behind the Standard Template Library.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-cpp">#include &lt;iostream&gt;
+
+template &lt;typename T&gt;
+T max_value(T a, T b) {
+    return (a &gt; b) ? a : b;
+}
+
+template &lt;typename T, size_t N&gt;
+class Array {
+public:
+    T &amp;operator[](size_t i) { return data_[i]; }
+    size_t size() const { return N; }
+private:
+    T data_[N];
+};
+
+int main() {
+    std::cout &lt;&lt; max_value(3, 7) &lt;&lt; "\n";
+    std::cout &lt;&lt; max_value(2.5, 1.5) &lt;&lt; "\n";
+
+    Array&lt;int, 5&gt; arr;
+    arr[0] = 42;
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Template facts</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li><code class="kbd">typename</code> and <code class="kbd">class</code> in template parameters are equivalent.</li>
+              <li>Explicit specialization overrides a template for one type.</li>
+              <li>Non-type parameters can be integers, pointers, or references.</li>
+              <li>SFINAE lets you disable templates based on type traits.</li>
+            </ul>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#operator-overloading">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#stl">Next: STL &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="stl">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 8</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">STL Deep Dive</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            The Standard Template Library provides containers, iterators, and algorithms that you can combine without writing your own data structures.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;map&gt;
+#include &lt;algorithm&gt;
+#include &lt;numeric&gt;
+
+int main() {
+    std::vector&lt;int&gt; v = {3, 1, 4, 1, 5, 9};
+    std::sort(v.begin(), v.end());
+
+    auto it = std::find(v.begin(), v.end(), 5);
+    if (it != v.end()) std::cout &lt;&lt; "found 5\n";
+
+    int sum = std::accumulate(v.begin(), v.end(), 0);
+    std::cout &lt;&lt; "sum = " &lt;&lt; sum &lt;&lt; "\n";
+
+    std::map&lt;std::string, int&gt; scores;
+    scores["Alice"] = 95;
+    scores["Bob"] = 87;
+    for (const auto &amp;pair : scores) {
+        std::cout &lt;&lt; pair.first &lt;&lt; ": " &lt;&lt; pair.second &lt;&lt; "\n";
+    }
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Container quick reference</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><code class="kbd">std::vector</code>: dynamic array. Fast random access.</li>
+                <li><code class="kbd">std::list</code>: doubly-linked list.</li>
+                <li><code class="kbd">std::deque</code>: double-ended queue.</li>
+                <li><code class="kbd">std::set</code> / <code class="kbd">std::map</code>: ordered tree, O(log n).</li>
+                <li><code class="kbd">std::unordered_set</code> / <code class="kbd">std::unordered_map</code>: hash table, average O(1).</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Iterator categories</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><strong>Input:</strong> read once.</li>
+                <li><strong>Output:</strong> write once.</li>
+                <li><strong>Forward:</strong> read multiple times.</li>
+                <li><strong>Bidirectional:</strong> move backward too.</li>
+                <li><strong>Random access:</strong> arbitrary jumps.</li>
+              </ul>
+            </div>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#templates">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#smart-pointers">Next: Smart Pointers &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="smart-pointers">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 9</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Smart Pointers &amp; Move Semantics</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Smart pointers automate memory ownership. Move semantics let expensive objects be transferred instead of copied.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+#include &lt;string&gt;
+
+class Resource {
+public:
+    Resource() { std::cout &lt;&lt; "acquired\n"; }
+    ~Resource() { std::cout &lt;&lt; "released\n"; }
+};
+
+int main() {
+    // unique ownership
+    auto r1 = std::make_unique&lt;Resource&gt;();
+
+    // shared ownership
+    auto r2 = std::make_shared&lt;Resource&gt;();
+    {
+        auto r3 = r2;   // reference count increases
+    }                  // r3 destroyed, count decreases
+
+    // weak pointer breaks cycles
+    std::weak_ptr&lt;Resource&gt; weak = r2;
+
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Smart pointer summary</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><code class="kbd">std::unique_ptr</code>: exclusive owner.</li>
+                <li><code class="kbd">std::shared_ptr</code>: reference-counted shared owner.</li>
+                <li><code class="kbd">std::weak_ptr</code>: non-owning observer.</li>
+                <li>Prefer <code class="kbd">std::make_unique</code> / <code class="kbd">std::make_shared</code> over raw <code class="kbd">new</code>.</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Move semantics</h3>
+              <p class="text-[var(--muted)]">An rvalue reference (<code class="kbd">T&amp;&amp;</code>) binds to temporary values. <code class="kbd">std::move</code> casts an lvalue to an rvalue so its resources can be stolen safely.</p>
+            </div>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;string&gt;
+#include &lt;utility&gt;
+
+int main() {
+    std::vector&lt;std::string&gt; v;
+    std::string s = "a very long string";
+
+    v.push_back(s);             // copy
+    v.push_back(std::move(s));  // move; s is now valid but unspecified
+    return 0;
+}</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#stl">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#lambdas">Next: Lambdas &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="lambdas">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 10</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Lambdas &amp; Functional Programming</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Lambdas are anonymous functions. They capture local variables and integrate cleanly with the STL.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+#include &lt;functional&gt;
+
+int main() {
+    std::vector&lt;int&gt; v = {1, 2, 3, 4, 5};
+
+    int threshold = 3;
+    std::sort(v.begin(), v.end(),
+              [](int a, int b) { return a &gt; b; });
+
+    auto count = std::count_if(v.begin(), v.end(),
+                               [threshold](int x) { return x &gt; threshold; });
+    std::cout &lt;&lt; count &lt;&lt; " items above " &lt;&lt; threshold &lt;&lt; "\n";
+
+    // Generic lambda (C++14)
+    auto add = [](auto a, auto b) { return a + b; };
+    std::cout &lt;&lt; add(2, 3) &lt;&lt; " " &lt;&lt; add(2.5, 3.5) &lt;&lt; "\n";
+
+    std::function&lt;int(int, int)&gt; op = [](int a, int b) { return a * b; };
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Capture modes</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li><code class="kbd">[]</code> captures nothing.</li>
+              <li><code class="kbd">[=]</code> captures everything by value.</li>
+              <li><code class="kbd">[&amp;]</code> captures everything by reference.</li>
+              <li><code class="kbd">[x, &amp;y]</code> captures <code class="kbd">x</code> by value and <code class="kbd">y</code> by reference.</li>
+              <li><code class="kbd">[this]</code> captures the current object pointer.</li>
+            </ul>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#smart-pointers">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#error-handling">Next: Error Handling &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="error-handling">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 11</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Error Handling</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            C++ offers exceptions for error propagation and <code class="kbd">std::optional</code> for values that may be missing. Choose the right tool for each API.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;stdexcept&gt;
+#include &lt;optional&gt;
+
+class NetworkError : public std::runtime_error {
+public:
+    explicit NetworkError(const char *msg) : std::runtime_error(msg) {}
+};
+
+std::optional&lt;int&gt; parse_int(const std::string &amp;s) {
+    try {
+        return std::stoi(s);
+    } catch (...) {
+        return std::nullopt;
+    }
+}
+
+int main() {
+    try {
+        throw NetworkError("connection refused");
+    } catch (const NetworkError &amp;e) {
+        std::cerr &lt;&lt; "Network error: " &lt;&lt; e.what() &lt;&lt; "\n";
+    } catch (const std::exception &amp;e) {
+        std::cerr &lt;&lt; "Other error: " &lt;&lt; e.what() &lt;&lt; "\n";
+    }
+
+    if (auto val = parse_int("42")) {
+        std::cout &lt;&lt; *val &lt;&lt; "\n";
+    }
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Exception safety levels</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><strong>Basic guarantee:</strong> no leaks or corruption; object invariants hold.</li>
+                <li><strong>Strong guarantee:</strong> operation either succeeds or has no effect.</li>
+                <li><strong>No-throw guarantee:</strong> operation never throws.</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Error codes vs exceptions</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li>Use <code class="kbd">std::optional</code> for expected missing values.</li>
+                <li>Use exceptions for truly exceptional failures.</li>
+                <li>In hot paths or across language boundaries, error codes may be better.</li>
+                <li>C++23 introduces <code class="kbd">std::expected</code> for explicit error values.</li>
+              </ul>
+            </div>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#lambdas">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#concurrency">Next: Concurrency &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="concurrency">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 12</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Concurrency</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            C++11 and later provide a portable threading library. Combine threads, mutexes, condition variables, and atomics to build safe parallel programs.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;mutex&gt;
+#include &lt;vector&gt;
+
+std::mutex g_mutex;
+int g_count = 0;
+
+void worker() {
+    std::lock_guard&lt;std::mutex&gt; lock(g_mutex);
+    ++g_count;
+}
+
+int main() {
+    std::vector&lt;std::thread&gt; threads;
+    for (int i = 0; i &lt; 10; ++i) {
+        threads.emplace_back(worker);
+    }
+    for (auto &amp;t : threads) t.join();
+    std::cout &lt;&lt; "count = " &lt;&lt; g_count &lt;&lt; "\n";
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Synchronization tools</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><code class="kbd">std::mutex</code> with <code class="kbd">std::lock_guard</code> for simple scopes.</li>
+                <li><code class="kbd">std::unique_lock</code> for condition variables and deferred locking.</li>
+                <li><code class="kbd">std::condition_variable</code> for producer/consumer patterns.</li>
+                <li><code class="kbd">std::atomic</code> for lock-free counters and flags.</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Async tasks</h3>
+              <div class="code-block">
+                <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><code class="language-cpp">#include &lt;future&gt;
+
+int compute() { return 42; }
+
+int main() {
+    auto fut = std::async(std::launch::async, compute);
+    std::cout &lt;&lt; fut.get() &lt;&lt; "\n";
+    return 0;
+}</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#error-handling">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#io">Next: I/O &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="io">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 13</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">I/O &amp; Filesystem</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            C++ streams handle formatted I/O, while C++17's filesystem library manipulates paths and directories portably.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+#include &lt;sstream&gt;
+#include &lt;filesystem&gt;
+
+namespace fs = std::filesystem;
+
+int main() {
+    // Stream I/O
+    std::ofstream out("data.txt");
+    out &lt;&lt; "answer: " &lt;&lt; 42 &lt;&lt; "\n";
+    out.close();
+
+    std::ifstream in("data.txt");
+    std::string line;
+    while (std::getline(in, line)) {
+        std::cout &lt;&lt; line &lt;&lt; "\n";
+    }
+
+    // String stream
+    std::stringstream ss;
+    ss &lt;&lt; "value = " &lt;&lt; 3.14;
+    std::cout &lt;&lt; ss.str() &lt;&lt; "\n";
+
+    // Filesystem
+    for (const auto &amp;entry : fs::directory_iterator(".")) {
+        std::cout &lt;&lt; entry.path() &lt;&lt; "\n";
+    }
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Formatting (C++20)</h3>
+            <div class="code-block">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-cpp">#include &lt;format&gt;
+#include &lt;iostream&gt;
+
+int main() {
+    std::cout &lt;&lt; std::format("{} + {} = {}\n", 2, 3, 5);
+    std::cout &lt;&lt; std::format("{:.2f}\n", 3.14159);
+    return 0;
+}</code></pre>
+            </div>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#concurrency">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#cmake">Next: CMake &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="cmake">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 14</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">CMake &amp; Build Systems</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            CMake is the de facto standard for building cross-platform C++ projects. It generates native build files for Make, Ninja, Visual Studio, and Xcode.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-cmake">cmake_minimum_required(VERSION 3.16)
+project(Tutorial CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+add_executable(app
+    src/main.cpp
+    src/bank_account.cpp
+)
+
+target_include_directories(app PRIVATE include)
+
+# Optional library target
+add_library(utils STATIC src/utils.cpp)
+target_link_libraries(app PRIVATE utils)
+
+# Release vs Debug builds
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Common CMake commands</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><code class="kbd">add_executable</code> / <code class="kbd">add_library</code>.</li>
+                <li><code class="kbd">target_include_directories</code>.</li>
+                <li><code class="kbd">target_link_libraries</code>.</li>
+                <li><code class="kbd">find_package</code> for external dependencies.</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Why CMake?</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li>Single build description for many platforms.</li>
+                <li>Integrated with most IDEs and CI systems.</li>
+                <li>Handles transitive dependencies cleanly.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-bash"># Configure and build with Ninja
+cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+cmake --build build --parallel
+
+# Run
+./build/app</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#io">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#modern">Next: Modern C++ &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="modern">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 15</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Modern C++17/20 &amp; Performance</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Modern C++ removes boilerplate, improves type safety, and helps the compiler generate fast code.
+          </p>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string_view&gt;
+#include &lt;vector&gt;
+#include &lt;map&gt;
+
+// if constexpr (C++17)
+template &lt;typename T&gt;
+auto get_value(T t) {
+    if constexpr (std::is_pointer_v&lt;T&gt;) {
+        return *t;
+    } else {
+        return t;
+    }
+}
+
+int main() {
+    // Structured bindings
+    std::map&lt;std::string, int&gt; scores = {{"Ada", 95}, {"Bob", 87}};
+    for (const auto &amp;[name, score] : scores) {
+        std::cout &lt;&lt; name &lt;&lt; ": " &lt;&lt; score &lt;&lt; "\n";
+    }
+
+    // string_view avoids allocations
+    std::string_view sv = "hello";
+    std::cout &lt;&lt; sv &lt;&lt; "\n";
+
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">C++20 highlights</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li><strong>Concepts:</strong> constrain templates with named requirements.</li>
+                <li><strong>Ranges:</strong> compose lazy algorithms with pipes.</li>
+                <li><strong>Coroutines:</strong> asynchronous functions with <code class="kbd">co_await</code>.</li>
+                <li><strong>Modules:</strong> faster, cleaner replacement for headers.</li>
+              </ul>
+            </div>
+            <div class="card rounded-2xl p-6">
+              <h3 class="text-xl font-semibold mb-3">Performance mindset</h3>
+              <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+                <li>Zero-cost abstractions: high-level code compiles to efficient machine code.</li>
+                <li>Cache locality: prefer contiguous containers like <code class="kbd">std::vector</code>.</li>
+                <li>Compile-time computation with <code class="kbd">constexpr</code> reduces runtime work.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="code-block mb-6">
+            <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><code class="language-cpp">// Concepts example (C++20)
+template &lt;typename T&gt;
+concept Numeric = std::is_arithmetic_v&lt;T&gt;;
+
+template &lt;Numeric T&gt;
+T add(T a, T b) { return a + b; }</code></pre>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#cmake">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#capstone">Next: Capstone Projects &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="capstone">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 16</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Capstone Projects</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            These projects apply modern C++ to realistic systems. Complete one to make the ideas stick, then extend it.
+          </p>
+
+          <div class="card rounded-2xl p-6 mb-10">
+            <h3 class="text-2xl font-bold mb-4">Project A: High-Performance Event-Driven Server</h3>
+
+            <h4 class="text-xl font-semibold mb-2">1. What is this project?</h4>
+            <p class="text-[var(--muted)] mb-4">Build a single-threaded TCP echo server that handles many clients without blocking. The goal is to understand sockets, non-blocking I/O, and event loops.</p>
+
+            <h4 class="text-xl font-semibold mb-2">2. What it covers?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li>Berkeley sockets and <code class="kbd">poll</code>.</li>
+              <li>Non-blocking file descriptors with <code class="kbd">fcntl</code>.</li>
+              <li>Buffering partial reads and writes.</li>
+              <li>Modern C++: <code class="kbd">std::vector</code>, smart pointers, lambdas.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">3. How it is done?</h4>
+            <div class="code-block mb-4">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-cpp">// Pseudocode of the event loop
+std::vector&lt;pollfd&gt; fds;
+fds.push_back({listener_fd, POLLIN, 0});
+
+while (true) {
+    poll(fds.data(), fds.size(), -1);
+    for (auto &amp;fd : fds) {
+        if (fd.revents &amp; POLLIN) {
+            if (fd.fd == listener_fd) accept_client();
+            else read_and_echo(fd.fd);
+        }
+    }
+}</code></pre>
+            </div>
+
+            <h4 class="text-xl font-semibold mb-2">4. What did we learn?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li>One thread can serve many connections when I/O is non-blocking.</li>
+              <li>Buffer management matters for partial network messages.</li>
+              <li>RAII cleans up sockets automatically on exceptions.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">5. How can I enhance?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li>Use <code class="kbd">epoll</code> or <code class="kbd">kqueue</code> for tens of thousands of connections.</li>
+              <li>Add a simple chat protocol with rooms.</li>
+              <li>Stress test with <code class="kbd">wrk</code> or <code class="kbd">ab</code>.</li>
+            </ul>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-10">
+            <h3 class="text-2xl font-bold mb-4">Project B: Custom STL-like Container Library</h3>
+
+            <h4 class="text-xl font-semibold mb-2">1. What is this project?</h4>
+            <p class="text-[var(--muted)] mb-4">Implement <code class="kbd">Vector</code> and <code class="kbd">HashMap</code> from scratch with iterators, RAII, and move semantics.</p>
+
+            <h4 class="text-xl font-semibold mb-2">2. What it covers?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li>Manual memory management.</li>
+              <li>Iterator design.</li>
+              <li>Move constructors and move assignment.</li>
+              <li>Hash tables and separate chaining.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">3. How it is done?</h4>
+            <div class="code-block mb-4">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-cpp">template &lt;typename T&gt;
+class Vector {
+public:
+    using iterator = T*;
+
+    Vector() = default;
+    ~Vector() { delete[] data_; }
+
+    Vector(const Vector &amp;other);
+    Vector(Vector &amp;&amp;other) noexcept
+        : data_(other.data_), size_(other.size_), cap_(other.cap_) {
+        other.data_ = nullptr;
+        other.size_ = other.cap_ = 0;
+    }
+
+    void push_back(const T &amp;value);
+    iterator begin() { return data_; }
+    iterator end() { return data_ + size_; }
+
+private:
+    T *data_ = nullptr;
+    size_t size_ = 0;
+    size_t cap_ = 0;
+};</code></pre>
+            </div>
+
+            <h4 class="text-xl font-semibold mb-2">4. What did we learn?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li>STL containers look simple but hide a lot of correctness machinery.</li>
+              <li>Move semantics make returning large objects cheap.</li>
+              <li>Iterators must obey category requirements to work with algorithms.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">5. How can I enhance?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li>Add <code class="kbd">emplace_back</code> and <code class="kbd">reserve</code>.</li>
+              <li>Write unit tests comparing behavior to <code class="kbd">std::vector</code> and <code class="kbd">std::unordered_map</code>.</li>
+              <li>Profile against the standard library.</li>
+            </ul>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-10">
+            <h3 class="text-2xl font-bold mb-4">Project C: Small Game Engine Component</h3>
+
+            <h4 class="text-xl font-semibold mb-2">1. What is this project?</h4>
+            <p class="text-[var(--muted)] mb-4">Build an ECS-style scene manager. Entities hold polymorphic components, systems update them, and a resource manager loads assets.</p>
+
+            <h4 class="text-xl font-semibold mb-2">2. What it covers?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li>Entity/Component design.</li>
+              <li>Polymorphism with smart pointers.</li>
+              <li>Resource manager with RAII.</li>
+              <li>Game loop timing.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">3. How it is done?</h4>
+            <div class="code-block mb-4">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-cpp">class Component {
+public:
+    virtual ~Component() = default;
+    virtual void update(float dt) = 0;
+};
+
+class Transform : public Component {
+public:
+    void update(float dt) override { /* ... */ }
+};
+
+class Entity {
+public:
+    std::vector&lt;std::unique_ptr&lt;Component&gt;&gt; components;
+    void add(std::unique_ptr&lt;Component&gt; c) {
+        components.push_back(std::move(c));
+    }
+};</code></pre>
+            </div>
+
+            <h4 class="text-xl font-semibold mb-2">4. What did we learn?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1 mb-4">
+              <li>Polymorphism plus smart pointers simplifies object lifetime.</li>
+              <li>A clean game loop separates update, render, and input phases.</li>
+              <li>Resource managers centralize loading and unloading.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">5. How can I enhance?</h4>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-1">
+              <li>Replace virtual components with a true dense ECS using arrays of structs.</li>
+              <li>Add a simple rendering abstraction with SDL.</li>
+              <li>Serialize scene state to JSON.</li>
+            </ul>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#modern">&larr; Previous</a>
+            <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="#quiz">Next: Knowledge Check &rarr;</a>
+          </nav>
+        </section>
+
+        <section class="scroll-mt-24" id="quiz">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 17</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Knowledge Check</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">Eight questions to verify your C++ fundamentals.</p>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">1. Which keyword creates a type alias in C++11 and later?</h3>
+            <div class="quiz" data-answer="A">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. <code class="kbd">using</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. <code class="kbd">typedef</code> only</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. <code class="kbd">alias</code></button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">2. What does RAII stand for?</h3>
+            <div class="quiz" data-answer="B">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. Runtime Allocation Is Initialization</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. Resource Acquisition Is Initialization</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. Random Access Is Immediate</button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">3. Which smart pointer owns a resource exclusively?</h3>
+            <div class="quiz" data-answer="A">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. <code class="kbd">std::unique_ptr</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. <code class="kbd">std::shared_ptr</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. <code class="kbd">std::weak_ptr</code></button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">4. What does <code class="kbd">std::move</code> do?</h3>
+            <div class="quiz" data-answer="B">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. Copies the object</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. Casts to an rvalue reference</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. Deletes the object</button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">5. Which container provides key-value lookup?</h3>
+            <div class="quiz" data-answer="C">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. <code class="kbd">std::vector</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. <code class="kbd">std::list</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. <code class="kbd">std::map</code></button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">6. What does marking a base-class function <code class="kbd">virtual</code> enable?</h3>
+            <div class="quiz" data-answer="A">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. Runtime polymorphism</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. Compile-time code generation</button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. Automatic memory management</button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-6">
+            <h3 class="font-semibold mb-2">7. Which C++17 feature inspects directories and paths?</h3>
+            <div class="quiz" data-answer="B">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. <code class="kbd">std::io_file</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. <code class="kbd">std::filesystem</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. <code class="kbd">std::directory</code></button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="font-semibold mb-2">8. Which header defines <code class="kbd">std::thread</code>?</h3>
+            <div class="quiz" data-answer="A">
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. <code class="kbd">&lt;thread&gt;</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. <code class="kbd">&lt;pthread.h&gt;</code></button>
+              <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. <code class="kbd">&lt;concurrency&gt;</code></button>
+            </div>
+            <p class="quiz-feedback mt-3 font-medium"></p>
+          </div>
+
+          <div class="card rounded-2xl p-8 text-center mb-10">
+            <h3 class="text-2xl font-bold mb-3">Congratulations!</h3>
+            <p class="text-[var(--muted)] mb-5">You have covered modern C++ from basics to concurrency, STL, and build systems.</p>
+            <div class="flex justify-center gap-4 flex-wrap">
+              <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">Restart tutorial</a>
+              <a class="px-5 py-2.5 rounded-lg bg-[var(--brand-light)] text-white font-medium hover:opacity-90 transition" href="https://en.cppreference.com/w/cpp" target="_blank">C++ Reference &rarr;</a>
+            </div>
+          </div>
+
+          <nav class="flex justify-between mt-10">
+            <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="#capstone">&larr; Previous</a>
+            <span></span>
+          </nav>
+        </section>
+
+      </div>
+      <footer class="border-t border-[var(--border)] px-6 py-8 text-center text-sm text-[var(--muted)]">
+        <p>Open in any browser. No build step required.</p>
+      </footer>
+    </main>
+  </div>
+  <script>
+    const html = document.documentElement;
+    const moon = document.getElementById('moon');
+    const sun = document.getElementById('sun');
+    const lightStylesheet = document.getElementById('hljs-light');
+    const darkStylesheet = document.getElementById('hljs-dark');
+
+    function applyTheme(theme) {
+      html.classList.remove('light', 'dark');
+      html.classList.add(theme);
+      if (theme === 'dark') {
+        lightStylesheet.disabled = true;
+        darkStylesheet.disabled = false;
+        moon.classList.add('hidden');
+        sun.classList.remove('hidden');
+      } else {
+        lightStylesheet.disabled = false;
+        darkStylesheet.disabled = true;
+        moon.classList.remove('hidden');
+        sun.classList.add('hidden');
+      }
+      localStorage.setItem('tutorials-theme', theme);
+    }
+
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      applyTheme(html.classList.contains('dark') ? 'light' : 'dark');
+    });
+
+    const saved = localStorage.getItem('tutorials-theme');
+    applyTheme(saved === 'dark' ? 'dark' : 'light');
+
+    function setStatus(status) {
+      localStorage.setItem('tutorial-cpp-language-status', status);
+      updateButtons();
+    }
+
+    function updateButtons() {
+      const status = localStorage.getItem('tutorial-cpp-language-status') || 'not-started';
+      const startBtns = document.querySelectorAll('[id^="btn-start"]');
+      const completeBtns = document.querySelectorAll('[id^="btn-complete"]');
+      startBtns.forEach(btn => { btn.textContent = status === 'in-progress' ? 'In Progress' : 'Start'; });
+      completeBtns.forEach(btn => { btn.textContent = status === 'completed' ? 'Completed' : 'Mark Complete'; });
+    }
+
+    document.querySelectorAll('[id^="btn-start"]').forEach(btn => btn.addEventListener('click', () => setStatus('in-progress')));
+    document.querySelectorAll('[id^="btn-complete"]').forEach(btn => btn.addEventListener('click', () => setStatus('completed')));
+    document.querySelectorAll('[id^="btn-reset"]').forEach(btn => btn.addEventListener('click', () => { localStorage.removeItem('tutorial-cpp-language-status'); updateButtons(); }));
+    updateButtons();
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('menu-overlay');
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('hidden');
+    }
+
+    function copyCode(btn) {
+      const code = btn.nextElementSibling.querySelector('code');
+      navigator.clipboard.writeText(code.innerText).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+      });
+    }
+
+    const sections = document.querySelectorAll('section[id]');
+    const tocLinks = document.querySelectorAll('.toc-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach((link) => link.classList.remove('active'));
+          const active = document.querySelector(`.toc-link[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -60% 0px' });
+    sections.forEach((section) => observer.observe(section));
+
+    document.querySelectorAll('.quiz').forEach((quiz) => {
+      const correct = quiz.dataset.answer;
+      const feedback = quiz.nextElementSibling;
+      quiz.querySelectorAll('.quiz-opt').forEach((opt) => {
+        opt.addEventListener('click', () => {
+          quiz.querySelectorAll('.quiz-opt').forEach((o) => { o.classList.remove('selected', 'correct', 'wrong'); o.disabled = true; });
+          opt.classList.add('selected');
+          if (opt.dataset.val === correct) {
+            opt.classList.add('correct');
+            feedback.textContent = 'Correct! ✅';
+            feedback.className = 'quiz-feedback mt-3 font-medium text-[var(--success)]';
+          } else {
+            opt.classList.add('wrong');
+            feedback.textContent = `Not quite. The correct answer is ${correct}.`;
+            feedback.className = 'quiz-feedback mt-3 font-medium text-[var(--danger)]';
+          }
+        });
+      });
+    });
+
+    hljs.highlightAll();
+  </script>
+</body>
+</html>

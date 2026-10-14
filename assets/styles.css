@@ -27,6 +27,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brand-light); o
   --foundation: #38bdf8;
   --security: #cf222e;
   --ai: #9333ea;
+  --data: #0ea5e9;
 }
 html.dark {
   --ink: #e6edf3;
@@ -44,6 +45,7 @@ html.dark {
   --foundation: #38bdf8;
   --security: #cf222e;
   --ai: #a855f7;
+  --data: #38bdf8;
 }
 
 /* Typography / layout */
@@ -133,6 +135,15 @@ html.dark .quiz-opt.selected { border-color: var(--brand-dark); background: rgba
 .brand-ai-rag-retrieval { --brand-light: #9333ea; --brand-dark: #a855f7; }
 .brand-ai-fine-tuning { --brand-light: #ec4899; --brand-dark: #f472b6; }
 .brand-ai-agents { --brand-light: #9333ea; --brand-dark: #a855f7; }
+.brand-data-engineering-foundations { --brand-light: #0ea5e9; --brand-dark: #38bdf8; }
+.brand-data-engineering-storage-warehouses { --brand-light: #0284c7; --brand-dark: #38bdf8; }
+.brand-data-engineering-pipelines-orchestration { --brand-light: #0369a1; --brand-dark: #0ea5e9; }
+.brand-data-engineering-streaming-cloud { --brand-light: #0891b2; --brand-dark: #22d3ee; }
+.brand-data-engineering-ops-governance { --brand-light: #0d9488; --brand-dark: #14b8a6; }
+.brand-c-language { --brand-light: #659AD3; --brand-dark: #659AD3; }
+.brand-cpp-language { --brand-light: #00599C; --brand-dark: #659AD2; }
+.brand-rust-language { --brand-light: #CE412B; --brand-dark: #E76B50; }
+.brand-go-language { --brand-light: #00ADD8; --brand-dark: #00ADD8; }
 
 /* Tutorial-specific badges */
 .linux-badge { background: #333; color: #FCC624; }
@@ -168,6 +179,7 @@ html.dark .react-badge { background: #20232a; color: #61DAFB; }
 .category-foundation { color: #ffffff; background: var(--foundation); }
 .category-security { color: #ffffff; background: var(--security); }
 .category-ai { color: #ffffff; background: var(--ai); }
+.category-data { color: #ffffff; background: var(--data); }
 .progress-ring { transform: rotate(-90deg); }
 .progress-ring-circle { transition: stroke-dashoffset 0.35s; }
 .completed-badge { background: var(--success); color: white; }
@@ -218,6 +230,7 @@ html.dark .hero-glow { box-shadow: 0 20px 60px -20px rgba(88,166,255,0.25); }
 .category-pill.devops { background: rgba(234,88,12,0.1); color: var(--devops); border-color: rgba(234,88,12,0.25); }
 .category-pill.security { background: rgba(207,34,46,0.1); color: var(--security); border-color: rgba(207,34,46,0.25); }
 .category-pill.ai { background: rgba(147,51,234,0.1); color: var(--ai); border-color: rgba(147,51,234,0.25); }
+.category-pill.data { background: rgba(14,165,233,0.1); color: var(--data); border-color: rgba(14,165,233,0.25); }
 .getting-started-card { background: linear-gradient(180deg, var(--card) 0%, var(--panel) 100%); }
 .progress-ring-bg { background: conic-gradient(from 0deg, var(--brand-light) calc(var(--percent, 0) * 1%), var(--border) 0); }
 
