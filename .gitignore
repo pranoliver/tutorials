@@ -21,6 +21,9 @@ tmp/
 temp/
 *.tmp
 
+# Agent context files
+.opencode_context.md
+
 # Operating system files
 Thumbs.db
 Desktop.ini
