@@ -136,7 +136,7 @@
       <div class="space-y-2">
        <div class="stat-row"><span>Completed</span><b id="count-completed">0</b></div>
        <div class="stat-row"><span>In Progress</span><b id="count-in-progress">0</b></div>
-       <div class="stat-row"><span>To Do</span><b id="count-not-started">43</b></div>
+        <div class="stat-row"><span>To Do</span><b id="count-not-started">45</b></div>
       </div>
       <a id="continue-link-banner" href="#" target="_blank" class="hidden mt-3 w-full text-center px-3 py-2 rounded-lg bg-[var(--brand-light)] text-white text-sm font-semibold hover:opacity-90 transition">
        Continue →
@@ -164,7 +164,7 @@
        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--foundation)] via-[var(--frontend)] to-[var(--devops)]"></div>
        <h2 class="relative z-10 text-2xl lg:text-3xl font-extrabold mb-2 tracking-tight">Learn by building.</h2>
        <p class="relative z-10 text-sm lg:text-base text-[var(--muted)] max-w-3xl leading-relaxed">
-        43 self-contained tutorials from the command line to production. No setup required — just open and start.
+         45 self-contained tutorials from the command line to production. No setup required — just open and start.
        </p>
       </div>
      </section>
@@ -209,14 +209,60 @@
       <div class="flex items-center gap-3 mb-5">
        <span class="w-2.5 h-2.5 rounded-full bg-[var(--brand-light)]" id="main-section-dot"></span>
        <h2 class="text-xl font-bold" id="main-section-title">All Tutorials</h2>
-       <span class="text-sm text-[var(--muted)] ml-auto" id="main-section-count">33 tutorials</span>
+       <span class="text-sm text-[var(--muted)] ml-auto" id="main-section-count">35 tutorials</span>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5" id="tutorial-grid">
-        <a class="tutorial-card group flex flex-col bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 hover:shadow-xl hover:border-[var(--foundation)] hover:-translate-y-1 transition-all duration-200 min-h-[260px]" data-category="foundation" data-duration="4 hrs" data-id="linux" href="linux/index.html" target="_blank">
+        <a class="tutorial-card group flex flex-col bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 hover:shadow-xl hover:border-[var(--foundation)] hover:-translate-y-1 transition-all duration-200 min-h-[260px]" data-category="foundation" data-duration="4 hrs" data-id="basic-computer-science" href="basic-computer-science/index.html" target="_blank">
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--foundation)] text-white shadow-md border border-white/20">
             #1
+           </span>
+           <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-foundation">
+            Foundation
+           </span>
+          </div>
+          <img alt="Basic Computer Science" class="w-7 h-7 group-hover:scale-110 transition" src="assets/favicons/basic-computer-science.svg"/>
+         </div>
+         <div class="flex-1 min-h-0">
+          <h2 class="text-lg font-bold mb-1 group-hover:text-[var(--foundation)] transition">
+           Basic Computer Science
+          </h2>
+          <p class="text-[var(--muted)] text-sm leading-relaxed overflow-y-auto max-h-[80px] pr-1 custom-scrollbar">
+           How computers work: hardware, binary data, operating systems, networking, algorithms, and programming fundamentals.
+          </p>
+         </div>
+         <div class="status-area">
+         </div>
+        </a>
+        <a class="tutorial-card group flex flex-col bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 hover:shadow-xl hover:border-[var(--foundation)] hover:-translate-y-1 transition-all duration-200 min-h-[260px]" data-category="foundation" data-duration="6 hrs" data-id="data-structures-algorithms" href="data-structures-algorithms/index.html" target="_blank">
+         <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+           <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--foundation)] text-white shadow-md border border-white/20">
+            #2
+           </span>
+           <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-foundation">
+            Foundation
+           </span>
+          </div>
+          <img alt="Data Structures &amp; Algorithms" class="w-7 h-7 group-hover:scale-110 transition" src="assets/favicons/data-structures-algorithms.svg"/>
+         </div>
+         <div class="flex-1 min-h-0">
+          <h2 class="text-lg font-bold mb-1 group-hover:text-[var(--foundation)] transition">
+           Data Structures &amp; Algorithms (DSA)
+          </h2>
+          <p class="text-[var(--muted)] text-sm leading-relaxed overflow-y-auto max-h-[80px] pr-1 custom-scrollbar">
+           Big O, arrays, linked lists, stacks, queues, hash tables, trees, heaps, graphs, sorting, recursion, and dynamic programming in Python.
+          </p>
+         </div>
+         <div class="status-area">
+         </div>
+        </a>
+        <a class="tutorial-card group flex flex-col bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 hover:shadow-xl hover:border-[var(--foundation)] hover:-translate-y-1 transition-all duration-200 min-h-[260px]" data-category="foundation" data-duration="4 hrs" data-id="linux" href="linux/index.html" target="_blank">
+         <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+           <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--foundation)] text-white shadow-md border border-white/20">
+#3
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-foundation">
             Foundation
@@ -239,7 +285,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--frontend)] text-white shadow-md border border-white/20">
-            #2
+#4
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-frontend">
             Frontend
@@ -262,7 +308,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--frontend)] text-white shadow-md border border-white/20">
-            #3
+#5
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-frontend">
             Frontend
@@ -285,7 +331,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--frontend)] text-white shadow-md border border-white/20">
-            #4
+#6
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-frontend">
             Frontend
@@ -308,7 +354,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--foundation)] text-white shadow-md border border-white/20">
-            #5
+#7
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-foundation">
             Foundation
@@ -331,7 +377,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--foundation)] text-white shadow-md border border-white/20">
-            #6
+#8
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-foundation">
             Foundation
@@ -354,7 +400,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--backend)] text-white shadow-md border border-white/20">
-            #7
+#9
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-backend">
             Backend
@@ -377,7 +423,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--foundation)] text-white shadow-md border border-white/20">
-            #8
+#10
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-foundation">
             Foundation
@@ -400,7 +446,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--foundation)] text-white shadow-md border border-white/20">
-            #9
+#11
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-foundation">
             Foundation
@@ -423,7 +469,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--foundation)] text-white shadow-md border border-white/20">
-            #10
+#12
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-foundation">
             Foundation
@@ -446,7 +492,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--foundation)] text-white shadow-md border border-white/20">
-            #11
+#13
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-foundation">
             Foundation
@@ -469,7 +515,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--backend)] text-white shadow-md border border-white/20">
-            #12
+#14
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-backend">
             Backend
@@ -492,7 +538,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--backend)] text-white shadow-md border border-white/20">
-            #13
+#15
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-backend">
             Backend
@@ -515,7 +561,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--backend)] text-white shadow-md border border-white/20">
-            #14
+#16
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-backend">
             Backend
@@ -538,7 +584,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--backend)] text-white shadow-md border border-white/20">
-            #15
+#17
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-backend">
             Backend
@@ -561,7 +607,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--backend)] text-white shadow-md border border-white/20">
-            #16
+#18
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-backend">
             Backend
@@ -584,7 +630,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--backend)] text-white shadow-md border border-white/20">
-            #17
+#19
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-backend">
             Backend
@@ -607,7 +653,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--frontend)] text-white shadow-md border border-white/20">
-            #18
+#20
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-frontend">
             Frontend
@@ -630,7 +676,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--frontend)] text-white shadow-md border border-white/20">
-            #19
+#21
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-frontend">
             Frontend
@@ -653,7 +699,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--frontend)] text-white shadow-md border border-white/20">
-            #20
+#22
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-frontend">
             Frontend
@@ -676,7 +722,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--devops)] text-white shadow-md border border-white/20">
-            #21
+#23
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-devops">
             DevOps
@@ -699,7 +745,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--devops)] text-white shadow-md border border-white/20">
-            #22
+#24
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-devops">
             DevOps
@@ -722,7 +768,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--devops)] text-white shadow-md border border-white/20">
-            #23
+#25
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-devops">
             DevOps
@@ -745,7 +791,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--devops)] text-white shadow-md border border-white/20">
-            #24
+#26
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-devops">
             DevOps
@@ -768,7 +814,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--devops)] text-white shadow-md border border-white/20">
-            #25
+#27
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-devops">
             DevOps
@@ -791,7 +837,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--devops)] text-white shadow-md border border-white/20">
-            #26
+#28
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-devops">
             DevOps
@@ -814,7 +860,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--devops)] text-white shadow-md border border-white/20">
-            #27
+#29
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-devops">
             DevOps
@@ -837,7 +883,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--backend)] text-white shadow-md border border-white/20">
-            #28
+#30
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-backend">
             Backend
@@ -860,7 +906,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--backend)] text-white shadow-md border border-white/20">
-            #29
+#31
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-backend">
             Backend
@@ -883,7 +929,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--backend)] text-white shadow-md border border-white/20">
-            #30
+#32
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-backend">
             Backend
@@ -906,7 +952,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--frontend)] text-white shadow-md border border-white/20">
-            #31
+#33
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-frontend">
             Frontend
@@ -929,7 +975,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--security)] text-white shadow-md border border-white/20">
-            #32
+#34
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-security">
             Security
@@ -952,7 +998,7 @@
          <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
            <span class="text-sm font-extrabold px-3 py-1.5 rounded-lg bg-[var(--security)] text-white shadow-md border border-white/20">
-            #33
+#35
            </span>
            <span class="text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full text-white category-security">
             Security
@@ -1262,6 +1308,8 @@
     const saved = localStorage.getItem('tutorials-theme');
     applyTheme(saved === 'dark' ? 'dark' : 'light');
     const TUTORIALS = [
+    { id: 'basic-computer-science', url: 'basic-computer-science/index.html' },
+    { id: 'data-structures-algorithms', url: 'data-structures-algorithms/index.html' },
     { id: 'linux', url: 'linux/index.html' },
     { id: 'html-css', url: 'html-css/index.html' },
     { id: 'web-accessibility', url: 'web-accessibility/index.html' },

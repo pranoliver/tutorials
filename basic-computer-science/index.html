@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Basic Computer Science — Foundations of Computing</title>
+  <link href="../assets/favicons/basic-computer-science.svg" rel="icon" type="image/svg+xml"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-light" rel="stylesheet"/>
+  <link disabled="" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" id="hljs-dark" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' }
+  </script>
+  <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="antialiased transition-colors duration-300 min-h-screen brand-basic-computer-science">
+  <a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-black focus:px-3 focus:py-2 focus:rounded" href="#main">Skip to content</a>
+
+  <div class="fixed inset-0 bg-black/40 z-30 hidden lg:hidden" id="menu-overlay" onclick="toggleSidebar()"></div>
+
+  <div class="flex min-h-screen">
+    <aside class="fixed lg:sticky top-0 left-0 h-screen w-72 border-r border-[var(--border)] bg-[var(--panel)] z-40 overflow-y-auto p-6" id="sidebar">
+      <div class="flex items-center gap-3 mb-8">
+        <img alt="Basic Computer Science" class="w-10 h-10" src="../assets/favicons/basic-computer-science.svg"/>
+        <span class="text-xl font-bold">Basic CS</span>
+      </div>
+      <nav class="space-y-1 text-sm" id="toc">
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">1. What is Computer Science?</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#hardware">2. How Computers Work (Hardware)</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#data">3. Data &amp; Binary Representation</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#os">4. Operating Systems</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#networking">5. Networking &amp; The Internet</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#algorithms">6. Algorithms &amp; Complexity Basics</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#programming">7. Programming Fundamentals</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#capstone">8. Capstone Project</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#quiz">9. Knowledge Check Quiz</a>
+      </nav>
+      <div class="mt-8 pt-6 border-t border-[var(--border)]">
+        <p class="text-xs text-[var(--muted)]">Open directly in any browser. No build step required.</p>
+      </div>
+    </aside>
+    <main class="flex-1 min-w-0" id="main">
+      <header class="sticky top-0 z-20 border-b border-[var(--border)] bg-[var(--panel)]/90 backdrop-blur px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <button aria-label="Open menu" class="lg:hidden p-2 rounded-md border border-[var(--border)]" onclick="toggleSidebar()">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </button>
+          <h1 class="text-lg sm:text-xl font-bold tracking-tight">Basic Computer Science</h1>
+        </div>
+        <div class="hidden sm:flex items-center gap-2 progress-controls" id="progress-controls">
+          <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-start">Start</button>
+          <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-complete">Mark Complete</button>
+          <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-reset">Reset</button>
+        </div>
+        <div class="sm:hidden flex items-center gap-2 progress-controls" id="progress-controls-mobile">
+          <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-start-mobile">Start</button>
+          <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-complete-mobile">Complete</button>
+          <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-reset-mobile">Reset</button>
+        </div>
+        <button aria-label="Toggle theme" class="p-2 rounded-full border border-[var(--border)] hover:bg-black/5 dark:hover:bg-white/5 transition" id="theme-toggle">
+          <svg aria-hidden="true" class="w-5 h-5" fill="none" id="moon" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <svg aria-hidden="true" class="w-5 h-5 hidden" fill="none" id="sun" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5"></circle>
+            <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </header>
+      <div class="max-w-4xl mx-auto px-6 py-10 space-y-20">
+
+        <section class="scroll-mt-24" id="intro">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 1</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">What is Computer Science?</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Computer science is not just about programming. It is the study of computation, information, and automation — how problems are represented, how solutions are designed as step-by-step procedures (algorithms), and how those procedures are carried out by machines.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Core pillars</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+              <li><strong>Hardware:</strong> The physical machine — CPU, memory, storage, and input/output devices.</li>
+              <li><strong>Data:</strong> How information is represented using bits, bytes, and number systems.</li>
+              <li><strong>Software:</strong> Programs and operating systems that control the hardware.</li>
+              <li><strong>Algorithms:</strong> Step-by-step procedures for solving problems efficiently.</li>
+              <li><strong>Networking:</strong> How computers communicate and share resources.</li>
+            </ul>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Why start here?</h3>
+            <p class="text-[var(--muted)] leading-relaxed">
+              Understanding the foundations makes every other tutorial easier. When you later learn Python, C++, databases, or operating systems, you will already know what happens under the hood: memory layout, CPU execution, binary data, and algorithmic cost.
+            </p>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24" id="hardware">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 2</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">How Computers Work (Hardware)</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Every computer, from a phone to a supercomputer, follows the same basic model: <strong>input → process → store → output</strong>.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Key components</h3>
+            <table class="w-full text-left text-[var(--muted)] text-sm border-collapse mb-4">
+              <thead>
+                <tr class="border-b border-[var(--border)]">
+                  <th class="pb-2 font-semibold text-[var(--ink)]">Component</th>
+                  <th class="pb-2 font-semibold text-[var(--ink)]">Role</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[var(--border)]">
+                <tr>
+                  <td class="py-2 font-medium">CPU (processor)</td>
+                  <td class="py-2">The "brain." Fetches, decodes, and executes instructions. Measured in clock speed (GHz) and cores.</td>
+                </tr>
+                <tr>
+                  <td class="py-2 font-medium">RAM (memory)</td>
+                  <td class="py-2">Fast, volatile working storage for programs and data currently in use. Lost when power is off.</td>
+                </tr>
+                <tr>
+                  <td class="py-2 font-medium">Storage (SSD/HDD)</td>
+                  <td class="py-2">Slower, non-volatile storage for files and the OS. Survives reboots.</td>
+                </tr>
+                <tr>
+                  <td class="py-2 font-medium">GPU</td>
+                  <td class="py-2">Specialized processor for parallel math — graphics, machine learning, scientific simulation.</td>
+                </tr>
+                <tr>
+                  <td class="py-2 font-medium">Motherboard</td>
+                  <td class="py-2">Main circuit board connecting CPU, RAM, storage, and peripherals.</td>
+                </tr>
+                <tr>
+                  <td class="py-2 font-medium">I/O devices</td>
+                  <td class="py-2">Keyboard, mouse, screen, network, speakers — how the computer interacts with the world.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">The fetch-decode-execute cycle</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              The CPU repeatedly performs three steps for every instruction:
+            </p>
+            <ol class="list-decimal pl-6 space-y-2 text-[var(--muted)]">
+              <li><strong>Fetch:</strong> Get the next instruction from memory.</li>
+              <li><strong>Decode:</strong> Figure out what the instruction means.</li>
+              <li><strong>Execute:</strong> Carry out the instruction (math, move data, jump, etc.).</li>
+            </ol>
+            <p class="text-[var(--muted)] mt-4">
+              This happens billions of times per second. Software is ultimately a sequence of these simple instructions.
+            </p>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24" id="data">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 3</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Data &amp; Binary Representation</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Computers store everything as <strong>bits</strong> — 0s and 1s representing low/high voltage. Eight bits make a <strong>byte</strong>.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Number systems</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
+                <div class="text-xs text-[var(--muted)] uppercase font-semibold mb-1">Decimal (base 10)</div>
+                <div class="font-mono text-sm">Digits: 0–9</div>
+                <p class="text-xs text-[var(--muted)] mt-2">Humans use base 10 because we have ten fingers.</p>
+              </div>
+              <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
+                <div class="text-xs text-[var(--muted)] uppercase font-semibold mb-1">Binary (base 2)</div>
+                <div class="font-mono text-sm">Digits: 0, 1</div>
+                <p class="text-xs text-[var(--muted)] mt-2">Computers use base 2 because transistors are on/off.</p>
+              </div>
+              <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
+                <div class="text-xs text-[var(--muted)] uppercase font-semibold mb-1">Hexadecimal (base 16)</div>
+                <div class="font-mono text-sm">Digits: 0–9, A–F</div>
+                <p class="text-xs text-[var(--muted)] mt-2">Compact shorthand for binary (one hex digit = 4 bits).</p>
+              </div>
+            </div>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Converting binary to decimal</h3>
+            <p class="text-[var(--muted)] text-sm mb-4">Each bit position represents a power of 2, from right to left:</p>
+            <div class="code-block mb-6">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-python"># Convert binary 1011 to decimal
+#  1*2^3 + 0*2^2 + 1*2^1 + 1*2^0
+#  = 8 + 0 + 2 + 1 = 11
+
+binary = "1011"
+decimal = 0
+for i, bit in enumerate(reversed(binary)):
+    decimal += int(bit) * (2 ** i)
+
+print(f"Binary {binary} = decimal {decimal}")
+# Output: Binary 1011 = decimal 11</code></pre>
+            </div>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Bits, bytes, and units</h3>
+            <table class="w-full text-left text-[var(--muted)] text-sm border-collapse">
+              <thead>
+                <tr class="border-b border-[var(--border)]">
+                  <th class="pb-2 font-semibold text-[var(--ink)]">Unit</th>
+                  <th class="pb-2 font-semibold text-[var(--ink)]">Size</th>
+                  <th class="pb-2 font-semibold text-[var(--ink)]">Example</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[var(--border)]">
+                <tr><td class="py-2 font-medium">Bit</td><td class="py-2">1 binary digit</td><td class="py-2">0 or 1</td></tr>
+                <tr><td class="py-2 font-medium">Byte</td><td class="py-2">8 bits</td><td class="py-2">One character (e.g. 'A')</td></tr>
+                <tr><td class="py-2 font-medium">Kilobyte (KB)</td><td class="py-2">~1,000 bytes</td><td class="py-2">A short email</td></tr>
+                <tr><td class="py-2 font-medium">Megabyte (MB)</td><td class="py-2">~1,000 KB</td><td class="py-2">A photo</td></tr>
+                <tr><td class="py-2 font-medium">Gigabyte (GB)</td><td class="py-2">~1,000 MB</td><td class="py-2">A movie</td></tr>
+                <tr><td class="py-2 font-medium">Terabyte (TB)</td><td class="py-2">~1,000 GB</td><td class="py-2">A hard drive</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24" id="os">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 4</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Operating Systems</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            An operating system (OS) is the layer between applications and hardware. It manages resources so programs don't have to talk to the CPU, RAM, or disk directly.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">OS responsibilities</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+              <li><strong>Process management:</strong> Runs programs, schedules CPU time, and handles multitasking.</li>
+              <li><strong>Memory management:</strong> Allocates and frees RAM for each program.</li>
+              <li><strong>File system:</strong> Organizes files and folders on storage.</li>
+              <li><strong>Device drivers:</strong> Lets software use printers, networks, GPUs, etc.</li>
+              <li><strong>User interface:</strong> Command line (CLI) or graphical (GUI) for people to interact.</li>
+            </ul>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Common operating systems</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
+                <div class="font-medium mb-1">Linux</div>
+                <p class="text-xs text-[var(--muted)]">Open source, powers servers, Android, supercomputers.</p>
+              </div>
+              <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
+                <div class="font-medium mb-1">Windows</div>
+                <p class="text-xs text-[var(--muted)]">Most common desktop OS for home and office.</p>
+              </div>
+              <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
+                <div class="font-medium mb-1">macOS</div>
+                <p class="text-xs text-[var(--muted)]">Apple's desktop OS, Unix-based.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24" id="networking">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 5</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Networking &amp; The Internet</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Networking lets computers exchange data. The Internet is a global network of networks built on shared protocols.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Key concepts</h3>
+            <table class="w-full text-left text-[var(--muted)] text-sm border-collapse">
+              <thead>
+                <tr class="border-b border-[var(--border)]">
+                  <th class="pb-2 font-semibold text-[var(--ink)]">Concept</th>
+                  <th class="pb-2 font-semibold text-[var(--ink)]">Meaning</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[var(--border)]">
+                <tr><td class="py-2 font-medium">IP address</td><td class="py-2">Unique address of a device on a network (e.g. 192.168.1.5).</td></tr>
+                <tr><td class="py-2 font-medium">Domain name</td><td class="py-2">Human-readable name (e.g. example.com), resolved by DNS.</td></tr>
+                <tr><td class="py-2 font-medium">HTTP/HTTPS</td><td class="py-2">Protocols for transferring web pages (HTTPS is encrypted).</td></tr>
+                <tr><td class="py-2 font-medium">TCP/UDP</td><td class="py-2">Transport protocols — TCP is reliable, UDP is fast.</td></tr>
+                <tr><td class="py-2 font-medium">Port</td><td class="py-2">Number identifying a specific service on a host (e.g. 80 for HTTP).</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24" id="algorithms">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 6</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Algorithms &amp; Complexity Basics</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            An <strong>algorithm</strong> is a precise, step-by-step procedure for solving a problem. Not all algorithms are equal — some are far faster than others.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Big O notation</h3>
+            <p class="text-[var(--muted)] text-sm mb-4">
+              Big O describes how an algorithm's runtime grows as input size <em>n</em> grows. Common classes:
+            </p>
+            <table class="w-full text-left text-[var(--muted)] text-sm border-collapse mb-4">
+              <thead>
+                <tr class="border-b border-[var(--border)]">
+                  <th class="pb-2 font-semibold text-[var(--ink)]">Big O</th>
+                  <th class="pb-2 font-semibold text-[var(--ink)]">Name</th>
+                  <th class="pb-2 font-semibold text-[var(--ink)]">Example</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[var(--border)]">
+                <tr><td class="py-2 font-medium">O(1)</td><td class="py-2">Constant time</td><td class="py-2">Array index access</td></tr>
+                <tr><td class="py-2 font-medium">O(log n)</td><td class="py-2">Logarithmic</td><td class="py-2">Binary search</td></tr>
+                <tr><td class="py-2 font-medium">O(n)</td><td class="py-2">Linear</td><td class="py-2">Simple loop / search</td></tr>
+                <tr><td class="py-2 font-medium">O(n log n)</td><td class="py-2">Linearithmic</td><td class="py-2">Merge sort, quick sort average</td></tr>
+                <tr><td class="py-2 font-medium">O(n²)</td><td class="py-2">Quadratic</td><td class="py-2">Nested loops, bubble sort</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Linear vs binary search (Python)</h3>
+            <div class="code-block mb-6">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-python"># Linear search: check every element (O(n))
+def linear_search(arr, target):
+    for i, value in enumerate(arr):
+        if value == target:
+            return i  # found at index i
+    return -1         # not found
+
+# Binary search: requires sorted array (O(log n))
+def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+
+data = [2, 5, 8, 12, 16, 23, 38, 45, 56, 67, 78]
+target = 23
+
+print("Array:", data)
+print("Target:", target)
+print("Linear search index:", linear_search(data, target))
+print("Binary search index:", binary_search(data, target))
+# Output:
+# Array: [2, 5, 8, 12, 16, 23, 38, 45, 56, 67, 78]
+# Target: 23
+# Linear search index: 5
+# Binary search index: 5</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24" id="programming">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 7</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Programming Fundamentals</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Programming is writing algorithms in a language a computer can execute. Python is a great first language because it reads like English.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Core concepts</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+              <li><strong>Variables:</strong> Named containers that hold data.</li>
+              <li><strong>Data types:</strong> Integers, floats, strings, booleans, lists, dictionaries.</li>
+              <li><strong>Control flow:</strong> if/else, for loops, while loops.</li>
+              <li><strong>Functions:</strong> Reusable, named blocks of code.</li>
+              <li><strong>Debugging:</strong> Finding and fixing errors in programs.</li>
+            </ul>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Your first Python program</h3>
+            <div class="code-block mb-6">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-python"># Greet the user and do a small calculation
+name = input("What is your name? ")
+age = int(input("How old are you? "))
+
+print(f"\nHello, {name}! 👋")
+print(f"You are {age} years old.")
+print(f"In 10 years, you will be {age + 10}.")
+
+# Simple loop example
+print("\nCounting to 5:")
+for i in range(1, 6):
+    print(f"  {i}")
+
+print("\nDone! Welcome to computer science. 🎓")
+# Sample output (your name/age will differ):
+# What is your name? Alex
+# How old are you? 20
+#
+# Hello, Alex! 👋
+# You are 20 years old.
+# In 10 years, you will be 30.
+#
+# Counting to 5:
+#   1
+#   2
+#   3
+#   4
+#   5
+#
+# Done! Welcome to computer science. 🎓</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24" id="capstone">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Capstone Project</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Build a "Computer Basics" Explorer</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Create an interactive Python program that teaches computer science basics: number conversion, component lookup, and a mini quiz. All runnable by copying the code.
+          </p>
+          <div class="space-y-6">
+            <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
+              <p class="font-medium text-[var(--ink)] mb-2">Phase 1 — Number converter</p>
+              <p class="text-sm text-[var(--muted)]">Convert decimal to binary and hex with clear output.</p>
+            </div>
+            <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
+              <p class="font-medium text-[var(--ink)] mb-2">Phase 2 — Hardware database</p>
+              <p class="text-sm text-[var(--muted)]">A dictionary of components the user can look up.</p>
+            </div>
+            <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
+              <p class="font-medium text-[var(--ink)] mb-2">Phase 3 — Binary quiz</p>
+              <p class="text-sm text-[var(--muted)]">Ask the user to convert decimal to binary; check answers.</p>
+            </div>
+            <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
+              <p class="font-medium text-[var(--ink)] mb-2">Phase 4 — Interactive menu</p>
+              <p class="text-sm text-[var(--muted)]">Loop until the user chooses to exit.</p>
+            </div>
+            <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
+              <p class="font-medium text-[var(--ink)] mb-2">Phase 5 — Polish &amp; run</p>
+              <p class="text-sm text-[var(--muted)]">Add comments, formatting, and a friendly goodbye message.</p>
+            </div>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Complete capstone code</h3>
+            <div class="code-block mb-6">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-python">"""Computer Basics Explorer — interactive capstone project.
+Run this file with: python basics_explorer.py
+"""
+
+# --- Hardware database: name -> description ---
+HARDWARE = {
+    "CPU": "Executes instructions. The brain of the computer.",
+    "RAM": "Fast, temporary memory for running programs.",
+    "Storage": "Long-term storage for files and the operating system.",
+    "GPU": "Handles graphics and parallel math.",
+    "Motherboard": "Connects all components together.",
+}
+
+# --- Phase 1: number converter ---
+def to_binary(n):
+    """Return the binary string of a non-negative integer."""
+    if n == 0:
+        return "0"
+    bits = []
+    while n > 0:
+        bits.append(str(n % 2))
+        n //= 2
+    return "".join(reversed(bits))
+
+def to_hex(n):
+    """Return the hexadecimal string of a non-negative integer."""
+    if n == 0:
+        return "0"
+    digits = "0123456789ABCDEF"
+    chars = []
+    while n > 0:
+        chars.append(digits[n % 16])
+        n //= 16
+    return "".join(reversed(chars))
+
+# --- Phase 3: binary quiz ---
+def binary_quiz():
+    import random
+    score = 0
+    for _ in range(3):
+        n = random.randint(0, 255)
+        correct = to_binary(n)
+        ans = input(f"Convert decimal {n} to binary: ").strip()
+        if ans == correct:
+            print("  ✅ Correct!")
+            score += 1
+        else:
+            print(f"  ❌ Close. Correct answer: {correct}")
+    print(f"Quiz score: {score}/3\n")
+
+# --- Phase 2 & 4: interactive menu ---
+def lookup_hardware():
+    print("\nAvailable components:", ", ".join(HARDWARE.keys()))
+    choice = input("Which component do you want to know about? ").strip().upper()
+    print(f"  {choice}: {HARDWARE.get(choice, 'Not found.')}\n")
+
+def main():
+    print("=== Computer Basics Explorer ===\n")
+    while True:
+        print("1. Convert a number (decimal → binary / hex)")
+        print("2. Look up a hardware component")
+        print("3. Take a 3-question binary quiz")
+        print("4. Exit")
+        choice = input("\nChoose an option (1-4): ").strip()
+
+        if choice == "1":
+            try:
+                n = int(input("Enter a non-negative integer: "))
+                if n < 0:
+                    print("Please enter a non-negative number.\n")
+                    continue
+                print(f"  Decimal: {n}")
+                print(f"  Binary:  {to_binary(n)}")
+                print(f"  Hex:     {to_hex(n)}\n")
+            except ValueError:
+                print("That's not a valid integer.\n")
+        elif choice == "2":
+            lookup_hardware()
+        elif choice == "3":
+            binary_quiz()
+        elif choice == "4":
+            print("\nGoodbye! Keep exploring computer science. 🎓")
+            break
+        else:
+            print("Invalid choice. Try again.\n")
+
+if __name__ == "__main__":
+    main()
+# Sample run:
+# === Computer Basics Explorer ===
+#
+# 1. Convert a number (decimal → binary / hex)
+# 2. Look up a hardware component
+# 3. Take a 3-question binary quiz
+# 4. Exit
+#
+# Choose an option (1-4): 1
+# Enter a non-negative integer: 42
+#   Decimal: 42
+#   Binary:  101010
+#   Hex:     2A
+# ...</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24" id="quiz">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Knowledge Check</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Quiz</h2>
+          <p class="text-[var(--muted)] text-sm mb-6">Answer all 8 questions. Click an option to check your answer.</p>
+
+          <div class="quiz" id="q1" data-answer="B">
+            <p class="font-medium text-[var(--ink)] mb-3">1. What does CPU stand for?</p>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. Central Process Unit</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. Central Processing Unit</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. Computer Processing Unit</button>
+          </div>
+          <p class="quiz-feedback mt-3 font-medium text-[var(--ink)]"></p>
+
+          <div class="quiz" id="q2" data-answer="C">
+            <p class="font-medium text-[var(--ink)] mb-3">2. How many bits are in one byte?</p>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. 4</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. 8</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. 8</button>
+          </div>
+          <p class="quiz-feedback mt-3 font-medium text-[var(--ink)]"></p>
+
+          <div class="quiz" id="q3" data-answer="B">
+            <p class="font-medium text-[var(--ink)] mb-3">3. Which is volatile memory (lost when power is off)?</p>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. SSD</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. RAM</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. Hard drive</button>
+          </div>
+          <p class="quiz-feedback mt-3 font-medium text-[var(--ink)]"></p>
+
+          <div class="quiz" id="q4" data-answer="A">
+            <p class="font-medium text-[var(--ink)] mb-3">4. Binary 1010 equals which decimal number?</p>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. 10</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. 12</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. 8</button>
+          </div>
+          <p class="quiz-feedback mt-3 font-medium text-[var(--ink)]"></p>
+
+          <div class="quiz" id="q5" data-answer="C">
+            <p class="font-medium text-[var(--ink)] mb-3">5. Big O notation describes what about an algorithm?</p>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. Exact runtime in seconds</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. Memory used only</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. How runtime grows with input size</button>
+          </div>
+          <p class="quiz-feedback mt-3 font-medium text-[var(--ink)]"></p>
+
+          <div class="quiz" id="q6" data-answer="B">
+            <p class="font-medium text-[var(--ink)] mb-3">6. Which search requires a sorted array?</p>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. Linear search</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. Binary search</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. Both</button>
+          </div>
+          <p class="quiz-feedback mt-3 font-medium text-[var(--ink)]"></p>
+
+          <div class="quiz" id="q7" data-answer="A">
+            <p class="font-medium text-[var(--ink)] mb-3">7. Which OS component manages CPU time for programs?</p>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. Process management</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. File system</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. Device drivers</button>
+          </div>
+          <p class="quiz-feedback mt-3 font-medium text-[var(--ink)]"></p>
+
+          <div class="quiz" id="q8" data-answer="B">
+            <p class="font-medium text-[var(--ink)] mb-3">8. What is an algorithm?</p>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. A type of computer chip</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. A step-by-step procedure for solving a problem</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. A programming language</button>
+          </div>
+          <p class="quiz-feedback mt-3 font-medium text-[var(--ink)]"></p>
+
+          <button class="px-5 py-2.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition mt-4" id="btn-score">Show score</button>
+          <p id="quiz-result" class="mt-3 font-semibold text-[var(--ink)]"></p>
+        </section>
+
+        <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="../index.html">&larr; Back to tutorials</a>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const html = document.documentElement;
+    const moon = document.getElementById('moon');
+    const sun = document.getElementById('sun');
+    function applyTheme(theme) {
+      html.classList.remove('light', 'dark');
+      html.classList.add(theme);
+      if (theme === 'dark') {
+        moon.classList.add('hidden');
+        sun.classList.remove('hidden');
+      } else {
+        moon.classList.remove('hidden');
+        sun.classList.add('hidden');
+      }
+      localStorage.setItem('tutorials-theme', theme);
+    }
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      applyTheme(html.classList.contains('dark') ? 'light' : 'dark');
+    });
+    const saved = localStorage.getItem('tutorials-theme');
+    applyTheme(saved === 'dark' ? 'dark' : 'light');
+
+    function setStatus(status) {
+      localStorage.setItem('tutorial-basic-computer-science-status', status);
+      updateButtons();
+    }
+    function updateButtons() {
+      const status = localStorage.getItem('tutorial-basic-computer-science-status') || 'not-started';
+      document.querySelectorAll('[id^="btn-start"]').forEach(btn => { btn.textContent = status === 'in-progress' ? 'In Progress' : 'Start'; });
+      document.querySelectorAll('[id^="btn-complete"]').forEach(btn => { btn.textContent = status === 'completed' ? 'Completed' : 'Mark Complete'; });
+    }
+    document.querySelectorAll('[id^="btn-start"]').forEach(btn => btn.addEventListener('click', () => setStatus('in-progress')));
+    document.querySelectorAll('[id^="btn-complete"]').forEach(btn => btn.addEventListener('click', () => setStatus('completed')));
+    document.querySelectorAll('[id^="btn-reset"]').forEach(btn => btn.addEventListener('click', () => { localStorage.removeItem('tutorial-basic-computer-science-status'); updateButtons(); }));
+    updateButtons();
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('menu-overlay');
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('hidden');
+    }
+
+    function copyCode(btn) {
+      const code = btn.nextElementSibling.querySelector('code');
+      navigator.clipboard.writeText(code.innerText).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+      });
+    }
+
+    const sections = document.querySelectorAll('section[id]');
+    const tocLinks = document.querySelectorAll('.toc-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach((link) => link.classList.remove('active'));
+          const active = document.querySelector(`.toc-link[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -60% 0px' });
+    sections.forEach((section) => observer.observe(section));
+
+    const scores = { q1: 'B', q2: 'B', q3: 'B', q4: 'A', q5: 'C', q6: 'B', q7: 'A', q8: 'B' };
+    document.querySelectorAll('.quiz').forEach((quiz) => {
+      const correct = quiz.dataset.answer;
+      const feedback = quiz.nextElementSibling;
+      quiz.querySelectorAll('.quiz-opt').forEach((opt) => {
+        opt.addEventListener('click', () => {
+          quiz.querySelectorAll('.quiz-opt').forEach((o) => { o.classList.remove('selected', 'correct', 'wrong'); o.disabled = true; });
+          opt.classList.add('selected');
+          if (opt.dataset.val === correct) {
+            opt.classList.add('correct');
+            feedback.textContent = 'Correct! ✅';
+            feedback.className = 'quiz-feedback mt-3 font-medium text-[var(--success)]';
+          } else {
+            opt.classList.add('wrong');
+            feedback.textContent = `Not quite. The correct answer is ${correct}.`;
+            feedback.className = 'quiz-feedback mt-3 font-medium text-[var(--danger)]';
+          }
+        });
+      });
+    });
+
+    document.getElementById('btn-score').addEventListener('click', () => {
+      let correct = 0;
+      Object.entries(scores).forEach(([q, ans]) => {
+        const quiz = document.getElementById(q);
+        const selected = quiz.querySelector('.quiz-opt.selected');
+        if (selected && selected.dataset.val === ans) correct++;
+      });
+      document.getElementById('quiz-result').textContent = `You scored ${correct} / 8.`;
+    });
+
+    hljs.highlightAll();
+  </script>
+</body>
+</html>

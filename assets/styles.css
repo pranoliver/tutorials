@@ -70,6 +70,11 @@ html.dark .code-block { background: #0f172a; }
 /* Diagrams */
 .diagram { width: 100%; max-width: 720px; }
 
+/* Inline SVG visualizations */
+.viz { margin: 1rem 0; }
+.svg-container svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+.viz-section { margin-top: 1rem; }
+
 /* Quiz */
 .quiz-opt.selected { border-color: var(--brand-light); background: rgba(128,128,128,0.08); }
 html.dark .quiz-opt.selected { border-color: var(--brand-dark); background: rgba(128,128,128,0.12); }
@@ -144,6 +149,8 @@ html.dark .quiz-opt.selected { border-color: var(--brand-dark); background: rgba
 .brand-cpp-language { --brand-light: #00599C; --brand-dark: #659AD2; }
 .brand-rust-language { --brand-light: #CE412B; --brand-dark: #E76B50; }
 .brand-go-language { --brand-light: #00ADD8; --brand-dark: #00ADD8; }
+.brand-basic-computer-science { --brand-light: #38bdf8; --brand-dark: #7dd3fc; }
+.brand-data-structures-algorithms { --brand-light: #38bdf8; --brand-dark: #7dd3fc; }
 
 /* Tutorial-specific badges */
 .linux-badge { background: #333; color: #FCC624; }

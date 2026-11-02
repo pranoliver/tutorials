@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <rect width="32" height="32" rx="8" fill="#1f2328"/>
+  <circle cx="16" cy="11" r="4.5" fill="#38bdf8"/>
+  <rect x="12" y="17" width="8" height="3" rx="1" fill="#38bdf8"/>
+  <rect x="14" y="22" width="4" height="3" rx="1" fill="#38bdf8"/>
+  <rect x="8" y="17" width="3" height="3" rx="1" fill="#2f81f7"/>
+  <rect x="21" y="17" width="3" height="3" rx="1" fill="#2f81f7"/>
+  <text x="16" y="29" font-family="Outfit,system-ui,sans-serif" font-size="11" font-weight="800" fill="#ffffff" text-anchor="middle">CS</text>
+</svg>

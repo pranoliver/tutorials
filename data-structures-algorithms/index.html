@@ -1,0 +1,1916 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Data Structures &amp; Algorithms (DSA) — Advanced Python Course</title>
+  <link href="../assets/favicons/data-structures-algorithms.svg" rel="icon" type="image/svg+xml"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-light" rel="stylesheet"/>
+  <link disabled="" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" id="hljs-dark" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' }
+  </script>
+  <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="antialiased transition-colors duration-300 min-h-screen brand-data-structures-algorithms">
+  <a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-black focus:px-3 focus:py-2 focus:rounded" href="#main">Skip to content</a>
+
+  <div class="fixed inset-0 bg-black/40 z-30 hidden lg:hidden" id="menu-overlay" onclick="toggleSidebar()"></div>
+
+  <div class="flex min-h-screen">
+    <aside class="fixed lg:sticky top-0 left-0 h-screen w-72 border-r border-[var(--border)] bg-[var(--panel)] z-40 overflow-y-auto p-6" id="sidebar">
+      <div class="flex items-center gap-3 mb-8">
+        <img alt="Data Structures & Algorithms" class="w-10 h-10" src="../assets/favicons/data-structures-algorithms.svg"/>
+        <span class="text-xl font-bold">DSA</span>
+      </div>
+      <nav class="space-y-1 text-sm" id="toc">
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#intro">1. Introduction to DSA</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#complexity">2. Complexity Analysis (Big O)</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#arrays">3. Arrays &amp; Lists</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#linked-list">4. Linked Lists</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#stacks-queues">5. Stacks &amp; Queues</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#hashing">6. Hash Tables</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#trees">7. Trees &amp; BST</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#heaps">8. Heaps &amp; Priority Queues</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#graphs">9. Graphs &amp; Traversal</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#sorting">10. Sorting Algorithms</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#recursion">11. Recursion &amp; Backtracking</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#dp">12. Dynamic Programming</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#greedy">13. Greedy Algorithms</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#capstone">14. Capstone Project</a>
+        <a class="toc-link block px-3 py-2 rounded-md text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 transition" href="#quiz">15. Knowledge Check Quiz</a>
+      </nav>
+      <div class="mt-8 pt-6 border-t border-[var(--border)]">
+        <p class="text-xs text-[var(--muted)]">Open directly in any browser. No build step required.</p>
+      </div>
+    </aside>
+    <main class="flex-1 min-w-0" id="main">
+      <header class="sticky top-0 z-20 border-b border-[var(--border)] bg-[var(--panel)]/90 backdrop-blur px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <button aria-label="Open menu" class="lg:hidden p-2 rounded-md border border-[var(--border)]" onclick="toggleSidebar()">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </button>
+          <h1 class="text-lg sm:text-xl font-bold tracking-tight">Data Structures &amp; Algorithms</h1>
+        </div>
+        <div class="hidden sm:flex items-center gap-2 progress-controls" id="progress-controls">
+          <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-start">Start</button>
+          <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-complete">Mark Complete</button>
+          <button class="px-3 py-1.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-reset">Reset</button>
+        </div>
+        <div class="sm:hidden flex items-center gap-2 progress-controls" id="progress-controls-mobile">
+          <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-start-mobile">Start</button>
+          <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-complete-mobile">Complete</button>
+          <button class="px-2 py-1.5 rounded-lg border border-[var(--border)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" id="btn-reset-mobile">Reset</button>
+        </div>
+        <button aria-label="Toggle theme" class="p-2 rounded-full border border-[var(--border)] hover:bg-black/5 dark:hover:bg-white/5 transition" id="theme-toggle">
+          <svg aria-hidden="true" class="w-5 h-5" fill="none" id="moon" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <svg aria-hidden="true" class="w-5 h-5 hidden" fill="none" id="sun" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5"></circle>
+            <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </header>
+      <div class="max-w-4xl mx-auto px-6 py-10 space-y-20">
+
+        <section class="scroll-mt-24" id="intro">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 1</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Introduction to DSA</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            <strong>Data Structures &amp; Algorithms (DSA)</strong> is the heart of efficient software. A <em>data structure</em> organizes data so it can be accessed and modified efficiently. An <em>algorithm</em> is a step-by-step procedure for solving a problem. Choosing the right combination can turn a program that takes hours into one that takes milliseconds.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Why DSA matters</h3>
+            <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
+              <li><strong>Performance:</strong> The right algorithm handles millions of records; the wrong one chokes on thousands.</li>
+              <li><strong>Interviews:</strong> DSA is the standard lens for evaluating engineers at top tech companies.</li>
+              <li><strong>Foundation:</strong> Databases, compilers, operating systems, and AI all rely on classic data structures and algorithms.</li>
+            </ul>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">How to use this tutorial</h3>
+            <p class="text-[var(--muted)] leading-relaxed">
+              Every code block is <strong>runnable Python</strong>. Copy it, paste it into a file (e.g. <code class="kbd">dsa_demo.py</code>), and run it with <code class="kbd">python dsa_demo.py</code>. Each example prints clear, meaningful output so you can see the behavior with your own eyes.
+            </p>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Visualization — Data → Algorithm → Solution</h3>
+            <div class="viz mx-auto" style="max-width:640px;">
+              <svg viewBox="0 0 640 190" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizIntroTitle">
+                <title id="vizIntroTitle">Data structure feeds algorithm to produce efficient program</title>
+                <style>
+                  .intro-flow { animation: pulse 2s ease-in-out infinite; }
+                  @keyframes pulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+                </style>
+                <defs>
+                  <marker id="introArr" markerWidth="13" markerHeight="13" refX="12" refY="6.5" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,13 L13,6.5 z" fill="#38bdf8"/>
+                  </marker>
+                </defs>
+                <!-- Data Structure -->
+                <rect x="40" y="50" width="180" height="90" rx="14" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/>
+                <text x="130" y="82" font-family="Outfit,system-ui,sans-serif" font-size="18" font-weight="800" fill="#38bdf8" text-anchor="middle">Data Structure</text>
+                <text x="130" y="106" font-family="Outfit,system-ui,sans-serif" font-size="13" fill="#94a3b8" text-anchor="middle">organizes &amp; stores</text>
+                <!-- Algorithm -->
+                <rect x="245" y="50" width="180" height="90" rx="14" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/>
+                <text x="335" y="82" font-family="Outfit,system-ui,sans-serif" font-size="18" font-weight="800" fill="#38bdf8" text-anchor="middle">Algorithm</text>
+                <text x="335" y="106" font-family="Outfit,system-ui,sans-serif" font-size="13" fill="#94a3b8" text-anchor="middle">step-by-step solve</text>
+                <!-- Solution -->
+                <rect x="450" y="50" width="150" height="90" rx="14" fill="#1d4ed8" stroke="#2563eb" stroke-width="3"/>
+                <text x="525" y="82" font-family="Outfit,system-ui,sans-serif" font-size="18" font-weight="800" fill="#ffffff" text-anchor="middle">Efficient Program</text>
+                <text x="525" y="106" font-family="Outfit,system-ui,sans-serif" font-size="13" fill="#bfdbfe" text-anchor="middle">fast &amp; correct</text>
+                <!-- Arrows -->
+                <line x1="220" y1="95" x2="245" y2="95" stroke="#38bdf8" stroke-width="3" marker-end="url(#introArr)" class="intro-flow"/>
+                <line x1="415" y1="95" x2="450" y2="95" stroke="#38bdf8" stroke-width="3" marker-end="url(#introArr)" class="intro-flow"/>
+                <text x="208" y="88" font-family="Outfit,system-ui,sans-serif" font-size="13" fill="#64748b">feeds</text>
+                <text x="404" y="88" font-family="Outfit,system-ui,sans-serif" font-size="13" fill="#64748b">produces</text>
+              </svg>
+            </div>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">The right structure + the right algorithm = efficient software.</p>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24" id="complexity">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 2</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Complexity Analysis (Big O)</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Big O notation describes how runtime (or memory) grows as input size <em>n</em> grows. It lets you compare algorithms independent of machine speed.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Common complexity classes</h3>
+            <table class="w-full text-left text-[var(--muted)] text-sm border-collapse mb-6">
+              <thead>
+                <tr class="border-b border-[var(--border)]">
+                  <th class="pb-2 font-semibold text-[var(--ink)]">Big O</th>
+                  <th class="pb-2 font-semibold text-[var(--ink)]">Name</th>
+                  <th class="pb-2 font-semibold text-[var(--ink)]">Growth</th>
+                  <th class="pb-2 font-semibold text-[var(--ink)]">Example</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[var(--border)]">
+                <tr><td class="py-2 font-medium">O(1)</td><td class="py-2">Constant</td><td class="py-2">Flat</td><td class="py-2">Array index access</td></tr>
+                <tr><td class="py-2 font-medium">O(log n)</td><td class="py-2">Logarithmic</td><td class="py-2">Slow growth</td><td class="py-2">Binary search</td></tr>
+                <tr><td class="py-2 font-medium">O(n)</td><td class="py-2">Linear</td><td class="py-2">Proportional to n</td><td class="py-2">Single loop</td></tr>
+                <tr><td class="py-2 font-medium">O(n log n)</td><td class="py-2">Linearithmic</td><td class="py-2">Slightly worse than linear</td><td class="py-2">Merge sort</td></tr>
+                <tr><td class="py-2 font-medium">O(n²)</td><td class="py-2">Quadratic</td><td class="py-2">Grows fast</td><td class="py-2">Nested loops</td></tr>
+                <tr><td class="py-2 font-medium">O(2ⁿ)</td><td class="py-2">Exponential</td><td class="py-2">Explodes quickly</td><td class="py-2">Naive recursion (Fibonacci)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Timing O(1) vs O(n) vs O(n²)</h3>
+            <p class="text-[var(--muted)] text-sm mb-4">The following demonstrates how work scales with input size.</p>
+            <div class="code-block mb-6">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-python">"""Complexity demonstration: O(1), O(n), and O(n^2).
+Run: python complexity_demo.py
+"""
+
+import time
+
+def constant_time(arr):
+    """O(1): Always one operation, regardless of array size."""
+    return arr[0] if arr else None
+
+def linear_time(arr, target):
+    """O(n): Check each element once."""
+    for item in arr:
+        if item == target:
+            return True
+    return False
+
+def quadratic_time(arr):
+    """O(n^2): Nested loop over all pairs."""
+    count = 0
+    for i in arr:
+        for j in arr:
+            count += 1
+    return count
+
+def time_it(fn, *args):
+    start = time.perf_counter()
+    result = fn(*args)
+    elapsed = (time.perf_counter() - start) * 1000  # milliseconds
+    return result, elapsed
+
+# Build arrays of different sizes
+sizes = [1_000, 5_000, 10_000]
+print(f"{'Size':>8} | {'O(1) ms':>9} | {'O(n) ms':>9} | {'O(n^2) ms':>11}")
+print("-" * 46)
+
+for n in sizes:
+    arr = list(range(n))
+
+    _, t1 = time_it(constant_time, arr)
+    _, t2 = time_it(linear_time, arr, n - 1)  # worst case: last element
+    _, t3 = time_it(quadratic_time, arr)
+
+    print(f"{n:>8} | {t1:>9.4f} | {t2:>9.4f} | {t3:>11.4f}")
+
+print("\nNotice: O(n^2) grows much faster than O(n) or O(1).")
+# Sample output:
+# Size    |   O(1) ms |   O(n) ms |  O(n^2) ms
+# ----------------------------------------------
+#    1000 |    0.0012 |    0.0234 |     3.4125
+#    5000 |    0.0008 |    0.0412 |    85.2103
+#   10000 |    0.0005 |    0.0987 |   342.1055</code></pre>
+            </div>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Visualization — Growth of complexity classes</h3>
+            <div class="viz mx-auto" style="max-width:660px;">
+              <svg viewBox="0 0 660 300" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizComplexityTitle">
+                <title id="vizComplexityTitle">Work grows as input size n increases across complexity classes</title>
+                <style>
+                  .complex-dot { animation: moveDot 4s ease-in-out infinite; }
+                  @keyframes moveDot { 0%,100% { r: 4; opacity: 1; } 50% { r: 7; opacity: 0.6; } }
+                </style>
+                <defs>
+                  <marker id="cArr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,8 L7,4 z" fill="#64748b"/></marker>
+                  <linearGradient id="gO1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#34d399"/><stop offset="100%" stop-color="#10b981"/></linearGradient>
+                  <linearGradient id="gLog" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#0891b2"/></linearGradient>
+                  <linearGradient id="gN" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#2563eb"/></linearGradient>
+                  <linearGradient id="gNlog" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient>
+                  <linearGradient id="gN2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f472b6"/><stop offset="100%" stop-color="#db2777"/></linearGradient>
+                </defs>
+                <!-- axes -->
+                <line x1="70" y1="245" x2="600" y2="245" stroke="#334155" stroke-width="2"/>
+                <line x1="70" y1="245" x2="70" y2="45" stroke="#334155" stroke-width="2"/>
+                <text x="335" y="272" font-family="Outfit,system-ui,sans-serif" font-size="13" fill="#94a3b8" text-anchor="middle">Input size n →</text>
+                <text x="30" y="145" font-family="Outfit,system-ui,sans-serif" font-size="13" fill="#94a3b8" text-anchor="middle" transform="rotate(-90 30,145)">Work / time →</text>
+                <!-- curves -->
+                <polyline points="70,225 335,225 600,225" fill="none" stroke="url(#gO1)" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="335" cy="225" r="5" fill="#10b981" class="complex-dot"/>
+                <text x="605" y="223" font-family="Fira Code,monospace" font-size="13" fill="#10b981" font-weight="700">O(1)</text>
+                <path d="M70,225 Q335,170 600,130" fill="none" stroke="url(#gLog)" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="335" cy="170" r="5" fill="#0891b2" class="complex-dot" style="animation-delay:0.5s"/>
+                <text x="605" y="128" font-family="Fira Code,monospace" font-size="13" fill="#0891b2" font-weight="700">O(log n)</text>
+                <path d="M70,225 Q335,125 600,65" fill="none" stroke="url(#gN)" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="335" cy="125" r="5" fill="#2563eb" class="complex-dot" style="animation-delay:1s"/>
+                <text x="605" y="63" font-family="Fira Code,monospace" font-size="13" fill="#2563eb" font-weight="700">O(n)</text>
+                <path d="M70,225 Q385,100 600,35" fill="none" stroke="url(#gNlog)" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="385" cy="100" r="5" fill="#7c3aed" class="complex-dot" style="animation-delay:1.5s"/>
+                <text x="605" y="33" font-family="Fira Code,monospace" font-size="13" fill="#7c3aed" font-weight="700">O(n log n)</text>
+                <path d="M70,225 Q500,70 600,10" fill="none" stroke="url(#gN2)" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="500" cy="70" r="5" fill="#db2777" class="complex-dot" style="animation-delay:2s"/>
+                <text x="605" y="8" font-family="Fira Code,monospace" font-size="13" fill="#db2777" font-weight="700">O(n²)</text>
+                <!-- labels left -->
+                <text x="62" y="228" font-family="Fira Code,monospace" font-size="11" fill="#64748b">flat</text>
+                <text x="62" y="133" font-family="Fira Code,monospace" font-size="11" fill="#64748b">slow</text>
+                <text x="62" y="68" font-family="Fira Code,monospace" font-size="11" fill="#64748b">steady</text>
+                <text x="62" y="38" font-family="Fira Code,monospace" font-size="11" fill="#64748b">fast</text>
+                <text x="62" y="13" font-family="Fira Code,monospace" font-size="11" fill="#64748b">explodes</text>
+              </svg>
+            </div>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">Animated dots trace each curve — O(n²) explodes while O(1) stays flat.</p>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24" id="arrays">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 3</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Arrays &amp; Lists</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            A list (Python's dynamic array) stores elements contiguously. Access by index is O(1); appending is amortized O(1); inserting/deleting in the middle is O(n) because elements must shift.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">List operations demo</h3>
+            <div class="code-block mb-6">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-python">"""Arrays / lists in Python.
+Run: python arrays_demo.py
+"""
+
+# Create a list
+nums = [10, 20, 30, 40, 50]
+print("Original list:", nums)
+
+# O(1) access by index
+print("Index 2:", nums[2])  # 30
+
+# Append (amortized O(1))
+nums.append(60)
+print("After append 60:", nums)
+
+# Insert at index (O(n) - elements shift)
+nums.insert(1, 15)
+print("After insert 15 at index 1:", nums)
+
+# Remove by value (O(n) - search + shift)
+nums.remove(30)
+print("After remove 30:", nums)
+
+# Pop from end (O(1))
+last = nums.pop()
+print("Popped last:", last, "| list now:", nums)
+
+# Slicing creates a new list (O(k))
+sub = nums[1:4]
+print("Slice [1:4]:", sub)
+
+# List comprehension (idiomatic Python)
+squares = [x * x for x in range(1, 6)]
+print("Squares 1..5:", squares)
+# Output:
+# Original list: [10, 20, 30, 40, 50]
+# Index 2: 30
+# After append 60: [10, 20, 30, 40, 50, 60]
+# After insert 15 at index 1: [10, 15, 20, 30, 40, 50, 60]
+# After remove 30: [10, 15, 20, 40, 50, 60]
+# Popped last: 60 | list now: [10, 15, 20, 40, 50]
+# Slice [1:4]: [15, 20, 40]
+# Squares 1..5: [1, 4, 9, 16, 25]</code></pre>
+            </div>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Two-sum problem (O(n) with a hash set)</h3>
+            <p class="text-[var(--muted)] text-sm mb-4">Given a list and a target, find two indices whose values sum to the target.</p>
+            <div class="code-block mb-6">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-python">"""Two-sum: find two numbers that add to target. O(n) time, O(n) space.
+Run: python two_sum.py
+"""
+
+def two_sum(nums, target):
+    """Return indices of two numbers that sum to target, or None."""
+    seen = {}  # value -> index
+    for i, num in enumerate(nums):
+        complement = target - num
+        if complement in seen:          # O(1) lookup
+            return [seen[complement], i]
+        seen[num] = i                   # store for later lookups
+    return None
+
+# Demo
+test_cases = [
+    ([2, 7, 11, 15], 9),   # -> [0, 1] (2 + 7)
+    ([3, 2, 4], 6),        # -> [1, 2] (2 + 4)
+    ([3, 3], 6),           # -> [0, 1] (3 + 3)
+    ([1, 2, 3], 7),        # -> None
+]
+
+for nums, target in test_cases:
+    result = two_sum(nums, target)
+    print(f"nums={nums}, target={target} -> indices={result}")
+# Output:
+# nums=[2, 7, 11, 15], target=9 -> indices=[0, 1]
+# nums=[3, 2, 4], target=6 -> indices=[1, 2]
+# nums=[3, 3], target=6 -> indices=[0, 1]
+# nums=[1, 2, 3], target=7 -> indices=None</code></pre>
+            </div>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Visualization — Array memory layout</h3>
+            <div class="viz mx-auto" style="max-width:700px;">
+              <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizArrayTitle">
+                <title id="vizArrayTitle">Contiguous memory cells indexed 0..4 with O(1) access</title>
+                <style>
+                  .cell { stroke-width: 2; }
+                  .access-dot { animation: accessPulse 3s ease-in-out infinite; }
+                  @keyframes accessPulse { 0%,100% { r: 7; opacity: 1; } 40% { r: 11; fill: #22d3ee; } 60% { r: 7; opacity: 1; } }
+                </style>
+                <defs>
+                  <marker id="aArr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,10 L10,5 z" fill="#22d3ee"/></marker>
+                </defs>
+                <text x="30" y="30" font-family="Outfit,system-ui,sans-serif" font-size="14" font-weight="800" fill="#22d3ee">Contiguous memory — O(1) index access</text>
+                <!-- cells -->
+                <g transform="translate(40,60)">
+                  <rect x="0" y="0" width="95" height="60" rx="10" fill="#0f172a" stroke="#334155" stroke-width="2" class="cell"/>
+                  <rect x="0" y="40" width="95" height="20" rx="4" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+                  <text x="47" y="26" font-family="Fira Code,monospace" font-size="17" fill="#22d3ee" text-anchor="middle">10</text>
+                  <text x="47" y="53" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">index 0</text>
+                </g>
+                <g transform="translate(145,60)">
+                  <rect x="0" y="0" width="95" height="60" rx="10" fill="#0f172a" stroke="#334155" stroke-width="2" class="cell"/>
+                  <rect x="0" y="40" width="95" height="20" rx="4" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+                  <text x="47" y="26" font-family="Fira Code,monospace" font-size="17" fill="#22d3ee" text-anchor="middle">20</text>
+                  <text x="47" y="53" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">index 1</text>
+                </g>
+                <g transform="translate(250,60)">
+                  <rect x="0" y="0" width="95" height="60" rx="10" fill="#0f172a" stroke="#22d3ee" stroke-width="3" class="cell"/>
+                  <rect x="0" y="40" width="95" height="20" rx="4" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+                  <text x="47" y="26" font-family="Fira Code,monospace" font-size="17" fill="#22d3ee" text-anchor="middle">30</text>
+                  <text x="47" y="53" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">index 2</text>
+                </g>
+                <g transform="translate(355,60)">
+                  <rect x="0" y="0" width="95" height="60" rx="10" fill="#0f172a" stroke="#334155" stroke-width="2" class="cell"/>
+                  <rect x="0" y="40" width="95" height="20" rx="4" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+                  <text x="47" y="26" font-family="Fira Code,monospace" font-size="17" fill="#22d3ee" text-anchor="middle">40</text>
+                  <text x="47" y="53" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">index 3</text>
+                </g>
+                <g transform="translate(460,60)">
+                  <rect x="0" y="0" width="95" height="60" rx="10" fill="#0f172a" stroke="#334155" stroke-width="2" class="cell"/>
+                  <rect x="0" y="40" width="95" height="20" rx="4" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+                  <text x="47" y="26" font-family="Fira Code,monospace" font-size="17" fill="#22d3ee" text-anchor="middle">50</text>
+                  <text x="47" y="53" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">index 4</text>
+                </g>
+                <!-- highlight nums[2] -->
+                <line x1="345" y1="95" x2="395" y2="95" stroke="#22d3ee" stroke-width="3" marker-end="url(#aArr)" class="access-dot"/>
+                <text x="400" y="92" font-family="Outfit,system-ui,sans-serif" font-size="13" fill="#22d3ee" font-weight="700">nums[2] = 30</text>
+                <text x="30" y="205" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b">Cells sit side-by-side; jump directly to any index — O(1)</text>
+              </svg>
+            </div>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24" id="linked-list">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 4</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Linked Lists</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            A linked list is a chain of <em>nodes</em>. Each node holds data and a reference to the next node. Insertion/deletion at the head is O(1), but access by index is O(n) because you must walk from the head.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Singly linked list implementation</h3>
+            <div class="code-block mb-6">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-python">"""Singly linked list with append, prepend, delete, and print.
+Run: python linked_list.py
+"""
+
+class Node:
+    """A single node: holds data and a link to the next node."""
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def prepend(self, data):
+        """Insert at the front — O(1)."""
+        new_node = Node(data)
+        new_node.next = self.head
+        self.head = new_node
+
+    def append(self, data):
+        """Insert at the end — O(n) because we walk to the tail."""
+        new_node = Node(data)
+        if not self.head:
+            self.head = new_node
+            return
+        current = self.head
+        while current.next:
+            current = current.next
+        current.next = new_node
+
+    def delete(self, key):
+        """Delete first node with matching data — O(n)."""
+        current = self.head
+        # Case: head holds the key
+        if current and current.data == key:
+            self.head = current.next
+            current = None
+            return
+        # Search for the key, keeping track of previous node
+        prev = None
+        while current and current.data != key:
+            prev = current
+            current = current.next
+        if not current:  # key not found
+            return
+        prev.next = current.next
+        current = None
+
+    def __str__(self):
+        parts = []
+        current = self.head
+        while current:
+            parts.append(str(current.data))
+            current = current.next
+        return " -> ".join(parts) if parts else "empty"
+
+# Demo
+ll = LinkedList()
+ll.append(10)
+ll.append(20)
+ll.append(30)
+print("After appends 10,20,30:", ll)        # 10 -> 20 -> 30
+
+ll.prepend(5)
+print("After prepend 5:    ", ll)           # 5 -> 10 -> 20 -> 30
+
+ll.delete(20)
+print("After delete 20:    ", ll)           # 5 -> 10 -> 30
+
+ll.delete(99)  # not present
+print("After delete 99:    ", ll)           # unchanged
+# Output:
+# After appends 10,20,30: 10 -> 20 -> 30
+# After prepend 5:     5 -> 10 -> 20 -> 30
+# After delete 20:     5 -> 10 -> 30
+# After delete 99:     5 -> 10 -> 30</code></pre>
+            </div>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Visualization — Singly linked node chain</h3>
+            <div class="viz mx-auto" style="max-width:620px;">
+              <svg viewBox="0 0 620 170" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizLLTitle">
+                <title id="vizLLTitle">Head → 5 → 10 → 30 → null</title>
+                <defs>
+                  <marker id="llArr" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#38bdf8"/></marker>
+                  <marker id="llNull" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#ef4444"/></marker>
+                </defs>
+                <!-- node 5 -->
+                <g transform="translate(40,55)">
+                  <rect x="0" y="0" width="70" height="45" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                  <rect x="0" y="30" width="45" height="15" rx="3" fill="#334155" stroke="#475569" stroke-width="1"/>
+                  <text x="22" y="25" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">5</text>
+                  <text x="22" y="40" font-family="Outfit,system-ui,sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">next</text>
+                </g>
+                <line x1="110" y1="77" x2="150" y2="77" stroke="#38bdf8" stroke-width="3" marker-end="url(#llArr)"/>
+                <!-- node 10 -->
+                <g transform="translate(160,55)">
+                  <rect x="0" y="0" width="70" height="45" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                  <rect x="0" y="30" width="45" height="15" rx="3" fill="#334155" stroke="#475569" stroke-width="1"/>
+                  <text x="22" y="25" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">10</text>
+                  <text x="22" y="40" font-family="Outfit,system-ui,sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">next</text>
+                </g>
+                <line x1="230" y1="77" x2="270" y2="77" stroke="#38bdf8" stroke-width="3" marker-end="url(#llArr)"/>
+                <!-- node 30 -->
+                <g transform="translate(280,55)">
+                  <rect x="0" y="0" width="70" height="45" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                  <rect x="0" y="30" width="45" height="15" rx="3" fill="#334155" stroke="#475569" stroke-width="1"/>
+                  <text x="22" y="25" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">30</text>
+                  <text x="22" y="40" font-family="Outfit,system-ui,sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">next</text>
+                </g>
+                <line x1="350" y1="77" x2="390" y2="77" stroke="#ef4444" stroke-width="3" stroke-dasharray="6" marker-end="url(#llNull)"/>
+                <text x="400" y="80" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#ef4444" font-weight="700">null</text>
+                <text x="40" y="150" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b">Head → 5 → 10 → 30 → null</text>
+              </svg>
+            </div>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">Insert/delete at head: O(1). Access by index: O(n) walk.</p>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24" id="stacks-queues">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 5</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Stacks &amp; Queues</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            <strong>Stack:</strong> LIFO (last-in, first-out). Push/pop from the top. Used for undo, call stack, DFS.<br/>
+            <strong>Queue:</strong> FIFO (first-in, first-out). Enqueue at back, dequeue at front. Used for BFS, task scheduling.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Stack demo (list-based)</h3>
+            <div class="code-block mb-6">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-python">"""Stack: Last-In First-Out (LIFO).
+Run: python stack_demo.py
+"""
+
+class Stack:
+    def __init__(self):
+        self.items = []
+
+    def push(self, item):
+        self.items.append(item)          # O(1)
+
+    def pop(self):
+        if self.is_empty():
+            raise IndexError("pop from empty stack")
+        return self.items.pop()          # O(1)
+
+    def peek(self):
+        if self.is_empty():
+            return None
+        return self.items[-1]            # O(1)
+
+    def is_empty(self):
+        return len(self.items) == 0
+
+    def __str__(self):
+        return " -> ".join(str(x) for x in reversed(self.items)) or "empty"
+
+# Undo-style demo
+stack = Stack()
+for action in ["type 'Hello'", "type ' World'", "bold", "italic"]:
+    stack.push(action)
+    print(f"Pushed: {action}")
+
+print("\nStack top to bottom:", stack)
+print("Undo (pop):", stack.pop())   # italic
+print("Undo (pop):", stack.pop())   # bold
+print("Stack now:", stack)
+# Output:
+# Pushed: type 'Hello'
+# Pushed: type ' World'
+# Pushed: bold
+# Pushed: italic
+#
+# Stack top to bottom: italic -> bold -> type ' World' -> type 'Hello'
+# Undo (pop): italic
+# Undo (pop): bold
+# Stack now: type ' World' -> type 'Hello'</code></pre>
+            </div>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Visualization — Stack (LIFO)</h3>
+            <div class="viz mx-auto" style="max-width:320px;">
+              <svg viewBox="0 0 320 270" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizStackTitle">
+                <title id="vizStackTitle">Stack LIFO: italic at top</title>
+                <defs>
+                  <marker id="stArr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,8 L6,4 z" fill="#38bdf8"/></marker>
+                </defs>
+                <rect x="95" y="235" width="130" height="10" rx="2" fill="#334155"/>
+                <rect x="95" y="175" width="130" height="45" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                <text x="160" y="200" font-family="Fira Code,monospace" font-size="12" fill="#cbd5e1" text-anchor="middle">type 'Hello'</text>
+                <rect x="95" y="120" width="130" height="45" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                <text x="160" y="145" font-family="Fira Code,monospace" font-size="12" fill="#cbd5e1" text-anchor="middle">type ' World'</text>
+                <rect x="95" y="65" width="130" height="45" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                <text x="160" y="90" font-family="Fira Code,monospace" font-size="12" fill="#cbd5e1" text-anchor="middle">bold</text>
+                <rect x="95" y="10" width="130" height="45" rx="6" fill="#1e293b" stroke="#2563eb" stroke-width="2"/>
+                <text x="160" y="35" font-family="Fira Code,monospace" font-size="12" fill="#2563eb" text-anchor="middle">italic  ← top</text>
+                <line x1="160" y1="0" x2="160" y2="10" stroke="#38bdf8" stroke-width="3" marker-end="url(#stArr)"/>
+                <text x="160" y="255" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b" text-anchor="middle">Push/pop at top — O(1)</text>
+              </svg>
+            </div>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Queue demo (collections.deque)</h3>
+            <div class="code-block mb-6">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-python">"""Queue: First-In First-Out (FIFO) using deque for O(1) popleft.
+Run: python queue_demo.py
+"""
+
+from collections import deque
+
+class Queue:
+    def __init__(self):
+        self.items = deque()
+
+    def enqueue(self, item):
+        self.items.append(item)          # O(1)
+
+    def dequeue(self):
+        if self.is_empty():
+            raise IndexError("dequeue from empty queue")
+        return self.items.popleft()      # O(1)
+
+    def peek(self):
+        return self.items[0] if not self.is_empty() else None
+
+    def is_empty(self):
+        return len(self.items) == 0
+
+    def __str__(self):
+        return " <- ".join(str(x) for x in self.items) or "empty"
+
+# Print-job demo
+q = Queue()
+for job in ["doc1.pdf", "doc2.pdf", "doc3.pdf"]:
+    q.enqueue(job)
+    print(f"Enqueued: {job}")
+
+print("\nQueue front to back:", q)
+print("Printing (dequeue):", q.dequeue())  # doc1.pdf
+print("Printing (dequeue):", q.dequeue())  # doc2.pdf
+print("Queue now:", q)
+# Output:
+# Enqueued: doc1.pdf
+# Enqueued: doc2.pdf
+# Enqueued: doc3.pdf
+#
+# Queue front to back: doc1.pdf <- doc2.pdf <- doc3.pdf
+# Printing (dequeue): doc1.pdf
+# Printing (dequeue): doc2.pdf
+# Queue now: doc3.pdf</code></pre>
+            </div>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Visualization — Queue (FIFO)</h3>
+            <div class="viz mx-auto" style="max-width:600px;">
+              <svg viewBox="0 0 600 180" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizQueueTitle">
+                <title id="vizQueueTitle">Queue FIFO: doc1 front, doc3 back</title>
+                <defs>
+                  <marker id="qArrOut" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#ef4444"/></marker>
+                  <marker id="qArrIn" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#2563eb"/></marker>
+                </defs>
+                <rect x="60" y="60" width="80" height="45" rx="6" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+                <text x="100" y="86" font-family="Fira Code,monospace" font-size="12" fill="#f87171" text-anchor="middle">doc1.pdf</text>
+                <text x="100" y="98" font-family="Outfit,system-ui,sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">front → dequeue</text>
+                <rect x="160" y="60" width="80" height="45" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                <text x="200" y="86" font-family="Fira Code,monospace" font-size="12" fill="#cbd5e1" text-anchor="middle">doc2.pdf</text>
+                <rect x="260" y="60" width="80" height="45" rx="6" fill="#1e293b" stroke="#2563eb" stroke-width="2"/>
+                <text x="300" y="86" font-family="Fira Code,monospace" font-size="12" fill="#60a5fa" text-anchor="middle">doc3.pdf</text>
+                <text x="300" y="98" font-family="Outfit,system-ui,sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">back ← enqueue</text>
+                <line x1="40" y1="82" x2="60" y2="82" stroke="#ef4444" stroke-width="3" marker-end="url(#qArrOut)"/>
+                <line x1="340" y1="82" x2="460" y2="82" stroke="#2563eb" stroke-width="3"/>
+                <text x="45" y="80" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#f87171">dequeue</text>
+                <text x="465" y="80" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#60a5fa">enqueue</text>
+                <text x="60" y="155" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">Front ← ... → Back</text>
+              </svg>
+            </div>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">Enqueue at back, dequeue at front — O(1) with deque.</p>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24" id="hashing">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 6</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Hash Tables</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            A hash table maps <em>keys</em> to <em>values</em> using a hash function. Python's <code class="kbd">dict</code> and <code class="kbd">set</code> are hash tables. Average-case O(1) insert, lookup, and delete. Collisions occur when two keys hash to the same slot; good hash functions minimize them.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Hash table demo (Python dict)</h3>
+            <div class="code-block mb-6">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-python">"""Hash table basics with Python dict.
+Run: python hash_demo.py
+"""
+
+# Create a hash table (dict): key -> value
+phone_book = {
+    "Alice": "555-1234",
+    "Bob": "555-5678",
+    "Charlie": "555-9012",
+}
+
+# O(1) average lookup
+print("Alice's number:", phone_book["Alice"])  # 555-1234
+
+# Insert / update
+phone_book["Diana"] = "555-3344"
+phone_book["Alice"] = "555-9999"  # update
+print("After updates:", phone_book)
+
+# Membership test (O(1))
+print("Bob in book?", "Bob" in phone_book)   # True
+print("Eve in book?", "Eve" in phone_book)   # False
+
+# Delete
+del phone_book["Charlie"]
+print("After deleting Charlie:", phone_book)
+
+# Iterate
+print("\nAll entries:")
+for name, number in phone_book.items():
+    print(f"  {name}: {number}")
+# Output:
+# Alice's number: 555-1234
+# After updates: {'Alice': '555-9999', 'Bob': '555-5678', 'Charlie': '555-9012', 'Diana': '555-3344'}
+# Bob in book? True
+# Eve in book? False
+# After deleting Charlie: {'Alice': '555-9999', 'Bob': '555-5678', 'Diana': '555-3344'}
+#
+# All entries:
+#   Alice: 555-9999
+#   Bob: 555-5678
+#   Diana: 555-3344</code></pre>
+            </div>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Visualization — Hash table buckets</h3>
+            <div class="viz mx-auto" style="max-width:620px;">
+              <svg viewBox="0 0 620 210" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizHashTitle">
+                <title id="vizHashTitle">Hash buckets with chaining</title>
+                <defs>
+                  <marker id="hArr" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#38bdf8"/></marker>
+                </defs>
+                <text x="40" y="32" font-family="Outfit,system-ui,sans-serif" font-size="13" font-weight="800" fill="#38bdf8">Key → hash() → bucket index</text>
+                <g transform="translate(50,60)">
+                  <rect x="0" y="0" width="80" height="35" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                  <text x="40" y="22" font-family="Fira Code,monospace" font-size="12" fill="#38bdf8" text-anchor="middle">bucket 0</text>
+                  <rect x="0" y="38" width="80" height="30" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+                  <text x="40" y="60" font-family="Outfit,system-ui,sans-serif" font-size="10" fill="#64748b" text-anchor="middle">empty</text>
+                </g>
+                <line x1="130" y1="77" x2="170" y2="77" stroke="#38bdf8" stroke-width="3" marker-end="url(#hArr)"/>
+                <g transform="translate(180,60)">
+                  <rect x="0" y="0" width="80" height="35" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                  <text x="40" y="22" font-family="Fira Code,monospace" font-size="12" fill="#38bdf8" text-anchor="middle">bucket 1</text>
+                  <rect x="0" y="38" width="80" height="55" rx="4" fill="#1e293b" stroke="#2563eb" stroke-width="2"/>
+                  <text x="40" y="56" font-family="Fira Code,monospace" font-size="11" fill="#60a5fa" text-anchor="middle">"Alice"</text>
+                  <text x="40" y="71" font-family="Fira Code,monospace" font-size="11" fill="#60a5fa" text-anchor="middle">"Diana"</text>
+                </g>
+                <line x1="260" y1="77" x2="300" y2="77" stroke="#38bdf8" stroke-width="3" marker-end="url(#hArr)"/>
+                <g transform="translate(310,60)">
+                  <rect x="0" y="0" width="80" height="35" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                  <text x="40" y="22" font-family="Fira Code,monospace" font-size="12" fill="#38bdf8" text-anchor="middle">bucket 2</text>
+                  <rect x="0" y="38" width="80" height="30" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+                  <text x="40" y="60" font-family="Outfit,system-ui,sans-serif" font-size="10" fill="#64748b" text-anchor="middle">empty</text>
+                </g>
+                <line x1="390" y1="77" x2="430" y2="77" stroke="#38bdf8" stroke-width="3" marker-end="url(#hArr)"/>
+                <g transform="translate(440,60)">
+                  <rect x="0" y="0" width="80" height="35" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                  <text x="40" y="22" font-family="Fira Code,monospace" font-size="12" fill="#38bdf8" text-anchor="middle">bucket 3</text>
+                  <rect x="0" y="38" width="80" height="30" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+                  <text x="40" y="60" font-family="Outfit,system-ui,sans-serif" font-size="10" fill="#64748b" text-anchor="middle">empty</text>
+                </g>
+                <text x="40" y="185" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">Collision: multiple keys in one bucket (chained together)</text>
+              </svg>
+            </div>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">A good hash function spreads keys evenly — average O(1) lookup.</p>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Count word frequencies (hash map)</h3>
+            <div class="code-block mb-6">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-python">"""Count word frequencies using a hash map. O(n) time.
+Run: python word_freq.py
+"""
+
+def word_frequencies(text):
+    freq = {}
+    # Normalize: lower-case, split on whitespace
+    for word in text.lower().split():
+        # Strip simple punctuation
+        word = word.strip(".,!?:;\"'")
+        if word:
+            freq[word] = freq.get(word, 0) + 1  # O(1) increment
+    return freq
+
+sample = ("To be, or not to be, that is the question. "
+          "Whether 'tis nobler in the mind to suffer.")
+freq = word_frequencies(sample)
+
+print("Word frequencies:")
+for word, count in sorted(freq.items(), key=lambda x: -x[1]):
+    print(f"  {word:>10}: {count}")
+# Output:
+# Word frequencies:
+#       to: 3
+#       be: 2
+#     the: 1
+#   or: 1
+# not: 1
+# that: 1
+#   is: 1
+# question: 1
+# whether: 1
+# 'tis: 1
+# nobler: 1
+#   in: 1
+# mind: 1
+# suffer: 1</code></pre>
+            </div>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Visualization — Hash table buckets</h3>
+            <div class="viz svg-container mx-auto" style="max-width:560px;">
+              <svg viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+                <defs><marker id="htArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,8 L7,4 z" fill="#38bdf8"/></marker></defs>
+                <text x="30" y="30" font-family="Outfit,system-ui,sans-serif" font-size="12" font-weight="700" fill="#38bdf8">Key → hash() → bucket index</text>
+                <!-- buckets -->
+                <g transform="translate(40,60)">
+                  <rect x="0" y="0" width="70" height="30" rx="4" fill="#161b22" stroke="#38bdf8"/>
+                  <text x="35" y="20" font-family="Fira Code,monospace" font-size="11" fill="#38bdf8" text-anchor="middle">bucket 0</text>
+                  <rect x="0" y="32" width="70" height="26" rx="4" fill="#161b22" stroke="#30363d"/>
+                  <text x="35" y="51" font-family="Fira Code,monospace" font-size="10" fill="#848d97" text-anchor="middle">empty</text>
+                </g>
+                <line x1="110" y1="75" x2="150" y2="75" stroke="#38bdf8" stroke-width="2" marker-end="url(#htArrow)"/>
+                <g transform="translate(160,60)">
+                  <rect x="0" y="0" width="70" height="30" rx="4" fill="#161b22" stroke="#38bdf8"/>
+                  <text x="35" y="20" font-family="Fira Code,monospace" font-size="11" fill="#38bdf8" text-anchor="middle">bucket 1</text>
+                  <rect x="0" y="32" width="70" height="52" rx="4" fill="#161b22" stroke="#2f81f7"/>
+                  <text x="35" y="50" font-family="Fira Code,monospace" font-size="10" fill="#2f81f7" text-anchor="middle">"Alice"</text>
+                  <text x="35" y="64" font-family="Fira Code,monospace" font-size="10" fill="#2f81f7" text-anchor="middle">"Diana"</text>
+                </g>
+                <line x1="230" y1="75" x2="270" y2="75" stroke="#38bdf8" stroke-width="2" marker-end="url(#htArrow)"/>
+                <g transform="translate(280,60)">
+                  <rect x="0" y="0" width="70" height="30" rx="4" fill="#161b22" stroke="#38bdf8"/>
+                  <text x="35" y="20" font-family="Fira Code,monospace" font-size="11" fill="#38bdf8" text-anchor="middle">bucket 2</text>
+                  <rect x="0" y="32" width="70" height="26" rx="4" fill="#161b22" stroke="#30363d"/>
+                  <text x="35" y="51" font-family="Fira Code,monospace" font-size="10" fill="#848d97" text-anchor="middle">empty</text>
+                </g>
+                <line x1="350" y1="75" x2="390" y2="75" stroke="#38bdf8" stroke-width="2" marker-end="url(#htArrow)"/>
+                <g transform="translate(400,60)">
+                  <rect x="0" y="0" width="70" height="30" rx="4" fill="#161b22" stroke="#38bdf8"/>
+                  <text x="35" y="20" font-family="Fira Code,monospace" font-size="11" fill="#38bdf8" text-anchor="middle">bucket 3</text>
+                  <rect x="0" y="32" width="70" height="26" rx="4" fill="#161b22" stroke="#30363d"/>
+                  <text x="35" y="51" font-family="Fira Code,monospace" font-size="10" fill="#848d97" text-anchor="middle">empty</text>
+                </g>
+                <text x="40" y="175" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#848d97">Collision: multiple keys in one bucket (chaining)</text>
+              </svg>
+            </div>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">Good hash function spreads keys evenly — average O(1) lookup.</p>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24" id="trees">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 7</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Trees &amp; Binary Search Trees</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            A <strong>tree</strong> is a hierarchy of nodes with a root and children. A <strong>binary search tree (BST)</strong> keeps, for every node, all left descendants smaller and all right descendants larger. This makes search, insert, and delete O(h) where h is tree height (O(log n) if balanced).
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Binary search tree implementation</h3>
+            <div class="code-block mb-6">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-python">"""Binary Search Tree (BST): insert, search, in-order traversal.
+Run: python bst_demo.py
+"""
+
+class TreeNode:
+    def __init__(self, key):
+        self.key = key
+        self.left = None
+        self.right = None
+
+class BST:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, key):
+        """Insert a key — O(h) where h is tree height."""
+        self.root = self._insert(self.root, key)
+
+    def _insert(self, node, key):
+        if node is None:
+            return TreeNode(key)
+        if key < node.key:
+            node.left = self._insert(node.left, key)
+        elif key > node.key:
+            node.right = self._insert(node.right, key)
+        return node
+
+    def search(self, key):
+        """Search for a key — O(h)."""
+        return self._search(self.root, key)
+
+    def _search(self, node, key):
+        if node is None:
+            return False
+        if key == node.key:
+            return True
+        if key < node.key:
+            return self._search(node.left, key)
+        return self._search(node.right, key)
+
+    def inorder(self):
+        """Return keys in sorted order (left, root, right)."""
+        result = []
+        self._inorder(self.root, result)
+        return result
+
+    def _inorder(self, node, result):
+        if node:
+            self._inorder(node.left, result)
+            result.append(node.key)
+            self._inorder(node.right, result)
+
+# Demo: insert in unsorted order, then traverse sorted
+bst = BST()
+for key in [50, 30, 70, 20, 40, 60, 80]:
+    bst.insert(key)
+
+print("In-order traversal (sorted):", bst.inorder())
+# [20, 30, 40, 50, 60, 70, 80]
+
+print("Search 40:", bst.search(40))  # True
+print("Search 99:", bst.search(99))  # False
+# Output:
+# In-order traversal (sorted): [20, 30, 40, 50, 60, 70, 80]
+# Search 40: True
+# Search 99: False</code></pre>
+            </div>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Visualization — Binary search tree</h3>
+            <div class="viz mx-auto" style="max-width:600px;">
+              <svg viewBox="0 0 600 290" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizBSTTitle">
+                <title id="vizBSTTitle">Binary search tree</title>
+                <defs>
+                  <marker id="btArr" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#38bdf8"/></marker>
+                </defs>
+                <!-- root 50 -->
+                <circle cx="300" cy="55" r="20" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+                <text x="300" y="59" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">50</text>
+                <!-- left 30 -->
+                <circle cx="180" cy="135" r="20" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+                <text x="180" y="139" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">30</text>
+                <!-- right 70 -->
+                <circle cx="420" cy="135" r="20" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+                <text x="420" y="139" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">70</text>
+                <line x1="284" y1="75" x2="196" y2="115" stroke="#475569" stroke-width="2" marker-end="url(#btArr)"/>
+                <line x1="316" y1="75" x2="404" y2="115" stroke="#475569" stroke-width="2" marker-end="url(#btArr)"/>
+                <!-- 30 children 20, 40 -->
+                <circle cx="130" cy="215" r="20" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+                <text x="130" y="219" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">20</text>
+                <circle cx="230" cy="215" r="20" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+                <text x="230" y="219" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">40</text>
+                <line x1="162" y1="155" x2="148" y2="195" stroke="#475569" stroke-width="2" marker-end="url(#btArr)"/>
+                <line x1="198" y1="155" x2="212" y2="195" stroke="#475569" stroke-width="2" marker-end="url(#btArr)"/>
+                <!-- 70 children 60, 80 -->
+                <circle cx="370" cy="215" r="20" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+                <text x="370" y="219" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">60</text>
+                <circle cx="470" cy="215" r="20" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+                <text x="470" y="219" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">80</text>
+                <line x1="402" y1="155" x2="388" y2="195" stroke="#475569" stroke-width="2" marker-end="url(#btArr)"/>
+                <line x1="438" y1="155" x2="452" y2="195" stroke="#475569" stroke-width="2" marker-end="url(#btArr)"/>
+                <text x="300" y="270" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b" text-anchor="middle">Left &lt; parent &lt; right · in-order = sorted</text>
+              </svg>
+            </div>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">Search/insert/delete: O(h). Balanced tree: h = O(log n).</p>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24" id="heaps">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 8</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Heaps &amp; Priority Queues</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            A <strong>heap</strong> is a complete binary tree where each parent is ordered relative to its children (min-heap: parent ≤ children). Heap operations (push/pop) are O(log n). Ideal for priority queues and Dijkstra's algorithm. Python's <code class="kbd">heapq</code> module is a min-heap.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Min-heap demo (heapq)</h3>
+            <div class="code-block mb-6">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-python">"""Min-heap / priority queue with heapq.
+Run: python heap_demo.py
+"""
+
+import heapq
+
+class MinHeap:
+    def __init__(self):
+        self.heap = []
+
+    def push(self, item):
+        heapq.heappush(self.heap, item)   # O(log n)
+
+    def pop(self):
+        return heapq.heappop(self.heap)   # O(log n)
+
+    def peek(self):
+        return self.heap[0] if self.heap else None  # O(1)
+
+    def __str__(self):
+        return str(self.heap)
+
+# Demo: task scheduler with priorities (lower number = higher priority)
+tasks = MinHeap()
+tasks.push((3, "Low priority email"))
+tasks.push((1, "Critical server alert"))
+tasks.push((2, "Code review"))
+tasks.push((1, "Security patch"))
+
+print("Heap contents:", tasks)
+print("Next task (pop):", tasks.pop())   # (1, 'Critical server alert')
+print("Next task (pop):", tasks.pop())   # (1, 'Security patch')
+print("Next task (pop):", tasks.pop())   # (2, 'Code review')
+print("Next task (pop):", tasks.pop())   # (3, 'Low priority email')
+# Output:
+# Heap contents: [(1, 'Critical server alert'), (1, 'Security patch'), (2, 'Code review'), (3, 'Low priority email')]
+# Next task (pop): (1, 'Critical server alert')
+# Next task (pop): (1, 'Security patch')
+# Next task (pop): (2, 'Code review')
+# Next task (pop): (3, 'Low priority email')</code></pre>
+            </div>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Visualization — Min-heap (array as tree)</h3>
+            <div class="viz mx-auto" style="max-width:600px;">
+              <svg viewBox="0 0 600 290" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizHeapTitle">
+                <title id="vizHeapTitle">Min-heap tree</title>
+                <defs>
+                  <marker id="hpArr" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#38bdf8"/></marker>
+                </defs>
+                <text x="40" y="30" font-family="Outfit,system-ui,sans-serif" font-size="12" font-weight="700" fill="#38bdf8">Array: [1, 1, 2, 3]</text>
+                <!-- root 1 -->
+                <circle cx="300" cy="70" r="20" fill="#1e293b" stroke="#2563eb" stroke-width="2.5"/>
+                <text x="300" y="74" font-family="Fira Code,monospace" font-size="15" fill="#60a5fa" text-anchor="middle">1</text>
+                <!-- left 1 -->
+                <circle cx="180" cy="150" r="20" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+                <text x="180" y="154" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">1</text>
+                <!-- right 2 -->
+                <circle cx="420" cy="150" r="20" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+                <text x="420" y="154" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">2</text>
+                <!-- left-left 3 -->
+                <circle cx="240" cy="230" r="20" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+                <text x="240" y="234" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">3</text>
+                <line x1="284" y1="90" x2="196" y2="130" stroke="#475569" stroke-width="2" marker-end="url(#hpArr)"/>
+                <line x1="316" y1="90" x2="404" y2="130" stroke="#475569" stroke-width="2" marker-end="url(#hpArr)"/>
+                <line x1="162" y1="170" x2="228" y2="210" stroke="#475569" stroke-width="2" marker-end="url(#hpArr)"/>
+                <text x="300" y="270" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b" text-anchor="middle">Parent ≤ children · root is min (highest priority)</text>
+              </svg>
+            </div>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">Push/pop: O(log n). Peek min: O(1).</p>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24" id="graphs">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 9</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Graphs &amp; Traversal</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            A <strong>graph</strong> is a set of nodes (vertices) connected by edges. Two fundamental traversals:<br/>
+            • <strong>BFS (Breadth-First Search):</strong> explore layer by layer using a queue — finds shortest paths in unweighted graphs.<br/>
+            • <strong>DFS (Depth-First Search):</strong> dive deep using recursion or a stack — useful for cycles, connectivity, topological order.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">BFS &amp; DFS on an adjacency list</h3>
+            <div class="code-block mb-6">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-python">"""Graph traversals: BFS and DFS.
+Run: python graph_demo.py
+"""
+
+from collections import deque
+
+# Graph as adjacency list
+graph = {
+    "A": ["B", "C"],
+    "B": ["D", "E"],
+    "C": ["F"],
+    "D": [],
+    "E": ["F"],
+    "F": [],
+}
+
+def bfs(start):
+    """Breadth-First Search using a queue."""
+    visited = set()
+    queue = deque([start])
+    order = []
+    while queue:
+        node = queue.popleft()
+        if node not in visited:
+            visited.add(node)
+            order.append(node)
+            queue.extend(graph[node])
+    return order
+
+def dfs(start, visited=None, order=None):
+    """Depth-First Search using recursion."""
+    if visited is None:
+        visited = set()
+    if order is None:
+        order = []
+    visited.add(start)
+    order.append(start)
+    for neighbor in graph[start]:
+        if neighbor not in visited:
+            dfs(neighbor, visited, order)
+    return order
+
+print("BFS from A:", bfs("A"))    # A, B, C, D, E, F
+print("DFS from A:", dfs("A"))    # A, B, D, E, F, C
+# Output:
+# BFS from A: ['A', 'B', 'C', 'D', 'E', 'F']
+# DFS from A: ['A', 'B', 'D', 'E', 'F', 'C']</code></pre>
+            </div>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Visualization — Graph traversal</h3>
+            <div class="viz mx-auto" style="max-width:600px;">
+              <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizGraphTitle">
+                <title id="vizGraphTitle">Graph with BFS/DFS edges</title>
+                <defs>
+                  <marker id="grArr" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#64748b"/></marker>
+                </defs>
+                <!-- nodes -->
+                <circle cx="90" cy="90" r="18" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+                <text x="90" y="94" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">A</text>
+                <circle cx="220" cy="60" r="18" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+                <text x="220" y="64" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">B</text>
+                <circle cx="350" cy="60" r="18" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+                <text x="350" y="64" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">C</text>
+                <circle cx="180" cy="170" r="18" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+                <text x="180" y="174" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">D</text>
+                <circle cx="260" cy="170" r="18" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+                <text x="260" y="174" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">E</text>
+                <circle cx="340" cy="170" r="18" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+                <text x="340" y="174" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">F</text>
+                <!-- edges -->
+                <line x1="106" y1="78" x2="204" y2="72" stroke="#475569" stroke-width="2" marker-end="url(#grArr)"/>
+                <line x1="106" y1="102" x2="334" y2="72" stroke="#475569" stroke-width="2" marker-end="url(#grArr)"/>
+                <line x1="204" y2="78" x2="164" y2="150" stroke="#475569" stroke-width="2" marker-end="url(#grArr)"/>
+                <line x1="236" y1="78" x2="276" y2="150" stroke="#475569" stroke-width="2" marker-end="url(#grArr)"/>
+                <line x1="334" y1="78" x2="334" y2="150" stroke="#475569" stroke-width="2" marker-end="url(#grArr)"/>
+                <line x1="244" y1="190" x2="324" y2="150" stroke="#475569" stroke-width="2" marker-end="url(#grArr)"/>
+                <text x="300" y="220" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b" text-anchor="middle">BFS: layer by layer · DFS: dive deep first</text>
+              </svg>
+            </div>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">BFS uses a queue; DFS uses recursion/stack.</p>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24" id="sorting">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 10</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Sorting Algorithms</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Sorting is a building block for search, data analysis, and interview problems. Below are the classic algorithms with their complexities.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Bubble sort, insertion sort, merge sort, quick sort</h3>
+            <div class="code-block mb-6">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-python">"""Sorting algorithms demo.
+Run: python sorting_demo.py
+"""
+
+def bubble_sort(arr):
+    """O(n^2). Repeatedly swaps adjacent out-of-order elements."""
+    a = arr[:]
+    n = len(a)
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if a[j] > a[j + 1]:
+                a[j], a[j + 1] = a[j + 1], a[j]
+    return a
+
+def insertion_sort(arr):
+    """O(n^2). Builds sorted array one element at a time."""
+    a = arr[:]
+    for i in range(1, len(a)):
+        key = a[i]
+        j = i - 1
+        while j >= 0 and a[j] > key:
+            a[j + 1] = a[j]
+            j -= 1
+        a[j + 1] = key
+    return a
+
+def merge_sort(arr):
+    """O(n log n). Divide, recursively sort, merge."""
+    if len(arr) <= 1:
+        return arr
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    return _merge(left, right)
+
+def _merge(left, right):
+    result = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i]); i += 1
+        else:
+            result.append(right[j]); j += 1
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result
+
+def quick_sort(arr):
+    """O(n log n) average, O(n^2) worst. Pivot-based partitioning."""
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    return quick_sort(left) + middle + quick_sort(right)
+
+data = [64, 34, 25, 12, 22, 11, 90]
+print("Original:", data)
+print("Bubble sort:", bubble_sort(data))
+print("Insertion sort:", insertion_sort(data))
+print("Merge sort:", merge_sort(data))
+print("Quick sort:", quick_sort(data))
+# Output:
+# Original: [64, 34, 25, 12, 22, 11, 90]
+# Bubble sort: [11, 12, 22, 25, 34, 64, 90]
+# Insertion sort: [11, 12, 22, 25, 34, 64, 90]
+# Merge sort: [11, 12, 22, 25, 34, 64, 90]
+# Quick sort: [11, 12, 22, 25, 34, 64, 90]</code></pre>
+            </div>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Visualization — Merge sort divide &amp; conquer</h3>
+            <div class="viz mx-auto" style="max-width:600px;">
+              <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizMergeTitle">
+                <title id="vizMergeTitle">Merge sort split and merge</title>
+                <text x="40" y="30" font-family="Outfit,system-ui,sans-serif" font-size="13" font-weight="700" fill="#38bdf8">Split → sort halves → merge</text>
+                <!-- original -->
+                <rect x="40" y="50" width="200" height="40" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                <text x="140" y="74" font-family="Fira Code,monospace" font-size="12" fill="#cbd5e1" text-anchor="middle">[64, 34, 25, 12, 22, 11, 90]</text>
+                <!-- left half -->
+                <rect x="40" y="105" width="110" height="40" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                <text x="95" y="129" font-family="Fira Code,monospace" font-size="12" fill="#38bdf8" text-anchor="middle">[64, 34, 25, 12]</text>
+                <!-- right half -->
+                <rect x="270" y="105" width="110" height="40" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                <text x="325" y="129" font-family="Fira Code,monospace" font-size="12" fill="#38bdf8" text-anchor="middle">[22, 11, 90]</text>
+                <line x1="140" y1="90" x2="95" y2="105" stroke="#38bdf8" stroke-width="2" marker-end="url(#mergeArr)"/>
+                <line x1="140" y1="90" x2="325" y2="105" stroke="#38bdf8" stroke-width="2" marker-end="url(#mergeArr)"/>
+                <!-- merged -->
+                <rect x="110" y="160" width="200" height="40" rx="6" fill="#1e293b" stroke="#2563eb" stroke-width="2.5"/>
+                <text x="210" y="184" font-family="Fira Code,monospace" font-size="12" fill="#60a5fa" text-anchor="middle">[11, 12, 22, 25, 34, 64, 90]</text>
+                <line x1="95" y1="145" x2="160" y2="160" stroke="#2563eb" stroke-width="2" marker-end="url(#mergeArr)"/>
+                <line x1="325" y1="145" x2="260" y2="160" stroke="#2563eb" stroke-width="2" marker-end="url(#mergeArr)"/>
+                <text x="300" y="208" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b" text-anchor="middle">O(n log n) guaranteed</text>
+                <defs><marker id="mergeArr" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#38bdf8"/></marker></defs>
+              </svg>
+            </div>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">Merge sort: O(n log n) guaranteed.</p>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24" id="recursion">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 11</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Recursion &amp; Backtracking</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            <strong>Recursion:</strong> a function calling itself with a smaller input, until a <em>base case</em> stops it. <strong>Backtracking</strong> is recursion that explores choices and undoes (backs out of) dead ends — used for permutations, N-queens, sudoku.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Factorial, Fibonacci, and permutations</h3>
+            <div class="code-block mb-6">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-python">"""Recursion and backtracking demos.
+Run: python recursion_demo.py
+"""
+
+def factorial(n):
+    """n! = n * (n-1)! ; base case 0! = 1"""
+    if n == 0:
+        return 1
+    return n * factorial(n - 1)
+
+def fibonacci(n):
+    """Naive recursive Fibonacci — O(2^n). Use DP for speed."""
+    if n <= 1:
+        return n
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+def permutations(s):
+    """All rearrangements of a string via backtracking."""
+    if len(s) <= 1:
+        return [s]
+    result = []
+    for i, ch in enumerate(s):
+        rest = s[:i] + s[i+1:]
+        for perm in permutations(rest):
+            result.append(ch + perm)
+    return result
+
+print("Factorial of 5:", factorial(5))      # 120
+print("Fibonacci of 8:", fibonacci(8))      # 21
+print("Permutations of 'abc':", permutations("abc"))
+# ['abc', 'acb', 'bac', 'bca', 'cab', 'cba']
+# Output:
+# Factorial of 5: 120
+# Fibonacci of 8: 21
+# Permutations of 'abc': ['abc', 'acb', 'bac', 'bca', 'cab', 'cba']</code></pre>
+            </div>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Visualization — Recursion call stack</h3>
+            <div class="viz mx-auto" style="max-width:360px;">
+              <svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizRecTitle">
+                <title id="vizRecTitle">Recursion call stack for factorial(3)</title>
+                <defs>
+                  <marker id="rcArr" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#38bdf8"/></marker>
+                </defs>
+                <text x="20" y="28" font-family="Outfit,system-ui,sans-serif" font-size="12" font-weight="700" fill="#38bdf8">factorial(3)</text>
+                <rect x="80" y="45" width="200" height="45" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                <text x="180" y="68" font-family="Fira Code,monospace" font-size="13" fill="#38bdf8" text-anchor="middle">3 * factorial(2)</text>
+                <line x1="180" y1="45" x2="180" y2="35" stroke="#38bdf8" stroke-width="3" marker-end="url(#rcArr)"/>
+                <rect x="80" y="100" width="200" height="45" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                <text x="180" y="123" font-family="Fira Code,monospace" font-size="13" fill="#38bdf8" text-anchor="middle">2 * factorial(1)</text>
+                <line x1="180" y1="100" x2="180" y2="90" stroke="#38bdf8" stroke-width="3" marker-end="url(#rcArr)"/>
+                <rect x="80" y="155" width="200" height="45" rx="8" fill="#1e293b" stroke="#2563eb" stroke-width="2.5"/>
+                <text x="180" y="178" font-family="Fira Code,monospace" font-size="13" fill="#60a5fa" text-anchor="middle">1  (base case)</text>
+                <text x="20" y="225" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">Unwind: 1 → 2×1=2 → 3×2=6</text>
+              </svg>
+            </div>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">Base case stops recursion; each frame waits for the deeper call.</p>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24" id="dp">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 12</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Dynamic Programming</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            <strong>Dynamic programming (DP)</strong> solves overlapping subproblems once and stores results (<em>memoization</em>, top-down, or <em>tabulation</em>, bottom-up). It turns exponential recursion into polynomial time.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Fibonacci: naive vs memoized vs tabulated</h3>
+            <div class="code-block mb-6">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-python">"""Dynamic programming: Fibonacci three ways.
+Run: python dp_demo.py
+"""
+
+# Naive recursion — O(2^n), slow
+def fib_naive(n):
+    if n <= 1:
+        return n
+    return fib_naive(n - 1) + fib_naive(n - 2)
+
+# Memoization (top-down) — O(n)
+from functools import lru_cache
+@lru_cache(maxsize=None)
+def fib_memo(n):
+    if n <= 1:
+        return n
+    return fib_memo(n - 1) + fib_memo(n - 2)
+
+# Tabulation (bottom-up) — O(n) time, O(n) space
+def fib_tab(n):
+    if n <= 1:
+        return n
+    dp = [0] * (n + 1)
+    dp[1] = 1
+    for i in range(2, n + 1):
+        dp[i] = dp[i - 1] + dp[i - 2]
+    return dp[n]
+
+n = 40
+print(f"fib_naive({n}) =", fib_naive(n))      # slow but correct
+print(f"fib_memo({n})  =", fib_memo(n))       # instant
+print(f"fib_tab({n})   =", fib_tab(n))        # instant
+# All print: 102334155
+# Output:
+# fib_naive(40) = 102334155
+# fib_memo(40)  = 102334155
+# fib_tab(40)   = 102334155</code></pre>
+            </div>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Visualization — DP memo table</h3>
+            <div class="viz mx-auto" style="max-width:620px;">
+              <svg viewBox="0 0 620 170" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizDpTitle">
+                <title id="vizDpTitle">DP memo table</title>
+                <text x="40" y="30" font-family="Outfit,system-ui,sans-serif" font-size="13" font-weight="700" fill="#38bdf8">dp[i] = fib(i), filled bottom-up — each subproblem once</text>
+                <g transform="translate(40,60)">
+                  <rect x="0" y="0" width="44" height="44" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                  <text x="22" y="27" font-family="Fira Code,monospace" font-size="14" fill="#38bdf8" text-anchor="middle">0</text>
+                  <rect x="50" y="0" width="44" height="44" rx="6" fill="#1e293b" stroke="#2563eb" stroke-width="2.5"/>
+                  <text x="72" y="27" font-family="Fira Code,monospace" font-size="14" fill="#60a5fa" text-anchor="middle">1</text>
+                  <rect x="100" y="0" width="44" height="44" rx="6" fill="#1e293b" stroke="#2563eb" stroke-width="2.5"/>
+                  <text x="122" y="27" font-family="Fira Code,monospace" font-size="14" fill="#60a5fa" text-anchor="middle">1</text>
+                  <rect x="150" y="0" width="44" height="44" rx="6" fill="#1e293b" stroke="#2563eb" stroke-width="2.5"/>
+                  <text x="172" y="27" font-family="Fira Code,monospace" font-size="14" fill="#60a5fa" text-anchor="middle">2</text>
+                  <rect x="200" y="0" width="44" height="44" rx="6" fill="#1e293b" stroke="#2563eb" stroke-width="2.5"/>
+                  <text x="222" y="27" font-family="Fira Code,monospace" font-size="14" fill="#60a5fa" text-anchor="middle">3</text>
+                  <rect x="250" y="0" width="44" height="44" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                  <text x="272" y="27" font-family="Fira Code,monospace" font-size="14" fill="#64748b" text-anchor="middle">?</text>
+                  <rect x="300" y="0" width="44" height="44" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                  <text x="322" y="27" font-family="Fira Code,monospace" font-size="14" fill="#64748b" text-anchor="middle">?</text>
+                </g>
+                <text x="40" y="140" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">Memoization / tabulation reuse subproblem results — O(n) instead of O(2ⁿ)</text>
+              </svg>
+            </div>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">Each subproblem solved once — O(n) instead of O(2ⁿ).</p>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24" id="greedy">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 13</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Greedy Algorithms</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            A <strong>greedy algorithm</strong> makes the locally optimal choice at each step, hoping it leads to a global optimum. Works when the problem has the <em>greedy-choice property</em> (e.g. activity selection, coin change with canonical coins). Not always correct — that's when DP or other methods are needed.
+          </p>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Coin change (greedy, canonical coins)</h3>
+            <div class="code-block mb-6">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-python">"""Greedy coin change: fewest coins for canonical denominations.
+Run: python greedy_demo.py
+"""
+
+def coin_change_greedy(amount, coins):
+    """Return dict {coin: count} using largest coins first."""
+    coins = sorted(coins, reverse=True)
+    result = {}
+    remaining = amount
+    for coin in coins:
+        count = remaining // coin
+        if count:
+            result[coin] = count
+            remaining -= count * coin
+    if remaining != 0:
+        return None  # cannot make exact change with these coins
+    return result
+
+amount = 93
+coins = [1, 5, 10, 25]  # US coins (canonical: greedy works)
+change = coin_change_greedy(amount, coins)
+print(f"Amount: {amount}")
+print(f"Coins:  {coins}")
+print(f"Change: {change}")
+print(f"Total coins: {sum(change.values())}")
+# Output:
+# Amount: 93
+# Coins:  [1, 5, 10, 25]
+# Change: {25: 3, 10: 1, 5: 1, 1: 3}
+# Total coins: 8  (3*25 + 1*10 + 1*5 + 3*1 = 93)</code></pre>
+            </div>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Visualization — Greedy coin change (93¢)</h3>
+            <div class="viz mx-auto" style="max-width:640px;">
+              <svg viewBox="0 0 640 180" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizGreedyTitle">
+                <title id="vizGreedyTitle">Greedy coin change for 93 cents</title>
+                <defs>
+                  <marker id="grArr" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#38bdf8"/></marker>
+                </defs>
+                <text x="40" y="28" font-family="Outfit,system-ui,sans-serif" font-size="12" font-weight="700" fill="#38bdf8">Always take the largest coin ≤ remaining</text>
+                <rect x="40" y="55" width="56" height="44" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                <text x="68" y="80" font-family="Fira Code,monospace" font-size="14" fill="#cbd5e1" text-anchor="middle">93¢</text>
+                <line x1="96" y1="77" x2="140" y2="77" stroke="#38bdf8" stroke-width="3" marker-end="url(#grArr)"/>
+                <rect x="150" y="55" width="56" height="44" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                <text x="178" y="80" font-family="Fira Code,monospace" font-size="13" fill="#60a5fa" text-anchor="middle">−25 → 68</text>
+                <line x1="206" y1="77" x2="250" y2="77" stroke="#38bdf8" stroke-width="3" marker-end="url(#grArr)"/>
+                <rect x="260" y="55" width="56" height="44" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                <text x="288" y="80" font-family="Fira Code,monospace" font-size="13" fill="#60a5fa" text-anchor="middle">−25 → 43</text>
+                <line x1="316" y1="77" x2="360" y2="77" stroke="#38bdf8" stroke-width="3" marker-end="url(#grArr)"/>
+                <rect x="370" y="55" width="56" height="44" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                <text x="398" y="80" font-family="Fira Code,monospace" font-size="13" fill="#60a5fa" text-anchor="middle">−25 → 18</text>
+                <line x1="426" y1="77" x2="470" y2="77" stroke="#38bdf8" stroke-width="3" marker-end="url(#grArr)"/>
+                <rect x="480" y="55" width="56" height="44" rx="6" fill="#1e293b" stroke="#2563eb" stroke-width="2.5"/>
+                <text x="508" y="80" font-family="Fira Code,monospace" font-size="13" fill="#60a5fa" text-anchor="middle">−10 → 8</text>
+                <line x1="536" y1="77" x2="580" y2="77" stroke="#38bdf8" stroke-width="3" marker-end="url(#grArr)"/>
+                <rect x="590" y="55" width="56" height="44" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                <text x="618" y="80" font-family="Fira Code,monospace" font-size="13" fill="#64748b" text-anchor="middle">→ 0</text>
+                <text x="40" y="152" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">→ −5 → 3 → −1×3 → 0. Total: 8 coins</text>
+                <text x="40" y="172" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">Greedy picks local best — optimal for canonical coins, not always</text>
+              </svg>
+            </div>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">Greedy picks local best; optimal for canonical coins, not always.</p>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24" id="capstone">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Capstone Project</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Build a "Route &amp; Task Planner"</h2>
+          <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
+            Combine a graph (cities/roads), a priority queue (task scheduler), and a hash table (city index) into one interactive program. All code is runnable by copying.
+          </p>
+          <div class="space-y-6">
+            <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
+              <p class="font-medium text-[var(--ink)] mb-2">Phase 1 — City graph</p>
+              <p class="text-sm text-[var(--muted)]">Model cities and roads with distances; BFS/DFS to find reachable cities.</p>
+            </div>
+            <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
+              <p class="font-medium text-[var(--ink)] mb-2">Phase 2 — Task scheduler</p>
+              <p class="text-sm text-[var(--muted)]">Min-heap priority queue for tasks by urgency.</p>
+            </div>
+            <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
+              <p class="font-medium text-[var(--ink)] mb-2">Phase 3 — City lookup</p>
+              <p class="text-sm text-[var(--muted)]">Hash table mapping city names to graph nodes.</p>
+            </div>
+            <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
+              <p class="font-medium text-[var(--ink)] mb-2">Phase 4 — Interactive CLI</p>
+              <p class="text-sm text-[var(--muted)]">Menu to add tasks, find routes, view schedule.</p>
+            </div>
+            <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
+              <p class="font-medium text-[var(--ink)] mb-2">Phase 5 — Polish &amp; run</p>
+              <p class="text-sm text-[var(--muted)]">Comments, formatted output, edge-case handling.</p>
+            </div>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Visualization — Route map (graph)</h3>
+            <div class="viz mx-auto" style="max-width:620px;">
+              <svg viewBox="0 0 620 260" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizRouteTitle">
+                <title id="vizRouteTitle">City route map with road distances</title>
+                <defs>
+                  <marker id="rtArr" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#64748b"/></marker>
+                </defs>
+                <text x="40" y="28" font-family="Outfit,system-ui,sans-serif" font-size="12" font-weight="700" fill="#38bdf8">Dijkstra finds shortest path by total distance</text>
+                <!-- cities -->
+                <circle cx="90" cy="100" r="16" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+                <text x="90" y="104" font-family="Fira Code,monospace" font-size="13" fill="#38bdf8" text-anchor="middle">NYC</text>
+                <circle cx="210" cy="60" r="16" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+                <text x="210" y="64" font-family="Fira Code,monospace" font-size="12" fill="#38bdf8" text-anchor="middle">Boston</text>
+                <circle cx="270" cy="140" r="16" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+                <text x="270" y="144" font-family="Fira Code,monospace" font-size="12" fill="#38bdf8" text-anchor="middle">Philly</text>
+                <circle cx="390" cy="100" r="16" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+                <text x="390" y="104" font-family="Fira Code,monospace" font-size="12" fill="#38bdf8" text-anchor="middle">DC</text>
+                <circle cx="310" cy="170" r="16" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+                <text x="310" y="174" font-family="Fira Code,monospace" font-size="12" fill="#38bdf8" text-anchor="middle">Richmond</text>
+                <!-- roads with distances -->
+                <line x1="106" y1="88" x2="194" y2="72" stroke="#475569" stroke-width="2" marker-end="url(#rtArr)"/>
+                <text x="140" y="78" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">215</text>
+                <line x1="106" y1="112" x2="254" y2="128" stroke="#475569" stroke-width="2" marker-end="url(#rtArr)"/>
+                <text x="165" y="133" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">95</text>
+                <line x1="286" y1="128" x2="374" y2="112" stroke="#475569" stroke-width="2" marker-end="url(#rtArr)"/>
+                <text x="315" y="133" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">140</text>
+                <line x1="286" y1="152" x2="294" y2="158" stroke="#475569" stroke-width="2" marker-end="url(#rtArr)"/>
+                <text x="325" y="170" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">110</text>
+              </svg>
+            </div>
+          </div>
+          <div class="card rounded-2xl p-6 mb-8">
+            <h3 class="text-xl font-semibold mb-3">Complete capstone code</h3>
+            <div class="code-block mb-6">
+              <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
+              <pre><code class="language-python">"""Route &amp; Task Planner capstone.
+Graph + priority queue + hash table. Run: python planner.py
+"""
+
+from collections import deque
+import heapq
+
+# --- Graph: cities and roads with distances ---
+class CityGraph:
+    def __init__(self):
+        self.adj = {}   # city -> list of (neighbor, distance)
+
+    def add_road(self, a, b, dist):
+        self.adj.setdefault(a, []).append((b, dist))
+        self.adj.setdefault(b, []).append((a, dist))
+
+    def bfs_reachable(self, start):
+        """Cities reachable from start (unweighted reachability)."""
+        visited = {start}
+        queue = deque([start])
+        while queue:
+            city = queue.popleft()
+            for neighbor, _ in self.adj.get(city, []):
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    queue.append(neighbor)
+        return sorted(visited)
+
+    def dijkstra(self, start, goal):
+        """Shortest path by distance using a min-heap."""
+        dist = {start: 0}
+        prev = {start: None}
+        heap = [(0, start)]
+        while heap:
+            d, city = heapq.heappop(heap)
+            if city == goal:
+                break
+            if d > dist.get(city, float('inf')):
+                continue
+            for neighbor, w in self.adj.get(city, []):
+                nd = d + w
+                if nd < dist.get(neighbor, float('inf')):
+                    dist[neighbor] = nd
+                    prev[neighbor] = city
+                    heapq.heappush(heap, (nd, neighbor))
+        # Reconstruct path
+        path = []
+        at = goal
+        while at is not None:
+            path.append(at)
+            at = prev.get(at)
+        path.reverse()
+        return dist.get(goal, float('inf')), path if path and path[0] == start else []
+
+# --- Task scheduler: min-heap by priority ---
+class TaskScheduler:
+    def __init__(self):
+        self.heap = []
+        self.counter = 0  # tie-breaker so equal priorities stay ordered
+
+    def add(self, task, priority):
+        heapq.heappush(self.heap, (priority, self.counter, task))
+        self.counter += 1
+
+    def next_task(self):
+        if not self.heap:
+            return None
+        _, _, task = heapq.heappop(self.heap)
+        return task
+
+    def __str__(self):
+        return ", ".join(t for _, _, t in sorted(self.heap)) or "none"
+
+# --- Interactive planner ---
+def main():
+    graph = CityGraph()
+    for a, b, d in [
+        ("NYC", "Philly", 95), ("Philly", "DC", 140),
+        ("DC", "Richmond", 110), ("NYC", "Boston", 215),
+        ("Boston", "Providence", 50), ("Providence", "Hartford", 100),
+        ("Hartford", "NYC", 120),
+    ]:
+        graph.add_road(a, b, d)
+
+    scheduler = TaskScheduler()
+
+    print("=== Route & Task Planner ===\n")
+    while True:
+        print("1. Add a task")
+        print("2. Show next task")
+        print("3. Find shortest route between cities")
+        print("4. List reachable cities from a city")
+        print("5. Exit")
+        choice = input("\nChoose (1-5): ").strip()
+
+        if choice == "1":
+            task = input("Task description: ").strip()
+            try:
+                priority = int(input("Priority (1=highest, 5=lowest): "))
+            except ValueError:
+                priority = 3
+            scheduler.add(task, priority)
+            print(f"  ✅ Added: '{task}' (priority {priority})\n")
+        elif choice == "2":
+            task = scheduler.next_task()
+            if task:
+                print(f"  ▶ Next: {task}\n")
+            else:
+                print("  No tasks scheduled.\n")
+        elif choice == "3":
+            start = input("From city: ").strip().upper()
+            goal = input("To city: ").strip().upper()
+            dist, path = graph.dijkstra(start, goal)
+            if path:
+                print(f"  Shortest route {start} -> {goal}: {' -> '.join(path)} ({dist} miles)\n")
+            else:
+                print(f"  No route from {start} to {goal}.\n")
+        elif choice == "4":
+            city = input("City: ").strip().upper()
+            reachable = graph.bfs_reachable(city)
+            print(f"  From {city}, reachable: {', '.join(reachable)}\n")
+        elif choice == "5":
+            print("\nGoodbye! 🎓\n")
+            break
+        else:
+            print("  Invalid choice.\n")
+
+if __name__ == "__main__":
+    main()
+# Sample interaction:
+# === Route & Task Planner ===
+#
+# 1. Add a task
+# 2. Show next task
+# ...
+# Choose (1-5): 1
+# Task description: Fix server
+# Priority (1=highest, 5=lowest): 1
+#   ✅ Added: 'Fix server' (priority 1)
+# ...</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section class="scroll-mt-24" id="quiz">
+          <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Knowledge Check</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Quiz</h2>
+          <p class="text-[var(--muted)] text-sm mb-6">Answer all 8 questions. Click an option to check your answer.</p>
+
+          <div class="quiz" id="q1" data-answer="C">
+            <p class="font-medium text-[var(--ink)] mb-3">1. What is Big O notation used for?</p>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. Exact runtime in seconds</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. Memory size only</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. How runtime grows with input size</button>
+          </div>
+          <p class="quiz-feedback mt-3 font-medium text-[var(--ink)]"></p>
+
+          <div class="quiz" id="q2" data-answer="B">
+            <p class="font-medium text-[var(--ink)] mb-3">2. Which structure is LIFO (last-in, first-out)?</p>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. Queue</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. Stack</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. Array</button>
+          </div>
+          <p class="quiz-feedback mt-3 font-medium text-[var(--ink)]"></p>
+
+          <div class="quiz" id="q3" data-answer="A">
+            <p class="font-medium text-[var(--ink)] mb-3">3. Average-case lookup in a hash table (dict) is:</p>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. O(1)</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. O(n)</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. O(log n)</button>
+          </div>
+          <p class="quiz-feedback mt-3 font-medium text-[var(--ink)]"></p>
+
+          <div class="quiz" id="q4" data-answer="B">
+            <p class="font-medium text-[var(--ink)] mb-3">4. In a BST, an in-order traversal visits nodes in:</p>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. Random order</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. Sorted order</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. Reverse sorted order</button>
+          </div>
+          <p class="quiz-feedback mt-3 font-medium text-[var(--ink)]"></p>
+
+          <div class="quiz" id="q5" data-answer="C">
+            <p class="font-medium text-[var(--ink)] mb-3">5. Merge sort has complexity:</p>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. O(n²)</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. O(n)</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. O(n log n)</button>
+          </div>
+          <p class="quiz-feedback mt-3 font-medium text-[var(--ink)]"></p>
+
+          <div class="quiz" id="q6" data-answer="A">
+            <p class="font-medium text-[var(--ink)] mb-3">6. BFS uses which data structure?</p>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. Queue</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. Stack</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. Heap</button>
+          </div>
+          <p class="quiz-feedback mt-3 font-medium text-[var(--ink)]"></p>
+
+          <div class="quiz" id="q7" data-answer="B">
+            <p class="font-medium text-[var(--ink)] mb-3">7. Dynamic programming is best when subproblems:</p>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. Are all unique</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. Overlap and repeat</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. Never repeat</button>
+          </div>
+          <p class="quiz-feedback mt-3 font-medium text-[var(--ink)]"></p>
+
+          <div class="quiz" id="q8" data-answer="A">
+            <p class="font-medium text-[var(--ink)] mb-3">8. Dijkstra's algorithm finds:</p>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="A">A. Shortest paths in weighted graphs</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)] mb-2" data-val="B">B. Minimum spanning tree</button>
+            <button class="quiz-opt block w-full text-left px-4 py-3 rounded-lg border border-[var(--border)]" data-val="C">C. Topological order</button>
+          </div>
+          <p class="quiz-feedback mt-3 font-medium text-[var(--ink)]"></p>
+
+          <button class="px-5 py-2.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition mt-4" id="btn-score">Show score</button>
+          <p id="quiz-result" class="mt-3 font-semibold text-[var(--ink)]"></p>
+        </section>
+
+        <a class="px-5 py-2.5 rounded-lg border border-[var(--border)] text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 transition" href="../index.html">&larr; Back to tutorials</a>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const html = document.documentElement;
+    const moon = document.getElementById('moon');
+    const sun = document.getElementById('sun');
+    function applyTheme(theme) {
+      html.classList.remove('light', 'dark');
+      html.classList.add(theme);
+      if (theme === 'dark') {
+        moon.classList.add('hidden');
+        sun.classList.remove('hidden');
+      } else {
+        moon.classList.remove('hidden');
+        sun.classList.add('hidden');
+      }
+      localStorage.setItem('tutorials-theme', theme);
+    }
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      applyTheme(html.classList.contains('dark') ? 'light' : 'dark');
+    });
+    const saved = localStorage.getItem('tutorials-theme');
+    applyTheme(saved === 'dark' ? 'dark' : 'light');
+
+    function setStatus(status) {
+      localStorage.setItem('tutorial-data-structures-algorithms-status', status);
+      updateButtons();
+    }
+    function updateButtons() {
+      const status = localStorage.getItem('tutorial-data-structures-algorithms-status') || 'not-started';
+      document.querySelectorAll('[id^="btn-start"]').forEach(btn => { btn.textContent = status === 'in-progress' ? 'In Progress' : 'Start'; });
+      document.querySelectorAll('[id^="btn-complete"]').forEach(btn => { btn.textContent = status === 'completed' ? 'Completed' : 'Mark Complete'; });
+    }
+    document.querySelectorAll('[id^="btn-start"]').forEach(btn => btn.addEventListener('click', () => setStatus('in-progress')));
+    document.querySelectorAll('[id^="btn-complete"]').forEach(btn => btn.addEventListener('click', () => setStatus('completed')));
+    document.querySelectorAll('[id^="btn-reset"]').forEach(btn => btn.addEventListener('click', () => { localStorage.removeItem('tutorial-data-structures-algorithms-status'); updateButtons(); }));
+    updateButtons();
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('menu-overlay');
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('hidden');
+    }
+
+    function copyCode(btn) {
+      const code = btn.nextElementSibling.querySelector('code');
+      navigator.clipboard.writeText(code.innerText).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+      });
+    }
+
+    const sections = document.querySelectorAll('section[id]');
+    const tocLinks = document.querySelectorAll('.toc-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach((link) => link.classList.remove('active'));
+          const active = document.querySelector(`.toc-link[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -60% 0px' });
+    sections.forEach((section) => observer.observe(section));
+
+    const scores = { q1: 'C', q2: 'B', q3: 'A', q4: 'B', q5: 'C', q6: 'A', q7: 'B', q8: 'A' };
+    document.querySelectorAll('.quiz').forEach((quiz) => {
+      const correct = quiz.dataset.answer;
+      const feedback = quiz.nextElementSibling;
+      quiz.querySelectorAll('.quiz-opt').forEach((opt) => {
+        opt.addEventListener('click', () => {
+          quiz.querySelectorAll('.quiz-opt').forEach((o) => { o.classList.remove('selected', 'correct', 'wrong'); o.disabled = true; });
+          opt.classList.add('selected');
+          if (opt.dataset.val === correct) {
+            opt.classList.add('correct');
+            feedback.textContent = 'Correct! ✅';
+            feedback.className = 'quiz-feedback mt-3 font-medium text-[var(--success)]';
+          } else {
+            opt.classList.add('wrong');
+            feedback.textContent = `Not quite. The correct answer is ${correct}.`;
+            feedback.className = 'quiz-feedback mt-3 font-medium text-[var(--danger)]';
+          }
+        });
+      });
+    });
+
+    document.getElementById('btn-score').addEventListener('click', () => {
+      let correct = 0;
+      Object.entries(scores).forEach(([q, ans]) => {
+        const quiz = document.getElementById(q);
+        const selected = quiz.querySelector('.quiz-opt.selected');
+        if (selected && selected.dataset.val === ans) correct++;
+      });
+      document.getElementById('quiz-result').textContent = `You scored ${correct} / 8.`;
+    });
+
+    hljs.highlightAll();
+  </script>
+</body>
+</html>
