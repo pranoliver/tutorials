@@ -80,22 +80,26 @@
           <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 1</p>
           <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">What is Computer Science?</h2>
           <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
-            Computer science is not just about programming. It is the study of computation, information, and automation — how problems are represented, how solutions are designed as step-by-step procedures (algorithms), and how those procedures are carried out by machines.
+            When people hear "computer science," they often picture someone typing code in a dark room. But computer science is much bigger than that. It is the study of how information is stored, how problems are solved using step-by-step instructions, and how machines can follow those instructions automatically.
+<br/><br/>
+            Think of a recipe. A recipe takes ingredients (input), gives clear steps (an algorithm), and produces a dish (output). A computer does the same thing with data: it takes information in, follows a precise procedure, and produces a result. Programming is one way to write those procedures, but the real heart of computer science is learning to think clearly about problems.
+<br/><br/>
+            Computer science also asks deeper questions. What can be computed at all? What makes one solution better than another? How do we keep information safe? How do millions of computers work together? These ideas show up everywhere — in your phone, in video games, in medicine, in space exploration, and even in the apps you use every day.
           </p>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Core pillars</h3>
             <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
-              <li><strong>Hardware:</strong> The physical machine — CPU, memory, storage, and input/output devices.</li>
-              <li><strong>Data:</strong> How information is represented using bits, bytes, and number systems.</li>
-              <li><strong>Software:</strong> Programs and operating systems that control the hardware.</li>
-              <li><strong>Algorithms:</strong> Step-by-step procedures for solving problems efficiently.</li>
-              <li><strong>Networking:</strong> How computers communicate and share resources.</li>
+              <li><strong>Hardware:</strong> The physical parts you can touch — the processor, memory chips, hard drive, screen, keyboard, and cables. Without hardware, software has nothing to run on.</li>
+              <li><strong>Data:</strong> Information represented inside the machine as bits and bytes. Everything — text, images, sound, video — ultimately becomes numbers stored as 0s and 1s.</li>
+              <li><strong>Software:</strong> The programs and operating systems that tell hardware what to do. A browser, a game, and even the code that runs your microwave are all software.</li>
+              <li><strong>Algorithms:</strong> Step-by-step procedures for solving problems. Searching a list, sorting grades, and finding the shortest route are all algorithms.</li>
+              <li><strong>Networking:</strong> How computers talk to each other across rooms or across the world, sharing files, messages, and web pages.</li>
             </ul>
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Why start here?</h3>
             <p class="text-[var(--muted)] leading-relaxed">
-              Understanding the foundations makes every other tutorial easier. When you later learn Python, C++, databases, or operating systems, you will already know what happens under the hood: memory layout, CPU execution, binary data, and algorithmic cost.
+              Understanding the foundations makes every other tutorial easier. When you later learn Python, C++, databases, or operating systems, you will already know what happens under the hood: how memory is laid out, how the CPU executes instructions, how data is represented as binary, and why some algorithms are dramatically faster than others.
             </p>
           </div>
         </section>
@@ -104,10 +108,17 @@
           <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 2</p>
           <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">How Computers Work (Hardware)</h2>
           <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
-            Every computer, from a phone to a supercomputer, follows the same basic model: <strong>input → process → store → output</strong>.
+            Imagine you are doing your homework with a very simple helper who only understands four things: read a question, think about it, write the answer in a notebook, and show it to you. Every computer, from the phone in your pocket to the most powerful supercomputer, works on the same basic loop: <strong>input → process → store → output</strong>.
+<br/><br/>
+            First, the computer receives <strong>input</strong> — a keystroke, a tap, a sensor reading, or data from the internet. Then the <strong>CPU</strong> (the central processing unit) processes that input by following instructions. While processing, it may need to <strong>store</strong> intermediate results in memory or save them permanently on a disk. Finally, it produces <strong>output</strong> — text on a screen, sound from a speaker, a motor turning, or data sent over a network.
+<br/><br/>
+            The magic is not that the computer is smart; it is that it performs these simple steps incredibly fast, over and over, billions of times per second. Every app, game, or website you use is just a very long, very organized list of these simple steps.
           </p>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Key components</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              Here is a quick tour of the main parts inside a computer. Each part has a specific job, and they work together like organs in a body.
+            </p>
             <table class="w-full text-left text-[var(--muted)] text-sm border-collapse mb-4">
               <thead>
                 <tr class="border-b border-[var(--border)]">
@@ -118,27 +129,27 @@
               <tbody class="divide-y divide-[var(--border)]">
                 <tr>
                   <td class="py-2 font-medium">CPU (processor)</td>
-                  <td class="py-2">The "brain." Fetches, decodes, and executes instructions. Measured in clock speed (GHz) and cores.</td>
+                  <td class="py-2">The "brain" of the computer. It fetches instructions from memory, decodes what they mean, and executes them. A 3 GHz CPU performs about 3 billion cycles per second. More cores mean it can do multiple things at once.</td>
                 </tr>
                 <tr>
                   <td class="py-2 font-medium">RAM (memory)</td>
-                  <td class="py-2">Fast, volatile working storage for programs and data currently in use. Lost when power is off.</td>
+                  <td class="py-2">Fast, temporary workspace. When you open an app, it loads into RAM so the CPU can reach it quickly. RAM forgets everything when the power turns off, which is why you save files to storage.</td>
                 </tr>
                 <tr>
                   <td class="py-2 font-medium">Storage (SSD/HDD)</td>
-                  <td class="py-2">Slower, non-volatile storage for files and the OS. Survives reboots.</td>
+                  <td class="py-2">Long-term storage for files, programs, photos, and the operating system. SSDs are faster and have no moving parts; HDDs are slower but often cheaper for large amounts of data.</td>
                 </tr>
                 <tr>
                   <td class="py-2 font-medium">GPU</td>
-                  <td class="py-2">Specialized processor for parallel math — graphics, machine learning, scientific simulation.</td>
+                  <td class="py-2">A specialized processor originally made for rendering graphics, but also excellent at the math behind machine learning and scientific simulations. It performs many simple calculations in parallel.</td>
                 </tr>
                 <tr>
                   <td class="py-2 font-medium">Motherboard</td>
-                  <td class="py-2">Main circuit board connecting CPU, RAM, storage, and peripherals.</td>
+                  <td class="py-2">The main circuit board that connects every component. It is like the nervous system, routing signals and power between the CPU, RAM, storage, and peripherals.</td>
                 </tr>
                 <tr>
                   <td class="py-2 font-medium">I/O devices</td>
-                  <td class="py-2">Keyboard, mouse, screen, network, speakers — how the computer interacts with the world.</td>
+                  <td class="py-2">Input/Output devices: keyboard, mouse, touchscreen, monitor, speakers, microphone, network card. They are how the computer receives information from you and sends information back.</td>
                 </tr>
               </tbody>
             </table>
@@ -146,15 +157,15 @@
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">The fetch-decode-execute cycle</h3>
             <p class="text-[var(--muted)] leading-relaxed mb-4">
-              The CPU repeatedly performs three steps for every instruction:
+              The CPU is not really "thinking" — it is blindly following a loop. For every instruction, it does the same three things:
             </p>
             <ol class="list-decimal pl-6 space-y-2 text-[var(--muted)]">
-              <li><strong>Fetch:</strong> Get the next instruction from memory.</li>
-              <li><strong>Decode:</strong> Figure out what the instruction means.</li>
-              <li><strong>Execute:</strong> Carry out the instruction (math, move data, jump, etc.).</li>
+              <li><strong>Fetch:</strong> Look at memory and grab the next instruction. Think of it as reading the next line of a recipe.</li>
+              <li><strong>Decode:</strong> Figure out what that instruction means. Is it "add two numbers," "move data," "compare values," or "jump to another part of the program"?</li>
+              <li><strong>Execute:</strong> Perform the action. Maybe it adds, maybe it stores a result, maybe it draws a pixel or sends a network packet.</li>
             </ol>
             <p class="text-[var(--muted)] mt-4">
-              This happens billions of times per second. Software is ultimately a sequence of these simple instructions.
+              This happens billions of times per second. Every program — from a calculator to a blockbuster video game — is ultimately just a very long sequence of these simple instructions.
             </p>
           </div>
         </section>
@@ -163,10 +174,17 @@
           <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 3</p>
           <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Data &amp; Binary Representation</h2>
           <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
-            Computers store everything as <strong>bits</strong> — 0s and 1s representing low/high voltage. Eight bits make a <strong>byte</strong>.
+            Deep inside every computer, there are tiny switches called <strong>transistors</strong>. Each switch can be either <strong>on</strong> or <strong>off</strong>. We represent "off" as 0 and "on" as 1. A single 0 or 1 is called a <strong>bit</strong> — the smallest piece of information a computer can store.
+<br/><br/>
+            Because computers only understand bits, every kind of information must be translated into 0s and 1s. Numbers become binary numbers. Text becomes numbers using standards like ASCII or Unicode. Pictures become grids of colored dots, each color stored as numbers. Music becomes samples of sound waves, again stored as numbers. It is all bits in the end.
+<br/><br/>
+            A group of eight bits is called a <strong>byte</strong>. One byte can store 256 different values (2⁸), which is enough for one letter, a small number, or part of a larger value. File sizes, memory, and internet speed are all measured in bytes and their multiples — kilobytes, megabytes, gigabytes, and terabytes.
           </p>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Number systems</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              Humans usually count in <strong>base 10</strong> (decimal) because we have ten fingers. Computers use <strong>base 2</strong> (binary) because their transistors have two states. Programmers often use <strong>base 16</strong> (hexadecimal) as a shortcut, because one hex digit neatly represents four bits.
+            </p>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
                 <div class="text-xs text-[var(--muted)] uppercase font-semibold mb-1">Decimal (base 10)</div>
@@ -187,7 +205,7 @@
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Converting binary to decimal</h3>
-            <p class="text-[var(--muted)] text-sm mb-4">Each bit position represents a power of 2, from right to left:</p>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">Each binary digit position is worth a power of 2, starting from 1 on the right. Add up the positions that contain a 1 to get the decimal value:</p>
             <div class="code-block mb-6">
               <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre><code class="language-python"># Convert binary 1011 to decimal
@@ -205,6 +223,9 @@ print(f"Binary {binary} = decimal {decimal}")
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Bits, bytes, and units</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              These units are used everywhere: in your phone settings, on file icons, in download speeds, and when buying a laptop. Notice that each step is roughly 1,000 times bigger than the one before it.
+            </p>
             <table class="w-full text-left text-[var(--muted)] text-sm border-collapse">
               <thead>
                 <tr class="border-b border-[var(--border)]">
@@ -229,20 +250,30 @@ print(f"Binary {binary} = decimal {decimal}")
           <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 4</p>
           <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Operating Systems</h2>
           <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
-            An operating system (OS) is the layer between applications and hardware. It manages resources so programs don't have to talk to the CPU, RAM, or disk directly.
+            An operating system (OS) is the middleman between you and the hardware. Without it, every program would have to know exactly how to talk to the CPU, manage memory, read the keyboard, draw pixels, and send network signals. The OS handles all of that so applications can focus on what they are actually supposed to do.
+<br/><br/>
+            Imagine the OS as the manager of a busy restaurant. The CPU is the kitchen, RAM is the counter space, storage is the pantry, and the programs are the customers. The manager decides which order the kitchen works on, where ingredients go, who gets a table, and how the waiters communicate with customers. Without the manager, everything would be chaos.
+<br/><br/>
+            The OS keeps every program isolated from the others so one crashing app doesn't bring down the whole system. It also handles security, user accounts, and permissions — deciding who is allowed to read or change which files.
           </p>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">OS responsibilities</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              Here are the main jobs an operating system does behind the scenes every second your computer is running:
+            </p>
             <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
-              <li><strong>Process management:</strong> Runs programs, schedules CPU time, and handles multitasking.</li>
-              <li><strong>Memory management:</strong> Allocates and frees RAM for each program.</li>
-              <li><strong>File system:</strong> Organizes files and folders on storage.</li>
-              <li><strong>Device drivers:</strong> Lets software use printers, networks, GPUs, etc.</li>
-              <li><strong>User interface:</strong> Command line (CLI) or graphical (GUI) for people to interact.</li>
+              <li><strong>Process management:</strong> Starts, pauses, resumes, and stops programs. Decides which program gets CPU time and for how long, so many apps can feel like they are running simultaneously.</li>
+              <li><strong>Memory management:</strong> Keeps track of which program is using which part of RAM. When RAM fills up, it can temporarily move less-used data to storage in a process called swapping.</li>
+              <li><strong>File system:</strong> Organizes files and folders on storage so you can find them by name, not by raw disk locations.</li>
+              <li><strong>Device drivers:</strong> Translates generic requests from software into the specific commands each piece of hardware needs. Your keyboard, printer, and graphics card all need their own drivers.</li>
+              <li><strong>User interface:</strong> Provides either a command-line interface (CLI) where you type commands, or a graphical user interface (GUI) with windows, icons, and buttons.</li>
             </ul>
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Common operating systems</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              Different operating systems are designed for different needs. Some are built for everyday users, some for servers that run 24/7, and some for tiny devices.
+            </p>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
                 <div class="font-medium mb-1">Linux</div>
@@ -264,10 +295,17 @@ print(f"Binary {binary} = decimal {decimal}")
           <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 5</p>
           <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Networking &amp; The Internet</h2>
           <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
-            Networking lets computers exchange data. The Internet is a global network of networks built on shared protocols.
+            A computer by itself is powerful, but it becomes far more useful when it can talk to other computers. <strong>Networking</strong> is the technology that lets computers share information over short distances (a home Wi-Fi network) or across the entire planet (the Internet). The Internet is not a single thing — it is a giant collection of smaller networks owned by companies, schools, governments, and individuals, all connected by shared rules.
+<br/><br/>
+            Those shared rules are called <strong>protocols</strong>. Think of protocols like the grammar and etiquette of a conversation. If every computer agrees on how to address a message, how to break it into pieces, how to check for errors, and how to route it, then information can travel reliably from one machine to another even if they are thousands of miles apart and built by different companies.
+<br/><br/>
+            When you visit a website, your computer sends a request across many intermediate routers and servers. Each device looks at the destination address and forwards the message one hop closer. Along the way, the data may be split into small packets, each taking a different path, and reassembled at the destination. This design makes the Internet resilient — if one route breaks, packets can take another.
           </p>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Key concepts</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              Here are the building blocks you will hear about whenever networking is discussed:
+            </p>
             <table class="w-full text-left text-[var(--muted)] text-sm border-collapse">
               <thead>
                 <tr class="border-b border-[var(--border)]">
@@ -276,11 +314,11 @@ print(f"Binary {binary} = decimal {decimal}")
                 </tr>
               </thead>
               <tbody class="divide-y divide-[var(--border)]">
-                <tr><td class="py-2 font-medium">IP address</td><td class="py-2">Unique address of a device on a network (e.g. 192.168.1.5).</td></tr>
-                <tr><td class="py-2 font-medium">Domain name</td><td class="py-2">Human-readable name (e.g. example.com), resolved by DNS.</td></tr>
-                <tr><td class="py-2 font-medium">HTTP/HTTPS</td><td class="py-2">Protocols for transferring web pages (HTTPS is encrypted).</td></tr>
-                <tr><td class="py-2 font-medium">TCP/UDP</td><td class="py-2">Transport protocols — TCP is reliable, UDP is fast.</td></tr>
-                <tr><td class="py-2 font-medium">Port</td><td class="py-2">Number identifying a specific service on a host (e.g. 80 for HTTP).</td></tr>
+                <tr><td class="py-2 font-medium">IP address</td><td class="py-2">A unique address for every device on a network, like a house address. Example: 192.168.1.5.</td></tr>
+                <tr><td class="py-2 font-medium">Domain name</td><td class="py-2">A human-readable name like example.com. DNS translates it into an IP address.</td></tr>
+                <tr><td class="py-2 font-medium">HTTP/HTTPS</td><td class="py-2">The protocols your browser uses to request and receive web pages. HTTPS adds encryption for security.</td></tr>
+                <tr><td class="py-2 font-medium">TCP/UDP</td><td class="py-2">Transport protocols. TCP guarantees delivery and correct order; UDP is faster but may lose packets.</td></tr>
+                <tr><td class="py-2 font-medium">Port</td><td class="py-2">A number that identifies a specific service on a computer, like apartment numbers in the same building.</td></tr>
               </tbody>
             </table>
           </div>
@@ -290,12 +328,16 @@ print(f"Binary {binary} = decimal {decimal}")
           <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 6</p>
           <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Algorithms &amp; Complexity Basics</h2>
           <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
-            An <strong>algorithm</strong> is a precise, step-by-step procedure for solving a problem. Not all algorithms are equal — some are far faster than others.
+            An <strong>algorithm</strong> is just a clear, step-by-step recipe for solving a problem. A cake recipe is an algorithm for humans; a search algorithm is a recipe for a computer. The difference between a good recipe and a bad one can be huge. One search method checks every item; another uses clever tricks to skip half the list at a time.
+<br/><br/>
+            When we study algorithms, we care about <strong>correctness</strong> (does it always give the right answer?) and <strong>efficiency</strong> (how long does it take, and how much memory does it need?). A slow algorithm might be fine for 10 items but unusable for 10 million.
+<br/><br/>
+            <strong>Big O notation</strong> is the shorthand computer scientists use to describe efficiency. It tells us how the runtime grows as the input grows. If an algorithm is O(1), doubling the input does not change the time. If it is O(n), doubling the input doubles the time. If it is O(n²), doubling the input quadruples the time.
           </p>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Big O notation</h3>
-            <p class="text-[var(--muted)] text-sm mb-4">
-              Big O describes how an algorithm's runtime grows as input size <em>n</em> grows. Common classes:
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              Big O describes how an algorithm's runtime grows as input size <em>n</em> grows. The faster-growing classes are worse; the flatter ones are better.
             </p>
             <table class="w-full text-left text-[var(--muted)] text-sm border-collapse mb-4">
               <thead>
@@ -316,6 +358,9 @@ print(f"Binary {binary} = decimal {decimal}")
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Linear vs binary search (Python)</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              Here is a side-by-side comparison of two search methods. Linear search checks every element until it finds the target; it works on any list but is slow for large data. Binary search is much faster, but it only works if the list is already sorted. Watch how they both return index 5 for the same target.
+            </p>
             <div class="code-block mb-6">
               <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre><code class="language-python"># Linear search: check every element (O(n))
@@ -358,20 +403,30 @@ print("Binary search index:", binary_search(data, target))
           <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 7</p>
           <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Programming Fundamentals</h2>
           <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
-            Programming is writing algorithms in a language a computer can execute. Python is a great first language because it reads like English.
+            Programming is the act of writing algorithms in a language a computer can understand. A programming language is like a strict form of English: it has a vocabulary, grammar, and rules that the computer follows exactly. If you are off by even one character, the computer will complain — but it is also this precision that makes programming so powerful.
+<br/><br/>
+            Python is an excellent first language because its code is readable and close to ordinary English. It is used in web development, data science, artificial intelligence, automation, and education. But the ideas in this tutorial apply to almost any language: variables, types, control flow, functions, and debugging.
+<br/><br/>
+            The goal is not to memorize syntax. The goal is to learn how to break a problem into small, clear steps that a machine can follow. Once you can do that, you can express your ideas in Python, JavaScript, C, or any other language.
           </p>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Core concepts</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              These are the fundamental building blocks of almost every program:
+            </p>
             <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
-              <li><strong>Variables:</strong> Named containers that hold data.</li>
-              <li><strong>Data types:</strong> Integers, floats, strings, booleans, lists, dictionaries.</li>
-              <li><strong>Control flow:</strong> if/else, for loops, while loops.</li>
-              <li><strong>Functions:</strong> Reusable, named blocks of code.</li>
-              <li><strong>Debugging:</strong> Finding and fixing errors in programs.</li>
+              <li><strong>Variables:</strong> Named containers that hold data, like a labeled box. You can put a value in, look at it, or replace it later.</li>
+              <li><strong>Data types:</strong> The kind of data stored. Integers are whole numbers, floats are decimals, strings are text, booleans are true/false, and lists/dictionaries hold collections.</li>
+              <li><strong>Control flow:</strong> Decisions and repetition. An if/else chooses between paths; a for loop repeats something a known number of times; a while loop repeats while a condition is true.</li>
+              <li><strong>Functions:</strong> Reusable blocks of code with a name. They let you organize your program and avoid repeating the same logic.</li>
+              <li><strong>Debugging:</strong> The art of finding and fixing mistakes. Every programmer spends a lot of time debugging — it is how you learn.</li>
             </ul>
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Your first Python program</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              This tiny program uses a variable, a loop, a conditional, and a function. It also demonstrates a common pattern: define the function, then call it with specific data to see the result.
+            </p>
             <div class="code-block mb-6">
               <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre><code class="language-python"># Greet the user and do a small calculation
@@ -412,32 +467,37 @@ print("\nDone! Welcome to computer science. 🎓")
           <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Capstone Project</p>
           <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Build a "Computer Basics" Explorer</h2>
           <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
-            Create an interactive Python program that teaches computer science basics: number conversion, component lookup, and a mini quiz. All runnable by copying the code.
+            This capstone brings everything together into one interactive Python program called the <strong>Computer Basics Explorer</strong>. It will help you practice number conversion, look up hardware components, and test your binary knowledge with a short quiz. By building it, you will see how input, processing, output, loops, dictionaries, and functions all work as a team.
+<br/><br/>
+            Think of it as a tiny operating system menu: the user picks an option, the program does something useful, and then the menu appears again until the user decides to quit. Each phase adds a new feature, so you can build and test one piece at a time.
           </p>
           <div class="space-y-6">
             <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
               <p class="font-medium text-[var(--ink)] mb-2">Phase 1 — Number converter</p>
-              <p class="text-sm text-[var(--muted)]">Convert decimal to binary and hex with clear output.</p>
+              <p class="text-sm text-[var(--muted)]">Write functions that convert a decimal integer into binary and hexadecimal strings, with clear printed output.</p>
             </div>
             <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
               <p class="font-medium text-[var(--ink)] mb-2">Phase 2 — Hardware database</p>
-              <p class="text-sm text-[var(--muted)]">A dictionary of components the user can look up.</p>
+              <p class="text-sm text-[var(--muted)]">Use a Python dictionary to map component names (CPU, RAM, GPU, etc.) to their descriptions.</p>
             </div>
             <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
               <p class="font-medium text-[var(--ink)] mb-2">Phase 3 — Binary quiz</p>
-              <p class="text-sm text-[var(--muted)]">Ask the user to convert decimal to binary; check answers.</p>
+              <p class="text-sm text-[var(--muted)]">Generate random decimal numbers, ask the user for the binary equivalent, and check the answer.</p>
             </div>
             <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
               <p class="font-medium text-[var(--ink)] mb-2">Phase 4 — Interactive menu</p>
-              <p class="text-sm text-[var(--muted)]">Loop until the user chooses to exit.</p>
+              <p class="text-sm text-[var(--muted)]">Create a loop that prints options, reads the user's choice, and calls the right function until the user exits.</p>
             </div>
             <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
               <p class="font-medium text-[var(--ink)] mb-2">Phase 5 — Polish &amp; run</p>
-              <p class="text-sm text-[var(--muted)]">Add comments, formatting, and a friendly goodbye message.</p>
+              <p class="text-sm text-[var(--muted)]">Add comments explaining each part, format the output nicely, handle invalid choices, and give a friendly goodbye message.</p>
             </div>
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Complete capstone code</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              Copy this entire block into a file named <code class="kbd">basics_explorer.py</code> and run it. Explore each menu option to reinforce what you learned about number systems and hardware.
+            </p>
             <div class="code-block mb-6">
               <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre><code class="language-python">"""Computer Basics Explorer — interactive capstone project.

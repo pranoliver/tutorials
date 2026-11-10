@@ -86,20 +86,23 @@
           <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 1</p>
           <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Introduction to DSA</h2>
           <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
-            <strong>Data Structures &amp; Algorithms (DSA)</strong> is the heart of efficient software. A <em>data structure</em> organizes data so it can be accessed and modified efficiently. An <em>algorithm</em> is a step-by-step procedure for solving a problem. Choosing the right combination can turn a program that takes hours into one that takes milliseconds.
+            Imagine you have to find your friend's phone number in a contact list of 1,000 people. You could look at every name one by one — that works, but it's slow. Or, if the list is sorted alphabetically, you could open to the middle, see whether your friend's name comes before or after, and throw away half the list instantly. Repeat that a few times, and you find the name in about 10 steps instead of 1,000.<br/><br/>
+            <strong>Data Structures &amp; Algorithms (DSA)</strong> is exactly this idea, applied to computers. A <strong>data structure</strong> is a way to organize information so the computer can work with it efficiently — like a sorted contact list, a stack of plates, or a map of cities and roads. An <strong>algorithm</strong> is a clear, step-by-step recipe for solving a problem — like the "split the list in half" trick above.<br/><br/>
+            Computers are fast, but they are not magic. If you give a computer a bad plan, even the fastest machine will crawl. Give it a good plan (a good algorithm) stored in a good layout (a good data structure), and the same problem that took hours can be solved in milliseconds. That's what DSA is all about: choosing the right way to organize data, and the right steps to process it.
           </p>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Why DSA matters</h3>
             <ul class="text-[var(--muted)] list-disc pl-5 space-y-2">
-              <li><strong>Performance:</strong> The right algorithm handles millions of records; the wrong one chokes on thousands.</li>
-              <li><strong>Interviews:</strong> DSA is the standard lens for evaluating engineers at top tech companies.</li>
-              <li><strong>Foundation:</strong> Databases, compilers, operating systems, and AI all rely on classic data structures and algorithms.</li>
+              <li><strong>Performance:</strong> Two programs can solve the same problem. One finishes in a second; the other takes minutes. The difference is almost always the algorithm and data structure they use.</li>
+              <li><strong>Interviews:</strong> Tech companies use DSA questions to test how you think — not whether you memorized a language, but whether you can break a problem down and pick an efficient solution.</li>
+              <li><strong>Foundation:</strong> Databases, compilers, operating systems, search engines, social networks, and AI all run on classic data structures (arrays, trees, graphs, hash tables) and algorithms (sorting, searching, pathfinding).</li>
+              <li><strong>Everyday life:</strong> You already use DSA without knowing it — sorting your books, searching a playlist, following a recipe, or choosing the shortest route to school are all data structures and algorithms.</li>
             </ul>
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">How to use this tutorial</h3>
             <p class="text-[var(--muted)] leading-relaxed">
-              Every code block is <strong>runnable Python</strong>. Copy it, paste it into a file (e.g. <code class="kbd">dsa_demo.py</code>), and run it with <code class="kbd">python dsa_demo.py</code>. Each example prints clear, meaningful output so you can see the behavior with your own eyes.
+              Every code block is <strong>runnable Python</strong>. Copy it, paste it into a file (for example <code class="kbd">dsa_demo.py</code>), and run it with <code class="kbd">python dsa_demo.py</code>. Each example prints clear output so you can see exactly what happens. Don't just read the code — copy it, run it, change the numbers, and break it on purpose. That's how you learn.
             </p>
           </div>
           <div class="card rounded-2xl p-6 mb-8">
@@ -143,32 +146,42 @@
           <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 2</p>
           <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Complexity Analysis (Big O)</h2>
           <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
-            Big O notation describes how runtime (or memory) grows as input size <em>n</em> grows. It lets you compare algorithms independent of machine speed.
+            Imagine two students both have to sort 100 test papers alphabetically. One student reads every paper once and puts it in the right place. The other compares every paper against every other paper, again and again. Both finish with the same sorted stack, but the second student will still be working when the first student has gone home.
+<br/><br/>
+            <strong>Big O notation</strong> is how computer scientists measure this difference. It tells us how much time or memory an algorithm needs as the input grows. We don't care about milliseconds on one specific laptop — we care about the <em>shape</em> of the work curve. Does the work stay flat? Does it double when the input doubles? Does it explode?
+<br/><br/>
+            When we say an algorithm is O(n), we mean: if you give it twice as much data, it takes roughly twice as long. If it is O(n²), twice as much data means roughly <em>four</em> times as long. If it is O(1), it doesn't matter how big the data is — the time stays the same. Big O lets us compare two algorithms without running them on a real machine, and it helps us avoid writing code that looks fine with 10 items but dies with 10,000.
           </p>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Common complexity classes</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              Here is a menu of the most common growth rates you will meet. The best ones are near the top; the scary ones are near the bottom. Notice that "log n" grows incredibly slowly — cutting a problem in half repeatedly is a superpower.
+            </p>
             <table class="w-full text-left text-[var(--muted)] text-sm border-collapse mb-6">
               <thead>
                 <tr class="border-b border-[var(--border)]">
                   <th class="pb-2 font-semibold text-[var(--ink)]">Big O</th>
                   <th class="pb-2 font-semibold text-[var(--ink)]">Name</th>
-                  <th class="pb-2 font-semibold text-[var(--ink)]">Growth</th>
-                  <th class="pb-2 font-semibold text-[var(--ink)]">Example</th>
+                  <th class="pb-2 font-semibold text-[var(--ink)]">What it means</th>
+                  <th class="pb-2 font-semibold text-[var(--ink)]">Real example</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-[var(--border)]">
-                <tr><td class="py-2 font-medium">O(1)</td><td class="py-2">Constant</td><td class="py-2">Flat</td><td class="py-2">Array index access</td></tr>
-                <tr><td class="py-2 font-medium">O(log n)</td><td class="py-2">Logarithmic</td><td class="py-2">Slow growth</td><td class="py-2">Binary search</td></tr>
-                <tr><td class="py-2 font-medium">O(n)</td><td class="py-2">Linear</td><td class="py-2">Proportional to n</td><td class="py-2">Single loop</td></tr>
-                <tr><td class="py-2 font-medium">O(n log n)</td><td class="py-2">Linearithmic</td><td class="py-2">Slightly worse than linear</td><td class="py-2">Merge sort</td></tr>
-                <tr><td class="py-2 font-medium">O(n²)</td><td class="py-2">Quadratic</td><td class="py-2">Grows fast</td><td class="py-2">Nested loops</td></tr>
-                <tr><td class="py-2 font-medium">O(2ⁿ)</td><td class="py-2">Exponential</td><td class="py-2">Explodes quickly</td><td class="py-2">Naive recursion (Fibonacci)</td></tr>
+                <tr><td class="py-2 font-medium">O(1)</td><td class="py-2">Constant</td><td class="py-2">Flat line — work stays the same no matter how much data</td><td class="py-2">Reading the first item of a list</td></tr>
+                <tr><td class="py-2 font-medium">O(log n)</td><td class="py-2">Logarithmic</td><td class="py-2">Very slow growth — repeatedly cutting the problem in half</td><td class="py-2">Binary search in a dictionary</td></tr>
+                <tr><td class="py-2 font-medium">O(n)</td><td class="py-2">Linear</td><td class="py-2">Work doubles when input doubles</td><td class="py-2">Reading every page of a book</td></tr>
+                <tr><td class="py-2 font-medium">O(n log n)</td><td class="py-2">Linearithmic</td><td class="py-2">A little worse than linear; still very practical</td><td class="py-2">Efficient sorting like merge sort</td></tr>
+                <tr><td class="py-2 font-medium">O(n²)</td><td class="py-2">Quadratic</td><td class="py-2">Work explodes when input grows — every item touches every item</td><td class="py-2">Checking every pair in a class</td></tr>
+                <tr><td class="py-2 font-medium">O(2ⁿ)</td><td class="py-2">Exponential</td><td class="py-2">Tiny input becomes impossible quickly</td><td class="py-2">Trying every combination of a password</td></tr>
               </tbody>
             </table>
+            <p class="text-[var(--muted)] leading-relaxed">
+              <strong>Memory matters too.</strong> If an algorithm creates a brand-new copy of everything, it uses O(n) extra space. If it works "in place" using only a few variables, it uses O(1) extra space. Time and space are a trade-off: sometimes we use more memory to save time, and sometimes we keep memory tiny by doing a little more work.
+            </p>
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Timing O(1) vs O(n) vs O(n²)</h3>
-            <p class="text-[var(--muted)] text-sm mb-4">The following demonstrates how work scales with input size.</p>
+            <p class="text-[var(--muted)] text-sm mb-4">The following program creates lists of different sizes and measures three functions. Watch how the constant function barely changes, the linear function grows in step with the list, and the quadratic function quickly becomes painful.</p>
             <div class="code-block mb-6">
               <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre><code class="language-python">"""Complexity demonstration: O(1), O(n), and O(n^2).
@@ -279,10 +292,17 @@ print("\nNotice: O(n^2) grows much faster than O(n) or O(1).")
           <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 3</p>
           <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Arrays &amp; Lists</h2>
           <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
-            A list (Python's dynamic array) stores elements contiguously. Access by index is O(1); appending is amortized O(1); inserting/deleting in the middle is O(n) because elements must shift.
+            Think of an array like a row of numbered lockers in a school hallway. Each locker has a label: 0, 1, 2, 3, and so on. Because the lockers are in one straight line and each is the same size, you can walk directly to locker number 5 and open it immediately. You don't have to look inside lockers 0 through 4 first. That's why reading an item by its index is super fast — O(1).
+<br/><br/>
+            A <strong>Python list</strong> is basically a flexible version of this locker row. You can add items to the end, insert in the middle, remove items, and read any position. The catch is that inserting or deleting in the middle is slow — every item after the changed spot has to slide over by one locker, like students in a bench scooting left or right to make room. That sliding takes O(n) time in the worst case.
+<br/><br/>
+            Arrays are perfect when you mainly want to read items by position or add/remove from the end. They are the building blocks behind almost every other data structure. Even things like matrices, images, and sound clips are stored as arrays under the hood.
           </p>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">List operations demo</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              Run this program and watch the output. Notice how <code class="kbd">nums[2]</code> gives the third item instantly, but <code class="kbd">nums.insert(1, 15)</code> has to shift everything after it.
+            </p>
             <div class="code-block mb-6">
               <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre><code class="language-python">"""Arrays / lists in Python.
@@ -332,7 +352,11 @@ print("Squares 1..5:", squares)
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Two-sum problem (O(n) with a hash set)</h3>
-            <p class="text-[var(--muted)] text-sm mb-4">Given a list and a target, find two indices whose values sum to the target.</p>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              Here is a classic array problem: you are given a list of numbers and a target. Find two numbers that add up to the target. The obvious way is to try every pair — that's O(n²). But we can do much better. As we walk through the list once, we remember each number we have seen in a hash table. For the current number, we ask: "have I already seen the number I need to reach the target?" That lookup is O(1), so the whole algorithm becomes O(n).
+<br/><br/>
+              For example, if the target is 9 and the current number is 2, we ask: "have I seen 7 before?" If yes, we found our pair. If not, we store 2 and move on. One pass, one hash table, one answer.
+            </p>
             <div class="code-block mb-6">
               <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre><code class="language-python">"""Two-sum: find two numbers that add to target. O(n) time, O(n) space.
@@ -425,10 +449,17 @@ for nums, target in test_cases:
           <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 4</p>
           <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Linked Lists</h2>
           <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
-            A linked list is a chain of <em>nodes</em>. Each node holds data and a reference to the next node. Insertion/deletion at the head is O(1), but access by index is O(n) because you must walk from the head.
+            Imagine a treasure hunt where each clue points to the location of the next clue. You cannot jump to clue number 5; you must follow the chain from clue 1 to 2 to 3, reading each note as you go. A <strong>linked list</strong> works exactly like this treasure hunt. Each item, called a <strong>node</strong>, stores two things: its own data (the clue) and a pointer to the next node (where to look next).
+<br/><br/>
+            Unlike an array, the nodes are <em>not</em> sitting next to each other in memory. They are scattered, connected only by these pointers. This makes inserting at the front fast — O(1) — because you just create a new node and make it point to the old head. Deleting the first item is also fast. But reading a specific index is slow — O(n) — because you have to walk the chain from the start.
+<br/><br/>
+            Linked lists are great when you do lots of insertions and deletions at the ends, especially when you don't know the final size ahead of time. They are also the foundation of stacks, queues, and more advanced structures. The trade-off is simple: arrays give you fast random access; linked lists give you fast flexible insert/delete.
           </p>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Singly linked list implementation</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              Below is a complete linked list from scratch in Python. Notice how the <code class="kbd">Node</code> class only has two fields: <code class="kbd">data</code> and <code class="kbd">next</code>. The <code class="kbd">LinkedList</code> class only needs to remember the <code class="kbd">head</code> node.
+            </p>
             <div class="code-block mb-6">
               <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre><code class="language-python">"""Singly linked list with append, prepend, delete, and print.
@@ -512,42 +543,46 @@ print("After delete 99:    ", ll)           # unchanged
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Visualization — Singly linked node chain</h3>
-            <div class="viz mx-auto" style="max-width:620px;">
-              <svg viewBox="0 0 620 170" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizLLTitle">
+            <div class="viz mx-auto" style="max-width:720px;">
+              <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizLLTitle">
                 <title id="vizLLTitle">Head → 5 → 10 → 30 → null</title>
+                <style>
+                  .ll-travel { animation: llMove 4s ease-in-out infinite; }
+                  @keyframes llMove { 0%,30% { transform: translateX(0); } 100% { transform: translateX(260px); } }
+                </style>
                 <defs>
-                  <marker id="llArr" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#38bdf8"/></marker>
-                  <marker id="llNull" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#ef4444"/></marker>
+                  <marker id="llArr" markerWidth="11" markerHeight="11" refX="10" refY="5.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,11 L11,5.5 z" fill="#a78bfa"/></marker>
+                  <marker id="llNull" markerWidth="11" markerHeight="11" refX="10" refY="5.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,11 L11,5.5 z" fill="#ef4444"/></marker>
                 </defs>
                 <!-- node 5 -->
-                <g transform="translate(40,55)">
-                  <rect x="0" y="0" width="70" height="45" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                  <rect x="0" y="30" width="45" height="15" rx="3" fill="#334155" stroke="#475569" stroke-width="1"/>
-                  <text x="22" y="25" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">5</text>
-                  <text x="22" y="40" font-family="Outfit,system-ui,sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">next</text>
+                <g transform="translate(50,55)">
+                  <rect x="0" y="0" width="80" height="55" rx="10" fill="#0f172a" stroke="#a78bfa" stroke-width="3"/>
+                  <rect x="0" y="35" width="55" height="20" rx="4" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+                  <text x="28" y="28" font-family="Fira Code,monospace" font-size="17" fill="#a78bfa" text-anchor="middle">5</text>
+                  <text x="40" y="51" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">next</text>
                 </g>
-                <line x1="110" y1="77" x2="150" y2="77" stroke="#38bdf8" stroke-width="3" marker-end="url(#llArr)"/>
+                <line x1="130" y1="82" x2="170" y2="82" stroke="#a78bfa" stroke-width="3" marker-end="url(#llArr)" class="ll-travel"/>
                 <!-- node 10 -->
-                <g transform="translate(160,55)">
-                  <rect x="0" y="0" width="70" height="45" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                  <rect x="0" y="30" width="45" height="15" rx="3" fill="#334155" stroke="#475569" stroke-width="1"/>
-                  <text x="22" y="25" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">10</text>
-                  <text x="22" y="40" font-family="Outfit,system-ui,sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">next</text>
+                <g transform="translate(180,55)">
+                  <rect x="0" y="0" width="80" height="55" rx="10" fill="#0f172a" stroke="#a78bfa" stroke-width="3"/>
+                  <rect x="0" y="35" width="55" height="20" rx="4" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+                  <text x="28" y="28" font-family="Fira Code,monospace" font-size="17" fill="#a78bfa" text-anchor="middle">10</text>
+                  <text x="40" y="51" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">next</text>
                 </g>
-                <line x1="230" y1="77" x2="270" y2="77" stroke="#38bdf8" stroke-width="3" marker-end="url(#llArr)"/>
+                <line x1="260" y1="82" x2="300" y2="82" stroke="#a78bfa" stroke-width="3" marker-end="url(#llArr)" class="ll-travel" style="animation-delay:1s"/>
                 <!-- node 30 -->
-                <g transform="translate(280,55)">
-                  <rect x="0" y="0" width="70" height="45" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                  <rect x="0" y="30" width="45" height="15" rx="3" fill="#334155" stroke="#475569" stroke-width="1"/>
-                  <text x="22" y="25" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">30</text>
-                  <text x="22" y="40" font-family="Outfit,system-ui,sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">next</text>
+                <g transform="translate(310,55)">
+                  <rect x="0" y="0" width="80" height="55" rx="10" fill="#0f172a" stroke="#a78bfa" stroke-width="3"/>
+                  <rect x="0" y="35" width="55" height="20" rx="4" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+                  <text x="28" y="28" font-family="Fira Code,monospace" font-size="17" fill="#a78bfa" text-anchor="middle">30</text>
+                  <text x="40" y="51" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">next</text>
                 </g>
-                <line x1="350" y1="77" x2="390" y2="77" stroke="#ef4444" stroke-width="3" stroke-dasharray="6" marker-end="url(#llNull)"/>
-                <text x="400" y="80" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#ef4444" font-weight="700">null</text>
-                <text x="40" y="150" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b">Head → 5 → 10 → 30 → null</text>
+                <line x1="390" y1="82" x2="430" y2="82" stroke="#ef4444" stroke-width="3" stroke-dasharray="6" marker-end="url(#llNull)" class="ll-travel" style="animation-delay:2s"/>
+                <text x="440" y="85" font-family="Outfit,system-ui,sans-serif" font-size="13" fill="#ef4444" font-weight="700">null</text>
+                <text x="50" y="170" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b">Head → 5 → 10 → 30 → null · O(n) walk to reach any node</text>
               </svg>
             </div>
-            <p class="text-xs text-[var(--muted)] text-center mt-3">Insert/delete at head: O(1). Access by index: O(n) walk.</p>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">Animated dot walks the chain — insert/delete at head: O(1), access by index: O(n).</p>
           </div>
         </section>
 
@@ -555,11 +590,17 @@ print("After delete 99:    ", ll)           # unchanged
           <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 5</p>
           <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Stacks &amp; Queues</h2>
           <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
-            <strong>Stack:</strong> LIFO (last-in, first-out). Push/pop from the top. Used for undo, call stack, DFS.<br/>
-            <strong>Queue:</strong> FIFO (first-in, first-out). Enqueue at back, dequeue at front. Used for BFS, task scheduling.
+            A <strong>stack</strong> is like a pile of plates. You add new plates on top, and when you need one, you also take from the top. The last plate you put down is the first one you pick up — that's why we call it <strong>LIFO</strong>: Last In, First Out. In a computer, the "undo" button in your text editor, the browser back button, and the way functions call each other all use stacks.
+<br/><br/>
+            A <strong>queue</strong> is like a line at the cafeteria. The first person to arrive is the first person served. New people join at the back; service happens at the front. That's <strong>FIFO</strong>: First In, First Out. Your printer queue, a playlist, and the order in which web requests are handled all behave like queues.
+<br/><br/>
+            Both structures only let you interact at specific ends. This seems like a limitation, but that limitation is exactly their power. Because they only care about one end (or two ends), every operation is O(1). They are the backbone of many algorithms, including the way we explore graphs and backtrack through choices.
           </p>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Stack demo (list-based)</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              This demo shows a stack acting like an undo history. We push four actions, then pop twice to undo the two most recent ones. The last action pushed (<code class="kbd">italic</code>) is the first one undone.
+            </p>
             <div class="code-block mb-6">
               <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre><code class="language-python">"""Stack: Last-In First-Out (LIFO).
@@ -613,28 +654,35 @@ print("Stack now:", stack)
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Visualization — Stack (LIFO)</h3>
-            <div class="viz mx-auto" style="max-width:320px;">
-              <svg viewBox="0 0 320 270" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizStackTitle">
+            <div class="viz mx-auto" style="max-width:340px;">
+              <svg viewBox="0 0 340 280" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizStackTitle">
                 <title id="vizStackTitle">Stack LIFO: italic at top</title>
+                <style>
+                  .stack-top { animation: stackPulse 3s ease-in-out infinite; }
+                  @keyframes stackPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+                </style>
                 <defs>
-                  <marker id="stArr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,8 L6,4 z" fill="#38bdf8"/></marker>
+                  <marker id="stArr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,10 L10,5 z" fill="#2563eb"/></marker>
                 </defs>
-                <rect x="95" y="235" width="130" height="10" rx="2" fill="#334155"/>
-                <rect x="95" y="175" width="130" height="45" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-                <text x="160" y="200" font-family="Fira Code,monospace" font-size="12" fill="#cbd5e1" text-anchor="middle">type 'Hello'</text>
-                <rect x="95" y="120" width="130" height="45" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-                <text x="160" y="145" font-family="Fira Code,monospace" font-size="12" fill="#cbd5e1" text-anchor="middle">type ' World'</text>
-                <rect x="95" y="65" width="130" height="45" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-                <text x="160" y="90" font-family="Fira Code,monospace" font-size="12" fill="#cbd5e1" text-anchor="middle">bold</text>
-                <rect x="95" y="10" width="130" height="45" rx="6" fill="#1e293b" stroke="#2563eb" stroke-width="2"/>
-                <text x="160" y="35" font-family="Fira Code,monospace" font-size="12" fill="#2563eb" text-anchor="middle">italic  ← top</text>
-                <line x1="160" y1="0" x2="160" y2="10" stroke="#38bdf8" stroke-width="3" marker-end="url(#stArr)"/>
-                <text x="160" y="255" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b" text-anchor="middle">Push/pop at top — O(1)</text>
+                <rect x="95" y="240" width="150" height="12" rx="3" fill="#334155"/>
+                <rect x="95" y="180" width="150" height="48" rx="8" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+                <text x="170" y="206" font-family="Fira Code,monospace" font-size="13" fill="#cbd5e1" text-anchor="middle">type 'Hello'</text>
+                <rect x="95" y="120" width="150" height="48" rx="8" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+                <text x="170" y="146" font-family="Fira Code,monospace" font-size="13" fill="#cbd5e1" text-anchor="middle">type ' World'</text>
+                <rect x="95" y="60" width="150" height="48" rx="8" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+                <text x="170" y="86" font-family="Fira Code,monospace" font-size="13" fill="#cbd5e1" text-anchor="middle">bold</text>
+                <rect x="95" y="10" width="150" height="48" rx="8" fill="#0f172a" stroke="#2563eb" stroke-width="3" class="stack-top"/>
+                <text x="170" y="36" font-family="Fira Code,monospace" font-size="13" fill="#2563eb" text-anchor="middle">italic  ← top</text>
+                <line x1="170" y1="0" x2="170" y2="10" stroke="#2563eb" stroke-width="3" marker-end="url(#stArr)" class="stack-top"/>
+                <text x="170" y="262" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b" text-anchor="middle">Push/pop at top — O(1)</text>
               </svg>
             </div>
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Queue demo (collections.deque)</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              We use Python's <code class="kbd">collections.deque</code> because popping from the front of a normal list is O(n) — every item has to shift. A deque is designed for fast O(1) push and pop at both ends, which makes it perfect for a queue. Watch how the first song queued is the first one played.
+            </p>
             <div class="code-block mb-6">
               <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre><code class="language-python">"""Queue: First-In First-Out (FIFO) using deque for O(1) popleft.
@@ -687,29 +735,33 @@ print("Queue now:", q)
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Visualization — Queue (FIFO)</h3>
-            <div class="viz mx-auto" style="max-width:600px;">
-              <svg viewBox="0 0 600 180" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizQueueTitle">
+            <div class="viz mx-auto" style="max-width:660px;">
+              <svg viewBox="0 0 660 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizQueueTitle">
                 <title id="vizQueueTitle">Queue FIFO: doc1 front, doc3 back</title>
+                <style>
+                  .q-flow { animation: qMove 4s ease-in-out infinite; }
+                  @keyframes qMove { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+                </style>
                 <defs>
-                  <marker id="qArrOut" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#ef4444"/></marker>
-                  <marker id="qArrIn" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#2563eb"/></marker>
+                  <marker id="qArrOut" markerWidth="11" markerHeight="11" refX="10" refY="5.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,11 L11,5.5 z" fill="#ef4444"/></marker>
+                  <marker id="qArrIn" markerWidth="11" markerHeight="11" refX="10" refY="5.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,11 L11,5.5 z" fill="#2563eb"/></marker>
                 </defs>
-                <rect x="60" y="60" width="80" height="45" rx="6" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
-                <text x="100" y="86" font-family="Fira Code,monospace" font-size="12" fill="#f87171" text-anchor="middle">doc1.pdf</text>
-                <text x="100" y="98" font-family="Outfit,system-ui,sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">front → dequeue</text>
-                <rect x="160" y="60" width="80" height="45" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-                <text x="200" y="86" font-family="Fira Code,monospace" font-size="12" fill="#cbd5e1" text-anchor="middle">doc2.pdf</text>
-                <rect x="260" y="60" width="80" height="45" rx="6" fill="#1e293b" stroke="#2563eb" stroke-width="2"/>
-                <text x="300" y="86" font-family="Fira Code,monospace" font-size="12" fill="#60a5fa" text-anchor="middle">doc3.pdf</text>
-                <text x="300" y="98" font-family="Outfit,system-ui,sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">back ← enqueue</text>
-                <line x1="40" y1="82" x2="60" y2="82" stroke="#ef4444" stroke-width="3" marker-end="url(#qArrOut)"/>
-                <line x1="340" y1="82" x2="460" y2="82" stroke="#2563eb" stroke-width="3"/>
-                <text x="45" y="80" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#f87171">dequeue</text>
-                <text x="465" y="80" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#60a5fa">enqueue</text>
-                <text x="60" y="155" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">Front ← ... → Back</text>
+                <rect x="60" y="60" width="95" height="50" rx="8" fill="#0f172a" stroke="#ef4444" stroke-width="3"/>
+                <text x="107" y="86" font-family="Fira Code,monospace" font-size="13" fill="#f87171" text-anchor="middle">doc1.pdf</text>
+                <text x="107" y="99" font-family="Outfit,system-ui,sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">front → dequeue</text>
+                <rect x="170" y="60" width="95" height="50" rx="8" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+                <text x="217" y="86" font-family="Fira Code,monospace" font-size="13" fill="#cbd5e1" text-anchor="middle">doc2.pdf</text>
+                <rect x="280" y="60" width="95" height="50" rx="8" fill="#0f172a" stroke="#2563eb" stroke-width="3"/>
+                <text x="327" y="86" font-family="Fira Code,monospace" font-size="13" fill="#60a5fa" text-anchor="middle">doc3.pdf</text>
+                <text x="327" y="99" font-family="Outfit,system-ui,sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">back ← enqueue</text>
+                <line x1="40" y1="85" x2="60" y2="85" stroke="#ef4444" stroke-width="3" marker-end="url(#qArrOut)" class="q-flow"/>
+                <line x1="375" y1="85" x2="495" y2="85" stroke="#2563eb" stroke-width="3" class="q-flow" style="animation-delay:1s"/>
+                <text x="45" y="83" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#f87171">dequeue</text>
+                <text x="500" y="83" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#60a5fa">enqueue</text>
+                <text x="60" y="165" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b">Front ← ... → Back</text>
               </svg>
             </div>
-            <p class="text-xs text-[var(--muted)] text-center mt-3">Enqueue at back, dequeue at front — O(1) with deque.</p>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">Animated flow shows enqueue at back, dequeue at front — O(1) with deque.</p>
           </div>
         </section>
 
@@ -717,10 +769,17 @@ print("Queue now:", q)
           <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 6</p>
           <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Hash Tables</h2>
           <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
-            A hash table maps <em>keys</em> to <em>values</em> using a hash function. Python's <code class="kbd">dict</code> and <code class="kbd">set</code> are hash tables. Average-case O(1) insert, lookup, and delete. Collisions occur when two keys hash to the same slot; good hash functions minimize them.
+            Imagine a giant set of pigeonholes in a school office. Each pigeonhole has a number. When a student hands in a form, the secretary uses the student's ID to decide which pigeonhole to put it in — for example, by adding up digits and taking the remainder. Later, to find the form, the secretary uses the same ID calculation and goes straight to that pigeonhole. No searching through every form. That's the magic of a <strong>hash table</strong>.
+<br/><br/>
+            A hash table stores pairs of <strong>keys</strong> and <strong>values</strong> — like names and phone numbers, or words and definitions. A <strong>hash function</strong> converts the key into an index (a pigeonhole number). On average, inserting, looking up, and deleting are all O(1) — they take about the same time whether you have 10 entries or 10 million.
+<br/><br/>
+            In Python, <code class="kbd">dict</code> is a hash table. <code class="kbd">set</code> is also a hash table, but it only stores keys (no values). The only gotcha is <strong>collisions</strong>: sometimes two different keys land in the same pigeonhole. Python handles this automatically using chaining (a mini linked list inside the pigeonhole). Good hash functions keep collisions rare.
           </p>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Hash table demo (Python dict)</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              This is exactly how your phone's contact list or a dictionary app works. Keys are names, values are phone numbers. Lookups, inserts, and deletes are all fast because Python is using a hash table under the hood.
+            </p>
             <div class="code-block mb-6">
               <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre><code class="language-python">"""Hash table basics with Python dict.
@@ -769,45 +828,53 @@ for name, number in phone_book.items():
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Visualization — Hash table buckets</h3>
-            <div class="viz mx-auto" style="max-width:620px;">
-              <svg viewBox="0 0 620 210" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizHashTitle">
-                <title id="vizHashTitle">Hash buckets with chaining</title>
+            <div class="viz mx-auto" style="max-width:700px;">
+              <svg viewBox="0 0 700 230" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizHashTitle">
+                <title id="vizHashTitle">Hash buckets with chaining collision</title>
+                <style>
+                  .hash-flow { animation: hashPulse 3s ease-in-out infinite; }
+                  @keyframes hashPulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+                </style>
                 <defs>
-                  <marker id="hArr" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#38bdf8"/></marker>
+                  <marker id="hArr" markerWidth="11" markerHeight="11" refX="10" refY="5.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,11 L11,5.5 z" fill="#c084fc"/></marker>
                 </defs>
-                <text x="40" y="32" font-family="Outfit,system-ui,sans-serif" font-size="13" font-weight="800" fill="#38bdf8">Key → hash() → bucket index</text>
+                <text x="40" y="32" font-family="Outfit,system-ui,sans-serif" font-size="14" font-weight="800" fill="#c084fc">Key → hash() → bucket index</text>
+                <!-- bucket 0 empty -->
                 <g transform="translate(50,60)">
-                  <rect x="0" y="0" width="80" height="35" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-                  <text x="40" y="22" font-family="Fira Code,monospace" font-size="12" fill="#38bdf8" text-anchor="middle">bucket 0</text>
-                  <rect x="0" y="38" width="80" height="30" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1"/>
-                  <text x="40" y="60" font-family="Outfit,system-ui,sans-serif" font-size="10" fill="#64748b" text-anchor="middle">empty</text>
+                  <rect x="0" y="0" width="90" height="40" rx="8" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+                  <text x="45" y="24" font-family="Fira Code,monospace" font-size="13" fill="#c084fc" text-anchor="middle">bucket 0</text>
+                  <rect x="0" y="43" width="90" height="30" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+                  <text x="45" y="62" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b" text-anchor="middle">empty</text>
                 </g>
-                <line x1="130" y1="77" x2="170" y2="77" stroke="#38bdf8" stroke-width="3" marker-end="url(#hArr)"/>
-                <g transform="translate(180,60)">
-                  <rect x="0" y="0" width="80" height="35" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                  <text x="40" y="22" font-family="Fira Code,monospace" font-size="12" fill="#38bdf8" text-anchor="middle">bucket 1</text>
-                  <rect x="0" y="38" width="80" height="55" rx="4" fill="#1e293b" stroke="#2563eb" stroke-width="2"/>
-                  <text x="40" y="56" font-family="Fira Code,monospace" font-size="11" fill="#60a5fa" text-anchor="middle">"Alice"</text>
-                  <text x="40" y="71" font-family="Fira Code,monospace" font-size="11" fill="#60a5fa" text-anchor="middle">"Diana"</text>
+                <line x1="140" y1="78" x2="180" y2="78" stroke="#c084fc" stroke-width="3" marker-end="url(#hArr)" class="hash-flow"/>
+                <!-- bucket 1 with collision chain -->
+                <g transform="translate(190,60)">
+                  <rect x="0" y="0" width="90" height="40" rx="8" fill="#0f172a" stroke="#c084fc" stroke-width="3"/>
+                  <text x="45" y="24" font-family="Fira Code,monospace" font-size="13" fill="#c084fc" text-anchor="middle">bucket 1</text>
+                  <rect x="0" y="43" width="90" height="55" rx="4" fill="#1e293b" stroke="#c084fc" stroke-width="2.5"/>
+                  <text x="45" y="62" font-family="Fira Code,monospace" font-size="12" fill="#a78bfa" text-anchor="middle">"Alice"</text>
+                  <text x="45" y="77" font-family="Fira Code,monospace" font-size="12" fill="#a78bfa" text-anchor="middle">"Diana"</text>
                 </g>
-                <line x1="260" y1="77" x2="300" y2="77" stroke="#38bdf8" stroke-width="3" marker-end="url(#hArr)"/>
-                <g transform="translate(310,60)">
-                  <rect x="0" y="0" width="80" height="35" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-                  <text x="40" y="22" font-family="Fira Code,monospace" font-size="12" fill="#38bdf8" text-anchor="middle">bucket 2</text>
-                  <rect x="0" y="38" width="80" height="30" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1"/>
-                  <text x="40" y="60" font-family="Outfit,system-ui,sans-serif" font-size="10" fill="#64748b" text-anchor="middle">empty</text>
+                <line x1="280" y1="78" x2="320" y2="78" stroke="#c084fc" stroke-width="3" marker-end="url(#hArr)" class="hash-flow" style="animation-delay:0.8s"/>
+                <!-- bucket 2 empty -->
+                <g transform="translate(330,60)">
+                  <rect x="0" y="0" width="90" height="40" rx="8" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+                  <text x="45" y="24" font-family="Fira Code,monospace" font-size="13" fill="#c084fc" text-anchor="middle">bucket 2</text>
+                  <rect x="0" y="43" width="90" height="30" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+                  <text x="45" y="62" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b" text-anchor="middle">empty</text>
                 </g>
-                <line x1="390" y1="77" x2="430" y2="77" stroke="#38bdf8" stroke-width="3" marker-end="url(#hArr)"/>
-                <g transform="translate(440,60)">
-                  <rect x="0" y="0" width="80" height="35" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-                  <text x="40" y="22" font-family="Fira Code,monospace" font-size="12" fill="#38bdf8" text-anchor="middle">bucket 3</text>
-                  <rect x="0" y="38" width="80" height="30" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1"/>
-                  <text x="40" y="60" font-family="Outfit,system-ui,sans-serif" font-size="10" fill="#64748b" text-anchor="middle">empty</text>
+                <line x1="420" y1="78" x2="460" y2="78" stroke="#c084fc" stroke-width="3" marker-end="url(#hArr)" class="hash-flow" style="animation-delay:1.6s"/>
+                <!-- bucket 3 empty -->
+                <g transform="translate(470,60)">
+                  <rect x="0" y="0" width="90" height="40" rx="8" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+                  <text x="45" y="24" font-family="Fira Code,monospace" font-size="13" fill="#c084fc" text-anchor="middle">bucket 3</text>
+                  <rect x="0" y="43" width="90" height="30" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+                  <text x="45" y="62" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b" text-anchor="middle">empty</text>
                 </g>
-                <text x="40" y="185" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">Collision: multiple keys in one bucket (chained together)</text>
+                <text x="40" y="205" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b">Collision: multiple keys in one bucket (chained together)</text>
               </svg>
             </div>
-            <p class="text-xs text-[var(--muted)] text-center mt-3">A good hash function spreads keys evenly — average O(1) lookup.</p>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">Animated flow: Alice & Diana collide in bucket 1 (chained). Good hash spreads keys — O(1) lookup.</p>
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Count word frequencies (hash map)</h3>
@@ -852,56 +919,23 @@ for word, count in sorted(freq.items(), key=lambda x: -x[1]):
 # suffer: 1</code></pre>
             </div>
           </div>
-          <div class="card rounded-2xl p-6 mb-8">
-            <h3 class="text-xl font-semibold mb-3">Visualization — Hash table buckets</h3>
-            <div class="viz svg-container mx-auto" style="max-width:560px;">
-              <svg viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
-                <defs><marker id="htArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,8 L7,4 z" fill="#38bdf8"/></marker></defs>
-                <text x="30" y="30" font-family="Outfit,system-ui,sans-serif" font-size="12" font-weight="700" fill="#38bdf8">Key → hash() → bucket index</text>
-                <!-- buckets -->
-                <g transform="translate(40,60)">
-                  <rect x="0" y="0" width="70" height="30" rx="4" fill="#161b22" stroke="#38bdf8"/>
-                  <text x="35" y="20" font-family="Fira Code,monospace" font-size="11" fill="#38bdf8" text-anchor="middle">bucket 0</text>
-                  <rect x="0" y="32" width="70" height="26" rx="4" fill="#161b22" stroke="#30363d"/>
-                  <text x="35" y="51" font-family="Fira Code,monospace" font-size="10" fill="#848d97" text-anchor="middle">empty</text>
-                </g>
-                <line x1="110" y1="75" x2="150" y2="75" stroke="#38bdf8" stroke-width="2" marker-end="url(#htArrow)"/>
-                <g transform="translate(160,60)">
-                  <rect x="0" y="0" width="70" height="30" rx="4" fill="#161b22" stroke="#38bdf8"/>
-                  <text x="35" y="20" font-family="Fira Code,monospace" font-size="11" fill="#38bdf8" text-anchor="middle">bucket 1</text>
-                  <rect x="0" y="32" width="70" height="52" rx="4" fill="#161b22" stroke="#2f81f7"/>
-                  <text x="35" y="50" font-family="Fira Code,monospace" font-size="10" fill="#2f81f7" text-anchor="middle">"Alice"</text>
-                  <text x="35" y="64" font-family="Fira Code,monospace" font-size="10" fill="#2f81f7" text-anchor="middle">"Diana"</text>
-                </g>
-                <line x1="230" y1="75" x2="270" y2="75" stroke="#38bdf8" stroke-width="2" marker-end="url(#htArrow)"/>
-                <g transform="translate(280,60)">
-                  <rect x="0" y="0" width="70" height="30" rx="4" fill="#161b22" stroke="#38bdf8"/>
-                  <text x="35" y="20" font-family="Fira Code,monospace" font-size="11" fill="#38bdf8" text-anchor="middle">bucket 2</text>
-                  <rect x="0" y="32" width="70" height="26" rx="4" fill="#161b22" stroke="#30363d"/>
-                  <text x="35" y="51" font-family="Fira Code,monospace" font-size="10" fill="#848d97" text-anchor="middle">empty</text>
-                </g>
-                <line x1="350" y1="75" x2="390" y2="75" stroke="#38bdf8" stroke-width="2" marker-end="url(#htArrow)"/>
-                <g transform="translate(400,60)">
-                  <rect x="0" y="0" width="70" height="30" rx="4" fill="#161b22" stroke="#38bdf8"/>
-                  <text x="35" y="20" font-family="Fira Code,monospace" font-size="11" fill="#38bdf8" text-anchor="middle">bucket 3</text>
-                  <rect x="0" y="32" width="70" height="26" rx="4" fill="#161b22" stroke="#30363d"/>
-                  <text x="35" y="51" font-family="Fira Code,monospace" font-size="10" fill="#848d97" text-anchor="middle">empty</text>
-                </g>
-                <text x="40" y="175" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#848d97">Collision: multiple keys in one bucket (chaining)</text>
-              </svg>
-            </div>
-            <p class="text-xs text-[var(--muted)] text-center mt-3">Good hash function spreads keys evenly — average O(1) lookup.</p>
-          </div>
         </section>
 
         <section class="scroll-mt-24" id="trees">
           <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 7</p>
           <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Trees &amp; Binary Search Trees</h2>
           <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
-            A <strong>tree</strong> is a hierarchy of nodes with a root and children. A <strong>binary search tree (BST)</strong> keeps, for every node, all left descendants smaller and all right descendants larger. This makes search, insert, and delete O(h) where h is tree height (O(log n) if balanced).
+            A <strong>tree</strong> is like a family tree or an organization chart: one root node at the top, with branches that connect to child nodes, and those children may have their own children. Unlike a list, which has one "next," a tree node can have many children. This shape is perfect for representing hierarchies — folders on your computer, the HTML structure of a web page, or decisions in a game.
+<br/><br/>
+            A <strong>binary search tree (BST)</strong> is a special tree where each node has at most two children, and the children follow a strict rule: every value in the left subtree is smaller, and every value in the right subtree is larger. This rule makes searching super fast. If you want to find a number, you compare it to the root; if it's smaller, you go left; if bigger, you go right. You discard half the tree at every step — just like the phone book trick.
+<br/><br/>
+            In a balanced BST, each step cuts the data in half, so search, insert, and delete are O(log n). The catch is "if balanced." If you insert sorted data into a normal BST, it becomes a straight line — basically a linked list — and slows down to O(n). Real-world systems use self-balancing trees (like AVL or Red-Black trees) to prevent this.
           </p>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Binary search tree implementation</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              The code below builds a BST from scratch. Each <code class="kbd">TreeNode</code> has a key and two children (<code class="kbd">left</code> and <code class="kbd">right</code>). The <code class="kbd">insert</code> and <code class="kbd">search</code> methods follow the smaller-left, bigger-right rule recursively.
+            </p>
             <div class="code-block mb-6">
               <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre><code class="language-python">"""Binary Search Tree (BST): insert, search, in-order traversal.
@@ -974,41 +1008,47 @@ print("Search 99:", bst.search(99))  # False
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Visualization — Binary search tree</h3>
-            <div class="viz mx-auto" style="max-width:600px;">
-              <svg viewBox="0 0 600 290" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizBSTTitle">
-                <title id="vizBSTTitle">Binary search tree</title>
+            <div class="viz mx-auto" style="max-width:660px;">
+              <svg viewBox="0 0 660 320" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizBSTTitle">
+                <title id="vizBSTTitle">Binary search tree with left&lt;parent&lt;right property</title>
+                <style>
+                  .bst-node { stroke-width: 2.5; }
+                  .bst-search { animation: bstFlash 3s ease-in-out infinite; }
+                  @keyframes bstFlash { 0%,100% { opacity: 1; } 40% { opacity: 0.4; } }
+                </style>
                 <defs>
-                  <marker id="btArr" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#38bdf8"/></marker>
+                  <marker id="btArr" markerWidth="11" markerHeight="11" refX="10" refY="5.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,11 L11,5.5 z" fill="#f472b6"/></marker>
                 </defs>
                 <!-- root 50 -->
-                <circle cx="300" cy="55" r="20" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
-                <text x="300" y="59" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">50</text>
+                <circle cx="330" cy="60" r="22" fill="#0f172a" stroke="#f472b6" stroke-width="3" class="bst-node bst-search"/>
+                <text x="330" y="64" font-family="Fira Code,monospace" font-size="16" fill="#f472b6" text-anchor="middle">50</text>
                 <!-- left 30 -->
-                <circle cx="180" cy="135" r="20" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
-                <text x="180" y="139" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">30</text>
+                <circle cx="200" cy="140" r="22" fill="#0f172a" stroke="#f472b6" stroke-width="2.5" class="bst-node"/>
+                <text x="200" y="144" font-family="Fira Code,monospace" font-size="16" fill="#f472b6" text-anchor="middle">30</text>
                 <!-- right 70 -->
-                <circle cx="420" cy="135" r="20" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
-                <text x="420" y="139" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">70</text>
-                <line x1="284" y1="75" x2="196" y2="115" stroke="#475569" stroke-width="2" marker-end="url(#btArr)"/>
-                <line x1="316" y1="75" x2="404" y2="115" stroke="#475569" stroke-width="2" marker-end="url(#btArr)"/>
+                <circle cx="460" cy="140" r="22" fill="#0f172a" stroke="#f472b6" stroke-width="2.5" class="bst-node"/>
+                <text x="460" y="144" font-family="Fira Code,monospace" font-size="16" fill="#f472b6" text-anchor="middle">70</text>
+                <line x1="314" y1="82" x2="216" y2="118" stroke="#475569" stroke-width="2" marker-end="url(#btArr)"/>
+                <line x1="346" y1="82" x2="444" y2="118" stroke="#475569" stroke-width="2" marker-end="url(#btArr)"/>
                 <!-- 30 children 20, 40 -->
-                <circle cx="130" cy="215" r="20" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
-                <text x="130" y="219" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">20</text>
-                <circle cx="230" cy="215" r="20" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
-                <text x="230" y="219" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">40</text>
-                <line x1="162" y1="155" x2="148" y2="195" stroke="#475569" stroke-width="2" marker-end="url(#btArr)"/>
-                <line x1="198" y1="155" x2="212" y2="195" stroke="#475569" stroke-width="2" marker-end="url(#btArr)"/>
+                <circle cx="150" cy="220" r="22" fill="#0f172a" stroke="#f472b6" stroke-width="2.5" class="bst-node"/>
+                <text x="150" y="224" font-family="Fira Code,monospace" font-size="16" fill="#f472b6" text-anchor="middle">20</text>
+                <circle cx="250" cy="220" r="22" fill="#0f172a" stroke="#f472b6" stroke-width="2.5" class="bst-node"/>
+                <text x="250" y="224" font-family="Fira Code,monospace" font-size="16" fill="#f472b6" text-anchor="middle">40</text>
+                <line x1="184" y1="162" x2="164" y2="198" stroke="#475569" stroke-width="2" marker-end="url(#btArr)"/>
+                <line x1="216" y1="162" x2="236" y2="198" stroke="#475569" stroke-width="2" marker-end="url(#btArr)"/>
                 <!-- 70 children 60, 80 -->
-                <circle cx="370" cy="215" r="20" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
-                <text x="370" y="219" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">60</text>
-                <circle cx="470" cy="215" r="20" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
-                <text x="470" y="219" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">80</text>
-                <line x1="402" y1="155" x2="388" y2="195" stroke="#475569" stroke-width="2" marker-end="url(#btArr)"/>
-                <line x1="438" y1="155" x2="452" y2="195" stroke="#475569" stroke-width="2" marker-end="url(#btArr)"/>
-                <text x="300" y="270" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b" text-anchor="middle">Left &lt; parent &lt; right · in-order = sorted</text>
+                <circle cx="410" cy="220" r="22" fill="#0f172a" stroke="#f472b6" stroke-width="2.5" class="bst-node"/>
+                <text x="410" y="224" font-family="Fira Code,monospace" font-size="16" fill="#f472b6" text-anchor="middle">60</text>
+                <circle cx="510" cy="220" r="22" fill="#0f172a" stroke="#f472b6" stroke-width="2.5" class="bst-node"/>
+                <text x="510" y="224" font-family="Fira Code,monospace" font-size="16" fill="#f472b6" text-anchor="middle">80</text>
+                <line x1="444" y1="162" x2="424" y2="198" stroke="#475569" stroke-width="2" marker-end="url(#btArr)"/>
+                <line x1="476" y1="162" x2="496" y2="198" stroke="#475569" stroke-width="2" marker-end="url(#btArr)"/>
+                <text x="330" y="295" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b" text-anchor="middle">Left &lt; parent &lt; right · in-order = sorted</text>
+                <text x="330" y="310" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b" text-anchor="middle">Search path flashes: 50 → 30 → 40</text>
               </svg>
             </div>
-            <p class="text-xs text-[var(--muted)] text-center mt-3">Search/insert/delete: O(h). Balanced tree: h = O(log n).</p>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">Animated flash shows search path — O(h); balanced tree h = O(log n).</p>
           </div>
         </section>
 
@@ -1016,10 +1056,17 @@ print("Search 99:", bst.search(99))  # False
           <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 8</p>
           <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Heaps &amp; Priority Queues</h2>
           <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
-            A <strong>heap</strong> is a complete binary tree where each parent is ordered relative to its children (min-heap: parent ≤ children). Heap operations (push/pop) are O(log n). Ideal for priority queues and Dijkstra's algorithm. Python's <code class="kbd">heapq</code> module is a min-heap.
+            A <strong>heap</strong> is a special tree that is always organized so that the most important item is at the top. In a <strong>min-heap</strong>, every parent node is smaller than or equal to its children — so the very smallest item is always at the root. In a <strong>max-heap</strong>, every parent is larger, so the biggest item is on top. Think of it like a hospital triage room: the most urgent patient is always seen next, even if new patients keep arriving.
+<br/><br/>
+            Heaps are usually stored as arrays, but logically they behave like complete binary trees. The root is at index 0. The left child of index <code class="kbd">i</code> is at index <code class="kbd">2i + 1</code>, and the right child is at <code class="kbd">2i + 2</code>. When you insert or remove, the heap "bubbles" items up or down to restore the parent-child ordering. Both insertion and removal take O(log n) time because the tree height is logarithmic.
+<br/><br/>
+            A <strong>priority queue</strong> is the abstract idea: a queue where items have priorities and the highest-priority item is served first. A heap is the most common way to implement a priority queue. Python's <code class="kbd">heapq</code> module gives you a min-heap for free. You will see heaps again in Dijkstra's algorithm and in the scheduler inside your operating system.
           </p>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Min-heap demo (heapq)</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              This demo simulates a task scheduler. Each task has a priority number; the smallest number means "most urgent." Even though the tasks were inserted in random order, <code class="kbd">heappop</code> always returns the most urgent remaining task first.
+            </p>
             <div class="code-block mb-6">
               <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre><code class="language-python">"""Min-heap / priority queue with heapq.
@@ -1066,32 +1113,37 @@ print("Next task (pop):", tasks.pop())   # (3, 'Low priority email')
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Visualization — Min-heap (array as tree)</h3>
-            <div class="viz mx-auto" style="max-width:600px;">
-              <svg viewBox="0 0 600 290" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizHeapTitle">
-                <title id="vizHeapTitle">Min-heap tree</title>
+            <div class="viz mx-auto" style="max-width:660px;">
+              <svg viewBox="0 0 660 320" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizHeapTitle">
+                <title id="vizHeapTitle">Min-heap tree with parent ≤ children property</title>
+                <style>
+                  .heap-root { animation: heapFlash 3s ease-in-out infinite; }
+                  @keyframes heapFlash { 0%,100% { opacity: 1; } 40% { opacity: 0.4; } }
+                </style>
                 <defs>
-                  <marker id="hpArr" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#38bdf8"/></marker>
+                  <marker id="hpArr" markerWidth="11" markerHeight="11" refX="10" refY="5.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,11 L11,5.5 z" fill="#fbbf24"/></marker>
                 </defs>
-                <text x="40" y="30" font-family="Outfit,system-ui,sans-serif" font-size="12" font-weight="700" fill="#38bdf8">Array: [1, 1, 2, 3]</text>
+                <text x="40" y="30" font-family="Outfit,system-ui,sans-serif" font-size="14" font-weight="800" fill="#fbbf24">Array: [1, 1, 2, 3]</text>
                 <!-- root 1 -->
-                <circle cx="300" cy="70" r="20" fill="#1e293b" stroke="#2563eb" stroke-width="2.5"/>
-                <text x="300" y="74" font-family="Fira Code,monospace" font-size="15" fill="#60a5fa" text-anchor="middle">1</text>
+                <circle cx="330" cy="70" r="24" fill="#0f172a" stroke="#fbbf24" stroke-width="3" class="heap-root"/>
+                <text x="330" y="74" font-family="Fira Code,monospace" font-size="17" fill="#fbbf24" text-anchor="middle">1</text>
                 <!-- left 1 -->
-                <circle cx="180" cy="150" r="20" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
-                <text x="180" y="154" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">1</text>
+                <circle cx="210" cy="150" r="22" fill="#0f172a" stroke="#fbbf24" stroke-width="2.5"/>
+                <text x="210" y="154" font-family="Fira Code,monospace" font-size="16" fill="#fbbf24" text-anchor="middle">1</text>
                 <!-- right 2 -->
-                <circle cx="420" cy="150" r="20" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
-                <text x="420" y="154" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">2</text>
+                <circle cx="450" cy="150" r="22" fill="#0f172a" stroke="#fbbf24" stroke-width="2.5"/>
+                <text x="450" y="154" font-family="Fira Code,monospace" font-size="16" fill="#fbbf24" text-anchor="middle">2</text>
                 <!-- left-left 3 -->
-                <circle cx="240" cy="230" r="20" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
-                <text x="240" y="234" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">3</text>
-                <line x1="284" y1="90" x2="196" y2="130" stroke="#475569" stroke-width="2" marker-end="url(#hpArr)"/>
-                <line x1="316" y1="90" x2="404" y2="130" stroke="#475569" stroke-width="2" marker-end="url(#hpArr)"/>
-                <line x1="162" y1="170" x2="228" y2="210" stroke="#475569" stroke-width="2" marker-end="url(#hpArr)"/>
-                <text x="300" y="270" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b" text-anchor="middle">Parent ≤ children · root is min (highest priority)</text>
+                <circle cx="270" cy="230" r="22" fill="#0f172a" stroke="#fbbf24" stroke-width="2.5"/>
+                <text x="270" y="234" font-family="Fira Code,monospace" font-size="16" fill="#fbbf24" text-anchor="middle">3</text>
+                <line x1="314" y1="94" x2="226" y2="128" stroke="#475569" stroke-width="2" marker-end="url(#hpArr)"/>
+                <line x1="346" y1="94" x2="434" y2="128" stroke="#475569" stroke-width="2" marker-end="url(#hpArr)"/>
+                <line x1="194" y1="172" x2="254" y2="208" stroke="#475569" stroke-width="2" marker-end="url(#hpArr)"/>
+                <text x="330" y="295" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b" text-anchor="middle">Parent ≤ children · root is min (highest priority)</text>
+                <text x="330" y="310" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b" text-anchor="middle">Push/pop: O(log n) · Peek min: O(1)</text>
               </svg>
             </div>
-            <p class="text-xs text-[var(--muted)] text-center mt-3">Push/pop: O(log n). Peek min: O(1).</p>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">Animated root flashes — min-heap keeps smallest at top.</p>
           </div>
         </section>
 
@@ -1099,12 +1151,17 @@ print("Next task (pop):", tasks.pop())   # (3, 'Low priority email')
           <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 9</p>
           <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Graphs &amp; Traversal</h2>
           <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
-            A <strong>graph</strong> is a set of nodes (vertices) connected by edges. Two fundamental traversals:<br/>
-            • <strong>BFS (Breadth-First Search):</strong> explore layer by layer using a queue — finds shortest paths in unweighted graphs.<br/>
-            • <strong>DFS (Depth-First Search):</strong> dive deep using recursion or a stack — useful for cycles, connectivity, topological order.
+            A <strong>graph</strong> is a collection of <strong>nodes</strong> (also called vertices) connected by <strong>edges</strong>. If this sounds familiar, it's because almost everything is a graph: cities connected by roads, people connected by friendships, web pages connected by links, or tasks connected by dependencies. Trees are actually a special kind of graph with no cycles.
+<br/><br/>
+            When you want to explore a graph, there are two classic strategies. <strong>Breadth-First Search (BFS)</strong> explores evenly outward, like ripples in a pond. It visits all of the start node's neighbors first, then their neighbors, and so on. BFS is great for finding the <em>shortest path</em> in an unweighted graph because it reaches closer nodes before farther ones. It uses a queue.
+<br/><br/>
+            <strong>Depth-First Search (DFS)</strong>, on the other hand, dives deep. It picks one neighbor and follows that path as far as possible, then backtracks when it hits a dead end. DFS is useful for detecting cycles, exploring all possible paths, or ordering tasks that depend on other tasks. It uses a stack (often disguised as recursion). Both BFS and DFS visit every node once, giving them O(V + E) time where V is the number of vertices and E is the number of edges.
           </p>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">BFS &amp; DFS on an adjacency list</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              The graph is stored as an <strong>adjacency list</strong> — a dictionary where each key is a node, and its value is a list of neighbors. This is the standard way to represent sparse graphs. Compare the BFS and DFS outputs; notice how BFS reaches C early while DFS saves it for last.
+            </p>
             <div class="code-block mb-6">
               <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre><code class="language-python">"""Graph traversals: BFS and DFS.
@@ -1158,36 +1215,41 @@ print("DFS from A:", dfs("A"))    # A, B, D, E, F, C
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Visualization — Graph traversal</h3>
-            <div class="viz mx-auto" style="max-width:600px;">
-              <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizGraphTitle">
-                <title id="vizGraphTitle">Graph with BFS/DFS edges</title>
+            <div class="viz mx-auto" style="max-width:660px;">
+              <svg viewBox="0 0 660 280" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizGraphTitle">
+                <title id="vizGraphTitle">Graph nodes A-F with edges for BFS/DFS traversal</title>
+                <style>
+                  .graph-node { stroke-width: 2.5; }
+                  .graph-travel { animation: graphPulse 4s ease-in-out infinite; }
+                  @keyframes graphPulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+                </style>
                 <defs>
-                  <marker id="grArr" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#64748b"/></marker>
+                  <marker id="grArr" markerWidth="11" markerHeight="11" refX="10" refY="5.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,11 L11,5.5 z" fill="#94a3b8"/></marker>
                 </defs>
                 <!-- nodes -->
-                <circle cx="90" cy="90" r="18" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
-                <text x="90" y="94" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">A</text>
-                <circle cx="220" cy="60" r="18" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
-                <text x="220" y="64" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">B</text>
-                <circle cx="350" cy="60" r="18" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
-                <text x="350" y="64" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">C</text>
-                <circle cx="180" cy="170" r="18" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
-                <text x="180" y="174" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">D</text>
-                <circle cx="260" cy="170" r="18" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
-                <text x="260" y="174" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">E</text>
-                <circle cx="340" cy="170" r="18" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
-                <text x="340" y="174" font-family="Fira Code,monospace" font-size="15" fill="#38bdf8" text-anchor="middle">F</text>
+                <circle cx="90" cy="90" r="20" fill="#0f172a" stroke="#94a3b8" stroke-width="2.5" class="graph-node"/>
+                <text x="90" y="94" font-family="Fira Code,monospace" font-size="16" fill="#94a3b8" text-anchor="middle">A</text>
+                <circle cx="220" cy="60" r="20" fill="#0f172a" stroke="#94a3b8" stroke-width="2.5" class="graph-node"/>
+                <text x="220" y="64" font-family="Fira Code,monospace" font-size="16" fill="#94a3b8" text-anchor="middle">B</text>
+                <circle cx="350" cy="60" r="20" fill="#0f172a" stroke="#94a3b8" stroke-width="2.5" class="graph-node"/>
+                <text x="350" y="64" font-family="Fira Code,monospace" font-size="16" fill="#94a3b8" text-anchor="middle">C</text>
+                <circle cx="180" cy="170" r="20" fill="#0f172a" stroke="#94a3b8" stroke-width="2.5" class="graph-node"/>
+                <text x="180" y="174" font-family="Fira Code,monospace" font-size="16" fill="#94a3b8" text-anchor="middle">D</text>
+                <circle cx="260" cy="170" r="20" fill="#0f172a" stroke="#94a3b8" stroke-width="2.5" class="graph-node"/>
+                <text x="260" y="174" font-family="Fira Code,monospace" font-size="16" fill="#94a3b8" text-anchor="middle">E</text>
+                <circle cx="340" cy="170" r="20" fill="#0f172a" stroke="#94a3b8" stroke-width="2.5" class="graph-node"/>
+                <text x="340" y="174" font-family="Fira Code,monospace" font-size="16" fill="#94a3b8" text-anchor="middle">F</text>
                 <!-- edges -->
-                <line x1="106" y1="78" x2="204" y2="72" stroke="#475569" stroke-width="2" marker-end="url(#grArr)"/>
-                <line x1="106" y1="102" x2="334" y2="72" stroke="#475569" stroke-width="2" marker-end="url(#grArr)"/>
-                <line x1="204" y2="78" x2="164" y2="150" stroke="#475569" stroke-width="2" marker-end="url(#grArr)"/>
-                <line x1="236" y1="78" x2="276" y2="150" stroke="#475569" stroke-width="2" marker-end="url(#grArr)"/>
-                <line x1="334" y1="78" x2="334" y2="150" stroke="#475569" stroke-width="2" marker-end="url(#grArr)"/>
-                <line x1="244" y1="190" x2="324" y2="150" stroke="#475569" stroke-width="2" marker-end="url(#grArr)"/>
-                <text x="300" y="220" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b" text-anchor="middle">BFS: layer by layer · DFS: dive deep first</text>
+                <line x1="106" y1="78" x2="204" y2="72" stroke="#475569" stroke-width="2" marker-end="url(#grArr)" class="graph-travel"/>
+                <line x1="106" y1="102" x2="334" y2="72" stroke="#475569" stroke-width="2" marker-end="url(#grArr)" class="graph-travel" style="animation-delay:0.5s"/>
+                <line x1="204" y2="78" x2="164" y2="150" stroke="#475569" stroke-width="2" marker-end="url(#grArr)" class="graph-travel" style="animation-delay:1s"/>
+                <line x1="236" y1="78" x2="276" y2="150" stroke="#475569" stroke-width="2" marker-end="url(#grArr)" class="graph-travel" style="animation-delay:1.5s"/>
+                <line x1="334" y1="78" x2="334" y2="150" stroke="#475569" stroke-width="2" marker-end="url(#grArr)" class="graph-travel" style="animation-delay:2s"/>
+                <line x1="244" y1="190" x2="324" y2="150" stroke="#475569" stroke-width="2" marker-end="url(#grArr)" class="graph-travel" style="animation-delay:2.5s"/>
+                <text x="330" y="255" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b" text-anchor="middle">BFS: layer by layer · DFS: dive deep first</text>
               </svg>
             </div>
-            <p class="text-xs text-[var(--muted)] text-center mt-3">BFS uses a queue; DFS uses recursion/stack.</p>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">Animated edges pulse in traversal order — BFS uses queue, DFS uses stack/recursion.</p>
           </div>
         </section>
 
@@ -1195,10 +1257,17 @@ print("DFS from A:", dfs("A"))    # A, B, D, E, F, C
           <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 10</p>
           <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Sorting Algorithms</h2>
           <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
-            Sorting is a building block for search, data analysis, and interview problems. Below are the classic algorithms with their complexities.
+            Sorting is one of the most common things computers do. Before you can binary search a list, you need it sorted. Before you can find the top scores, you need them sorted. Before you can even compare two datasets, you often sort them first. A good sorting algorithm can save enormous amounts of time.
+<br/><br/>
+            Here are four classic ways to sort. <strong>Bubble sort</strong> repeatedly walks through the list and swaps neighbors that are out of order, like bubbles rising to the surface. It is simple but slow — O(n²). <strong>Insertion sort</strong> builds the sorted part one item at a time, the way you might sort playing cards in your hand. It is also O(n²) in the worst case, but fast for small or nearly-sorted lists.
+<br/><br/>
+            <strong>Merge sort</strong> uses the "divide and conquer" idea: split the list in half, sort each half, then merge the sorted halves together. Merging two sorted lists is easy — just repeatedly take the smaller front item. Merge sort is O(n log n) in all cases, which makes it very reliable. <strong>Quick sort</strong> also uses divide and conquer, but it picks a pivot and partitions items into "smaller than pivot" and "larger than pivot." On average it is O(n log n) and very fast in practice, but a bad pivot choice can make it O(n²).
           </p>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Bubble sort, insertion sort, merge sort, quick sort</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              Run the code and compare the timings (if you increase input size). For tiny lists they all look similar; for large lists, bubble and insertion will become painfully slow while merge and quick stay efficient.
+            </p>
             <div class="code-block mb-6">
               <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre><code class="language-python">"""Sorting algorithms demo.
@@ -1274,31 +1343,37 @@ print("Quick sort:", quick_sort(data))
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Visualization — Merge sort divide &amp; conquer</h3>
-            <div class="viz mx-auto" style="max-width:600px;">
-              <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizMergeTitle">
-                <title id="vizMergeTitle">Merge sort split and merge</title>
-                <text x="40" y="30" font-family="Outfit,system-ui,sans-serif" font-size="13" font-weight="700" fill="#38bdf8">Split → sort halves → merge</text>
+            <div class="viz mx-auto" style="max-width:700px;">
+              <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizMergeTitle">
+                <title id="vizMergeTitle">Merge sort split into halves then merge back sorted</title>
+                <style>
+                  .merge-flow { animation: mergePulse 4s ease-in-out infinite; }
+                  @keyframes mergePulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+                </style>
+                <defs>
+                  <marker id="mergeArr" markerWidth="11" markerHeight="11" refX="10" refY="5.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,11 L11,5.5 z" fill="#22d3ee"/></marker>
+                </defs>
+                <text x="40" y="28" font-family="Outfit,system-ui,sans-serif" font-size="14" font-weight="800" fill="#22d3ee">Split → sort halves → merge</text>
                 <!-- original -->
-                <rect x="40" y="50" width="200" height="40" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-                <text x="140" y="74" font-family="Fira Code,monospace" font-size="12" fill="#cbd5e1" text-anchor="middle">[64, 34, 25, 12, 22, 11, 90]</text>
+                <rect x="40" y="55" width="240" height="45" rx="8" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+                <text x="160" y="80" font-family="Fira Code,monospace" font-size="13" fill="#cbd5e1" text-anchor="middle">[64, 34, 25, 12, 22, 11, 90]</text>
                 <!-- left half -->
-                <rect x="40" y="105" width="110" height="40" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                <text x="95" y="129" font-family="Fira Code,monospace" font-size="12" fill="#38bdf8" text-anchor="middle">[64, 34, 25, 12]</text>
+                <rect x="40" y="110" width="130" height="45" rx="8" fill="#0f172a" stroke="#22d3ee" stroke-width="2.5"/>
+                <text x="105" y="134" font-family="Fira Code,monospace" font-size="12" fill="#22d3ee" text-anchor="middle">[64, 34, 25, 12]</text>
                 <!-- right half -->
-                <rect x="270" y="105" width="110" height="40" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                <text x="325" y="129" font-family="Fira Code,monospace" font-size="12" fill="#38bdf8" text-anchor="middle">[22, 11, 90]</text>
-                <line x1="140" y1="90" x2="95" y2="105" stroke="#38bdf8" stroke-width="2" marker-end="url(#mergeArr)"/>
-                <line x1="140" y1="90" x2="325" y2="105" stroke="#38bdf8" stroke-width="2" marker-end="url(#mergeArr)"/>
+                <rect x="350" y="110" width="130" height="45" rx="8" fill="#0f172a" stroke="#22d3ee" stroke-width="2.5"/>
+                <text x="415" y="134" font-family="Fira Code,monospace" font-size="12" fill="#22d3ee" text-anchor="middle">[22, 11, 90]</text>
+                <line x1="160" y1="100" x2="105" y2="110" stroke="#22d3ee" stroke-width="3" marker-end="url(#mergeArr)" class="merge-flow"/>
+                <line x1="160" y1="100" x2="415" y2="110" stroke="#22d3ee" stroke-width="3" marker-end="url(#mergeArr)" class="merge-flow" style="animation-delay:0.8s"/>
                 <!-- merged -->
-                <rect x="110" y="160" width="200" height="40" rx="6" fill="#1e293b" stroke="#2563eb" stroke-width="2.5"/>
-                <text x="210" y="184" font-family="Fira Code,monospace" font-size="12" fill="#60a5fa" text-anchor="middle">[11, 12, 22, 25, 34, 64, 90]</text>
-                <line x1="95" y1="145" x2="160" y2="160" stroke="#2563eb" stroke-width="2" marker-end="url(#mergeArr)"/>
-                <line x1="325" y1="145" x2="260" y2="160" stroke="#2563eb" stroke-width="2" marker-end="url(#mergeArr)"/>
-                <text x="300" y="208" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b" text-anchor="middle">O(n log n) guaranteed</text>
-                <defs><marker id="mergeArr" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#38bdf8"/></marker></defs>
+                <rect x="110" y="175" width="260" height="45" rx="8" fill="#0f172a" stroke="#06b6d4" stroke-width="3"/>
+                <text x="240" y="199" font-family="Fira Code,monospace" font-size="12" fill="#06b6d4" text-anchor="middle">[11, 12, 22, 25, 34, 64, 90]</text>
+                <line x1="105" y1="155" x2="170" y2="175" stroke="#06b6d4" stroke-width="3" marker-end="url(#mergeArr)" class="merge-flow" style="animation-delay:1.6s"/>
+                <line x1="415" y1="155" x2="350" y2="175" stroke="#06b6d4" stroke-width="3" marker-end="url(#mergeArr)" class="merge-flow" style="animation-delay:2.4s"/>
+                <text x="350" y="235" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b" text-anchor="middle">O(n log n) guaranteed</text>
               </svg>
             </div>
-            <p class="text-xs text-[var(--muted)] text-center mt-3">Merge sort: O(n log n) guaranteed.</p>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">Animated flow shows divide then merge — O(n log n) guaranteed.</p>
           </div>
         </section>
 
@@ -1306,10 +1381,17 @@ print("Quick sort:", quick_sort(data))
           <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 11</p>
           <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Recursion &amp; Backtracking</h2>
           <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
-            <strong>Recursion:</strong> a function calling itself with a smaller input, until a <em>base case</em> stops it. <strong>Backtracking</strong> is recursion that explores choices and undoes (backs out of) dead ends — used for permutations, N-queens, sudoku.
+            <strong>Recursion</strong> is when a function calls itself to solve a smaller version of the same problem. It feels strange at first, but it is a natural way to handle problems that have a repeating shape inside themselves. The secret is the <strong>base case</strong>: a condition where the function stops calling itself and just returns a simple answer. Without a base case, recursion would run forever, just like a loop without an exit condition.
+<br/><br/>
+            Think of <strong>factorial</strong>. 5! means 5 × 4 × 3 × 2 × 1. But 5! is also 5 × 4!, and 4! is 4 × 3!, and so on, until 0! = 1. The function asks itself a smaller question each time, then multiplies the answers on the way back up.
+<br/><br/>
+            <strong>Backtracking</strong> is recursion with a safety net. You try a choice, explore where it leads, and if it doesn't work, you undo the choice and try the next one. It is how you solve puzzles like Sudoku, generate all permutations of a word, or place queens on a chessboard so none attack each other. The "undo" is what makes it backtracking: you explore a branch, and if it fails, you back out and continue from where you left off.
           </p>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Factorial, Fibonacci, and permutations</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              The first function computes factorial, the second computes Fibonacci the naive way (notice it is slow for large <code class="kbd">n</code>), and the third generates all rearrangements of a string. Permutations is a great example of backtracking: we pick each letter, recursively permute the rest, and combine them.
+            </p>
             <div class="code-block mb-6">
               <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre><code class="language-python">"""Recursion and backtracking demos.
@@ -1351,25 +1433,30 @@ print("Permutations of 'abc':", permutations("abc"))
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Visualization — Recursion call stack</h3>
-            <div class="viz mx-auto" style="max-width:360px;">
-              <svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizRecTitle">
+            <div class="viz mx-auto" style="max-width:400px;">
+              <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizRecTitle">
                 <title id="vizRecTitle">Recursion call stack for factorial(3)</title>
+                <style>
+                  .rec-frame { stroke-width: 2.5; }
+                  .rec-base { animation: recFlash 3s ease-in-out infinite; }
+                  @keyframes recFlash { 0%,100% { opacity: 1; } 40% { opacity: 0.4; } }
+                </style>
                 <defs>
-                  <marker id="rcArr" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#38bdf8"/></marker>
+                  <marker id="rcArr" markerWidth="11" markerHeight="11" refX="10" refY="5.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,11 L11,5.5 z" fill="#e879f9"/></marker>
                 </defs>
-                <text x="20" y="28" font-family="Outfit,system-ui,sans-serif" font-size="12" font-weight="700" fill="#38bdf8">factorial(3)</text>
-                <rect x="80" y="45" width="200" height="45" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                <text x="180" y="68" font-family="Fira Code,monospace" font-size="13" fill="#38bdf8" text-anchor="middle">3 * factorial(2)</text>
-                <line x1="180" y1="45" x2="180" y2="35" stroke="#38bdf8" stroke-width="3" marker-end="url(#rcArr)"/>
-                <rect x="80" y="100" width="200" height="45" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                <text x="180" y="123" font-family="Fira Code,monospace" font-size="13" fill="#38bdf8" text-anchor="middle">2 * factorial(1)</text>
-                <line x1="180" y1="100" x2="180" y2="90" stroke="#38bdf8" stroke-width="3" marker-end="url(#rcArr)"/>
-                <rect x="80" y="155" width="200" height="45" rx="8" fill="#1e293b" stroke="#2563eb" stroke-width="2.5"/>
-                <text x="180" y="178" font-family="Fira Code,monospace" font-size="13" fill="#60a5fa" text-anchor="middle">1  (base case)</text>
-                <text x="20" y="225" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">Unwind: 1 → 2×1=2 → 3×2=6</text>
+                <text x="20" y="28" font-family="Outfit,system-ui,sans-serif" font-size="13" font-weight="700" fill="#e879f9">factorial(3)</text>
+                <rect x="80" y="45" width="240" height="50" rx="8" fill="#0f172a" stroke="#e879f9" stroke-width="2.5" class="rec-frame"/>
+                <text x="200" y="68" font-family="Fira Code,monospace" font-size="13" fill="#e879f9" text-anchor="middle">3 * factorial(2)</text>
+                <line x1="200" y1="45" x2="200" y2="35" stroke="#e879f9" stroke-width="3" marker-end="url(#rcArr)" class="rec-frame"/>
+                <rect x="80" y="100" width="240" height="50" rx="8" fill="#0f172a" stroke="#e879f9" stroke-width="2.5" class="rec-frame"/>
+                <text x="200" y="123" font-family="Fira Code,monospace" font-size="13" fill="#e879f9" text-anchor="middle">2 * factorial(1)</text>
+                <line x1="200" y1="100" x2="200" y2="90" stroke="#e879f9" stroke-width="3" marker-end="url(#rcArr)" class="rec-frame"/>
+                <rect x="80" y="155" width="240" height="50" rx="8" fill="#0f172a" stroke="#06b6d4" stroke-width="3" class="rec-frame rec-base"/>
+                <text x="200" y="178" font-family="Fira Code,monospace" font-size="13" fill="#06b6d4" text-anchor="middle">1  (base case)</text>
+                <text x="20" y="238" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b">Unwind: 1 → 2×1=2 → 3×2=6</text>
               </svg>
             </div>
-            <p class="text-xs text-[var(--muted)] text-center mt-3">Base case stops recursion; each frame waits for the deeper call.</p>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">Animated flash shows base case then unwind — each frame waits for the deeper call.</p>
           </div>
         </section>
 
@@ -1377,10 +1464,17 @@ print("Permutations of 'abc':", permutations("abc"))
           <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 12</p>
           <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Dynamic Programming</h2>
           <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
-            <strong>Dynamic programming (DP)</strong> solves overlapping subproblems once and stores results (<em>memoization</em>, top-down, or <em>tabulation</em>, bottom-up). It turns exponential recursion into polynomial time.
+            <strong>Dynamic programming (DP)</strong> is a technique for solving problems that contain the same smaller problem many times. Instead of recomputing the same thing over and over, we compute each subproblem once and save the answer. This simple change can turn a program that takes years into one that finishes in a second.
+<br/><br/>
+            Imagine you are climbing a staircase with <code class="kbd">n</code> steps, and you can take 1 or 2 steps at a time. How many ways can you reach the top? The answer for step <code class="kbd">n</code> depends only on the answers for steps <code class="kbd">n-1</code> and <code class="kbd">n-2</code>. A naive recursive solution would ask for the same step again and again. DP remembers each answer so the work becomes linear.
+<br/><br/>
+            There are two common styles. <strong>Memoization</strong> is top-down: write the recursive solution first, then cache results. <strong>Tabulation</strong> is bottom-up: build a table from the smallest cases upward, using previous entries to fill new ones. Both avoid the explosion of repeated work. DP is behind spell-checkers, DNA matching, shortest-path algorithms, game AI, and much more.
           </p>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Fibonacci: naive vs memoized vs tabulated</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              This program computes the 40th Fibonacci number three ways. The naive recursion takes a noticeable amount of time because it recomputes the same values millions of times. The memoized and tabulated versions are nearly instant. All three return the same answer: 102,334,155.
+            </p>
             <div class="code-block mb-6">
               <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre><code class="language-python">"""Dynamic programming: Fibonacci three ways.
@@ -1424,30 +1518,34 @@ print(f"fib_tab({n})   =", fib_tab(n))        # instant
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Visualization — DP memo table</h3>
-            <div class="viz mx-auto" style="max-width:620px;">
-              <svg viewBox="0 0 620 170" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizDpTitle">
-                <title id="vizDpTitle">DP memo table</title>
-                <text x="40" y="30" font-family="Outfit,system-ui,sans-serif" font-size="13" font-weight="700" fill="#38bdf8">dp[i] = fib(i), filled bottom-up — each subproblem once</text>
+            <div class="viz mx-auto" style="max-width:700px;">
+              <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizDpTitle">
+                <title id="vizDpTitle">DP memo table dp[i] = fib(i) filled bottom-up</title>
+                <style>
+                  .dp-fill { animation: dpFill 5s ease-in-out infinite; }
+                  @keyframes dpFill { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+                </style>
+                <text x="40" y="28" font-family="Outfit,system-ui,sans-serif" font-size="14" font-weight="800" fill="#fdba74">dp[i] = fib(i), filled bottom-up — each subproblem once</text>
                 <g transform="translate(40,60)">
-                  <rect x="0" y="0" width="44" height="44" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                  <text x="22" y="27" font-family="Fira Code,monospace" font-size="14" fill="#38bdf8" text-anchor="middle">0</text>
-                  <rect x="50" y="0" width="44" height="44" rx="6" fill="#1e293b" stroke="#2563eb" stroke-width="2.5"/>
-                  <text x="72" y="27" font-family="Fira Code,monospace" font-size="14" fill="#60a5fa" text-anchor="middle">1</text>
-                  <rect x="100" y="0" width="44" height="44" rx="6" fill="#1e293b" stroke="#2563eb" stroke-width="2.5"/>
-                  <text x="122" y="27" font-family="Fira Code,monospace" font-size="14" fill="#60a5fa" text-anchor="middle">1</text>
-                  <rect x="150" y="0" width="44" height="44" rx="6" fill="#1e293b" stroke="#2563eb" stroke-width="2.5"/>
-                  <text x="172" y="27" font-family="Fira Code,monospace" font-size="14" fill="#60a5fa" text-anchor="middle">2</text>
-                  <rect x="200" y="0" width="44" height="44" rx="6" fill="#1e293b" stroke="#2563eb" stroke-width="2.5"/>
-                  <text x="222" y="27" font-family="Fira Code,monospace" font-size="14" fill="#60a5fa" text-anchor="middle">3</text>
-                  <rect x="250" y="0" width="44" height="44" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-                  <text x="272" y="27" font-family="Fira Code,monospace" font-size="14" fill="#64748b" text-anchor="middle">?</text>
-                  <rect x="300" y="0" width="44" height="44" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-                  <text x="322" y="27" font-family="Fira Code,monospace" font-size="14" fill="#64748b" text-anchor="middle">?</text>
+                  <rect x="0" y="0" width="48" height="48" rx="8" fill="#0f172a" stroke="#fdba74" stroke-width="3" class="dp-fill"/>
+                  <text x="24" y="29" font-family="Fira Code,monospace" font-size="15" fill="#fdba74" text-anchor="middle">0</text>
+                  <rect x="54" y="0" width="48" height="48" rx="8" fill="#0f172a" stroke="#fdba74" stroke-width="3" class="dp-fill" style="animation-delay:0.6s"/>
+                  <text x="78" y="29" font-family="Fira Code,monospace" font-size="15" fill="#fdba74" text-anchor="middle">1</text>
+                  <rect x="108" y="0" width="48" height="48" rx="8" fill="#0f172a" stroke="#fdba74" stroke-width="3" class="dp-fill" style="animation-delay:1.2s"/>
+                  <text x="132" y="29" font-family="Fira Code,monospace" font-size="15" fill="#fdba74" text-anchor="middle">1</text>
+                  <rect x="162" y="0" width="48" height="48" rx="8" fill="#0f172a" stroke="#fdba74" stroke-width="3" class="dp-fill" style="animation-delay:1.8s"/>
+                  <text x="186" y="29" font-family="Fira Code,monospace" font-size="15" fill="#fdba74" text-anchor="middle">2</text>
+                  <rect x="216" y="0" width="48" height="48" rx="8" fill="#0f172a" stroke="#fdba74" stroke-width="3" class="dp-fill" style="animation-delay:2.4s"/>
+                  <text x="240" y="29" font-family="Fira Code,monospace" font-size="15" fill="#fdba74" text-anchor="middle">3</text>
+                  <rect x="270" y="0" width="48" height="48" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                  <text x="294" y="29" font-family="Fira Code,monospace" font-size="15" fill="#64748b" text-anchor="middle">?</text>
+                  <rect x="324" y="0" width="48" height="48" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                  <text x="348" y="29" font-family="Fira Code,monospace" font-size="15" fill="#64748b" text-anchor="middle">?</text>
                 </g>
-                <text x="40" y="140" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">Memoization / tabulation reuse subproblem results — O(n) instead of O(2ⁿ)</text>
+                <text x="40" y="160" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b">Memoization / tabulation reuse subproblem results — O(n) instead of O(2ⁿ)</text>
               </svg>
             </div>
-            <p class="text-xs text-[var(--muted)] text-center mt-3">Each subproblem solved once — O(n) instead of O(2ⁿ).</p>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">Animated fill shows each subproblem solved once — O(n) instead of O(2ⁿ).</p>
           </div>
         </section>
 
@@ -1455,10 +1553,17 @@ print(f"fib_tab({n})   =", fib_tab(n))        # instant
           <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Chapter 13</p>
           <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Greedy Algorithms</h2>
           <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
-            A <strong>greedy algorithm</strong> makes the locally optimal choice at each step, hoping it leads to a global optimum. Works when the problem has the <em>greedy-choice property</em> (e.g. activity selection, coin change with canonical coins). Not always correct — that's when DP or other methods are needed.
+            A <strong>greedy algorithm</strong> always makes the choice that looks best right now, without worrying about the future. It is like hiking and always taking the steepest upward path, hoping it leads to the highest peak. Sometimes it works perfectly; sometimes it gets stuck on a small hill while the real mountain is just one valley away.
+<br/><br/>
+            Greedy algorithms are attractive because they are simple and fast. At every step you pick the locally best option and move on — usually O(n log n) if you need to sort first, or O(n) otherwise. They work when the problem has the <strong>greedy-choice property</strong>: a locally best choice is also part of a globally best answer. Canonical coin systems, like US coins, have this property, so greedy coin change always gives the fewest coins.
+<br/><br/>
+            But beware: greedy is <em>not</em> always correct. If the coin system is weird — say coins of 1, 3, and 4 — greedy might pick 4 + 1 + 1 = 6 for an amount of 6, while the optimal answer is 3 + 3 = 2 coins. When greedy fails, you usually need dynamic programming or another exhaustive method. The skill is learning to recognize when greedy is safe.
           </p>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Coin change (greedy, canonical coins)</h3>
+            <p class="text-[var(--muted)] leading-relaxed mb-4">
+              This classic example uses US coins [1, 5, 10, 25]. The greedy rule is simple: use as many quarters as possible, then dimes, then nickels, then pennies. For 93¢, it takes 3 quarters (75¢), 1 dime (10¢), 1 nickel (5¢), and 3 pennies (3¢), totaling 8 coins. Try changing the coin list to [1, 3, 4] and amount to 6 to see where greedy fails.
+            </p>
             <div class="code-block mb-6">
               <button aria-label="Copy code" class="copy-btn" onclick="copyCode(this)">Copy</button>
               <pre><code class="language-python">"""Greedy coin change: fewest coins for canonical denominations.
@@ -1495,35 +1600,36 @@ print(f"Total coins: {sum(change.values())}")
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Visualization — Greedy coin change (93¢)</h3>
-            <div class="viz mx-auto" style="max-width:640px;">
-              <svg viewBox="0 0 640 180" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizGreedyTitle">
-                <title id="vizGreedyTitle">Greedy coin change for 93 cents</title>
+            <div class="viz mx-auto" style="max-width:720px;">
+              <svg viewBox="0 0 720 210" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizGreedyTitle">
+                <title id="vizGreedyTitle">Greedy coin change picking largest coin first</title>
+                <style>
+                  .greedy-flow { animation: greedyPulse 5s ease-in-out infinite; }
+                  @keyframes greedyPulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+                </style>
                 <defs>
-                  <marker id="grArr" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#38bdf8"/></marker>
+                  <marker id="grArr" markerWidth="11" markerHeight="11" refX="10" refY="5.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,11 L11,5.5 z" fill="#f87171"/></marker>
                 </defs>
-                <text x="40" y="28" font-family="Outfit,system-ui,sans-serif" font-size="12" font-weight="700" fill="#38bdf8">Always take the largest coin ≤ remaining</text>
-                <rect x="40" y="55" width="56" height="44" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-                <text x="68" y="80" font-family="Fira Code,monospace" font-size="14" fill="#cbd5e1" text-anchor="middle">93¢</text>
-                <line x1="96" y1="77" x2="140" y2="77" stroke="#38bdf8" stroke-width="3" marker-end="url(#grArr)"/>
-                <rect x="150" y="55" width="56" height="44" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                <text x="178" y="80" font-family="Fira Code,monospace" font-size="13" fill="#60a5fa" text-anchor="middle">−25 → 68</text>
-                <line x1="206" y1="77" x2="250" y2="77" stroke="#38bdf8" stroke-width="3" marker-end="url(#grArr)"/>
-                <rect x="260" y="55" width="56" height="44" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                <text x="288" y="80" font-family="Fira Code,monospace" font-size="13" fill="#60a5fa" text-anchor="middle">−25 → 43</text>
-                <line x1="316" y1="77" x2="360" y2="77" stroke="#38bdf8" stroke-width="3" marker-end="url(#grArr)"/>
-                <rect x="370" y="55" width="56" height="44" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                <text x="398" y="80" font-family="Fira Code,monospace" font-size="13" fill="#60a5fa" text-anchor="middle">−25 → 18</text>
-                <line x1="426" y1="77" x2="470" y2="77" stroke="#38bdf8" stroke-width="3" marker-end="url(#grArr)"/>
-                <rect x="480" y="55" width="56" height="44" rx="6" fill="#1e293b" stroke="#2563eb" stroke-width="2.5"/>
-                <text x="508" y="80" font-family="Fira Code,monospace" font-size="13" fill="#60a5fa" text-anchor="middle">−10 → 8</text>
-                <line x1="536" y1="77" x2="580" y2="77" stroke="#38bdf8" stroke-width="3" marker-end="url(#grArr)"/>
-                <rect x="590" y="55" width="56" height="44" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
-                <text x="618" y="80" font-family="Fira Code,monospace" font-size="13" fill="#64748b" text-anchor="middle">→ 0</text>
-                <text x="40" y="152" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">→ −5 → 3 → −1×3 → 0. Total: 8 coins</text>
-                <text x="40" y="172" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">Greedy picks local best — optimal for canonical coins, not always</text>
+                <text x="40" y="28" font-family="Outfit,system-ui,sans-serif" font-size="14" font-weight="800" fill="#f87171">Always take the largest coin ≤ remaining</text>
+                <rect x="40" y="55" width="56" height="48" rx="8" fill="#0f172a" stroke="#f87171" stroke-width="3"/>
+                <text x="68" y="82" font-family="Fira Code,monospace" font-size="15" fill="#f87171" text-anchor="middle">93¢</text>
+                <line x1="96" y1="79" x2="140" y2="79" stroke="#f87171" stroke-width="3" marker-end="url(#grArr)" class="greedy-flow"/>
+                <rect x="150" y="55" width="56" height="48" rx="8" fill="#0f172a" stroke="#f87171" stroke-width="3" class="greedy-flow" style="animation-delay:0.8s"/>
+                <text x="178" y="82" font-family="Fira Code,monospace" font-size="13" fill="#fb7185" text-anchor="middle">−25 → 68</text>
+                <line x1="206" y1="79" x2="250" y2="79" stroke="#f87171" stroke-width="3" marker-end="url(#grArr)" class="greedy-flow" style="animation-delay:1.6s"/>
+                <rect x="260" y="55" width="56" height="48" rx="8" fill="#0f172a" stroke="#f87171" stroke-width="3" class="greedy-flow" style="animation-delay:2.4s"/>
+                <text x="288" y="82" font-family="Fira Code,monospace" font-size="13" fill="#fb7185" text-anchor="middle">−25 → 43</text>
+                <line x1="316" y1="79" x2="360" y2="79" stroke="#f87171" stroke-width="3" marker-end="url(#grArr)" class="greedy-flow" style="animation-delay:3.2s"/>
+                <rect x="370" y="55" width="56" height="48" rx="8" fill="#0f172a" stroke="#f87171" stroke-width="3" class="greedy-flow" style="animation-delay:4s"/>
+                <text x="398" y="82" font-family="Fira Code,monospace" font-size="13" fill="#fb7185" text-anchor="middle">−25 → 18</text>
+                <line x1="426" y1="79" x2="470" y2="79" stroke="#f87171" stroke-width="3" marker-end="url(#grArr)" class="greedy-flow" style="animation-delay:4.8s"/>
+                <rect x="480" y="55" width="56" height="48" rx="8" fill="#0f172a" stroke="#06b6d4" stroke-width="3" class="greedy-flow" style="animation-delay:5.6s"/>
+                <text x="508" y="82" font-family="Fira Code,monospace" font-size="13" fill="#22d3ee" text-anchor="middle">−10 → 8</text>
+                <text x="40" y="155" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b">→ −5 → 3 → −1×3 → 0 · Total: 8 coins</text>
+                <text x="40" y="180" font-family="Outfit,system-ui,sans-serif" font-size="12" fill="#64748b">Greedy picks local best — optimal for canonical coins, not always</text>
               </svg>
             </div>
-            <p class="text-xs text-[var(--muted)] text-center mt-3">Greedy picks local best; optimal for canonical coins, not always.</p>
+            <p class="text-xs text-[var(--muted)] text-center mt-3">Animated flow picks largest coin each step — optimal for canonical coins, not always.</p>
           </div>
         </section>
 
@@ -1531,59 +1637,67 @@ print(f"Total coins: {sum(change.values())}")
           <p class="text-sm font-semibold brand uppercase tracking-wider mb-2">Capstone Project</p>
           <h2 class="text-3xl sm:text-4xl font-extrabold mb-6">Build a "Route &amp; Task Planner"</h2>
           <p class="text-lg text-[var(--muted)] leading-relaxed mb-6">
-            Combine a graph (cities/roads), a priority queue (task scheduler), and a hash table (city index) into one interactive program. All code is runnable by copying.
+            This capstone combines everything you have learned into one real-world program: a <strong>Route &amp; Task Planner</strong>. Imagine you are running a delivery service. You have a map of cities connected by roads, a list of urgent tasks to complete, and a fast way to look up any city by name. DSA gives you the perfect tools for each of these jobs.
+<br/><br/>
+            First, a <strong>graph</strong> stores cities as nodes and roads as weighted edges. This lets you ask, "Which cities can I reach from here?" using BFS or DFS, and later "What is the shortest driving route?" using Dijkstra's algorithm. Second, a <strong>min-heap priority queue</strong> schedules tasks so the most urgent one is always handled first. Third, a <strong>hash table</strong> maps city names to their graph data, giving O(1) lookups by name instead of searching through lists.
+<br/><br/>
+            The project is split into five phases so you can build it piece by piece: build the graph, add the scheduler, add fast city lookup, wire them together in a simple menu, and finally polish the output. By the end, you will have a single runnable Python program that uses at least four of the data structures and algorithms from this tutorial.
           </p>
           <div class="space-y-6">
             <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
               <p class="font-medium text-[var(--ink)] mb-2">Phase 1 — City graph</p>
-              <p class="text-sm text-[var(--muted)]">Model cities and roads with distances; BFS/DFS to find reachable cities.</p>
+              <p class="text-sm text-[var(--muted)]">Create a graph of cities and roads with distances. Use BFS/DFS to list reachable cities, and Dijkstra's algorithm (with a heap) to find the shortest route by total miles.</p>
             </div>
             <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
               <p class="font-medium text-[var(--ink)] mb-2">Phase 2 — Task scheduler</p>
-              <p class="text-sm text-[var(--muted)]">Min-heap priority queue for tasks by urgency.</p>
+              <p class="text-sm text-[var(--muted)]">Use a min-heap priority queue so urgent tasks (low priority number) are popped before routine tasks. This mirrors real operating-system and application schedulers.</p>
             </div>
             <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
               <p class="font-medium text-[var(--ink)] mb-2">Phase 3 — City lookup</p>
-              <p class="text-sm text-[var(--muted)]">Hash table mapping city names to graph nodes.</p>
+              <p class="text-sm text-[var(--muted)]">Build a hash table that maps a city's name to its node object in the graph. This makes name-based lookups and route planning O(1) on average.</p>
             </div>
             <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
               <p class="font-medium text-[var(--ink)] mb-2">Phase 4 — Interactive CLI</p>
-              <p class="text-sm text-[var(--muted)]">Menu to add tasks, find routes, view schedule.</p>
+              <p class="text-sm text-[var(--muted)]">Create a simple text menu where the user can add tasks, find the shortest route between two cities, view the schedule, and list reachable cities.</p>
             </div>
             <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
               <p class="font-medium text-[var(--ink)] mb-2">Phase 5 — Polish &amp; run</p>
-              <p class="text-sm text-[var(--muted)]">Comments, formatted output, edge-case handling.</p>
+              <p class="text-sm text-[var(--muted)]">Add clear comments, format the output nicely, handle invalid input, and run a few end-to-end scenarios to prove everything works together.</p>
             </div>
           </div>
           <div class="card rounded-2xl p-6 mb-8">
             <h3 class="text-xl font-semibold mb-3">Visualization — Route map (graph)</h3>
-            <div class="viz mx-auto" style="max-width:620px;">
-              <svg viewBox="0 0 620 260" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizRouteTitle">
-                <title id="vizRouteTitle">City route map with road distances</title>
+            <div class="viz mx-auto" style="max-width:680px;">
+              <svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" role="img" aria-labelledby="vizRouteTitle">
+                <title id="vizRouteTitle">City route map with road distances for Dijkstra shortest path</title>
+                <style>
+                  .route-flow { animation: routePulse 5s ease-in-out infinite; }
+                  @keyframes routePulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+                </style>
                 <defs>
-                  <marker id="rtArr" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,9 L8,4.5 z" fill="#64748b"/></marker>
+                  <marker id="rtArr" markerWidth="11" markerHeight="11" refX="10" refY="5.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,11 L11,5.5 z" fill="#6366f1"/></marker>
                 </defs>
-                <text x="40" y="28" font-family="Outfit,system-ui,sans-serif" font-size="12" font-weight="700" fill="#38bdf8">Dijkstra finds shortest path by total distance</text>
+                <text x="40" y="28" font-family="Outfit,system-ui,sans-serif" font-size="14" font-weight="800" fill="#6366f1">Dijkstra finds shortest path by total distance</text>
                 <!-- cities -->
-                <circle cx="90" cy="100" r="16" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
-                <text x="90" y="104" font-family="Fira Code,monospace" font-size="13" fill="#38bdf8" text-anchor="middle">NYC</text>
-                <circle cx="210" cy="60" r="16" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
-                <text x="210" y="64" font-family="Fira Code,monospace" font-size="12" fill="#38bdf8" text-anchor="middle">Boston</text>
-                <circle cx="270" cy="140" r="16" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
-                <text x="270" y="144" font-family="Fira Code,monospace" font-size="12" fill="#38bdf8" text-anchor="middle">Philly</text>
-                <circle cx="390" cy="100" r="16" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
-                <text x="390" y="104" font-family="Fira Code,monospace" font-size="12" fill="#38bdf8" text-anchor="middle">DC</text>
-                <circle cx="310" cy="170" r="16" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
-                <text x="310" y="174" font-family="Fira Code,monospace" font-size="12" fill="#38bdf8" text-anchor="middle">Richmond</text>
+                <circle cx="90" cy="110" r="18" fill="#0f172a" stroke="#6366f1" stroke-width="3" class="route-flow"/>
+                <text x="90" y="114" font-family="Fira Code,monospace" font-size="14" fill="#6366f1" text-anchor="middle">NYC</text>
+                <circle cx="210" cy="70" r="18" fill="#0f172a" stroke="#94a3b8" stroke-width="2.5"/>
+                <text x="210" y="74" font-family="Fira Code,monospace" font-size="12" fill="#94a3b8" text-anchor="middle">Boston</text>
+                <circle cx="270" cy="150" r="18" fill="#0f172a" stroke="#94a3b8" stroke-width="2.5"/>
+                <text x="270" y="154" font-family="Fira Code,monospace" font-size="12" fill="#94a3b8" text-anchor="middle">Philly</text>
+                <circle cx="390" cy="110" r="18" fill="#0f172a" stroke="#94a3b8" stroke-width="2.5"/>
+                <text x="390" y="114" font-family="Fira Code,monospace" font-size="12" fill="#94a3b8" text-anchor="middle">DC</text>
+                <circle cx="310" cy="180" r="18" fill="#0f172a" stroke="#94a3b8" stroke-width="2.5"/>
+                <text x="310" y="184" font-family="Fira Code,monospace" font-size="12" fill="#94a3b8" text-anchor="middle">Richmond</text>
                 <!-- roads with distances -->
-                <line x1="106" y1="88" x2="194" y2="72" stroke="#475569" stroke-width="2" marker-end="url(#rtArr)"/>
-                <text x="140" y="78" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">215</text>
-                <line x1="106" y1="112" x2="254" y2="128" stroke="#475569" stroke-width="2" marker-end="url(#rtArr)"/>
-                <text x="165" y="133" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">95</text>
-                <line x1="286" y1="128" x2="374" y2="112" stroke="#475569" stroke-width="2" marker-end="url(#rtArr)"/>
-                <text x="315" y="133" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">140</text>
-                <line x1="286" y1="152" x2="294" y2="158" stroke="#475569" stroke-width="2" marker-end="url(#rtArr)"/>
-                <text x="325" y="170" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">110</text>
+                <line x1="106" y1="98" x2="194" y2="82" stroke="#475569" stroke-width="2" marker-end="url(#rtArr)" class="route-flow"/>
+                <text x="135" y="88" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">215</text>
+                <line x1="106" y1="122" x2="254" y2="138" stroke="#475569" stroke-width="2" marker-end="url(#rtArr)" class="route-flow" style="animation-delay:1s"/>
+                <text x="160" y="143" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">95</text>
+                <line x1="286" y1="138" x2="374" y2="122" stroke="#475569" stroke-width="2" marker-end="url(#rtArr)" class="route-flow" style="animation-delay:2s"/>
+                <text x="315" y="143" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">140</text>
+                <line x1="286" y1="162" x2="294" y2="168" stroke="#475569" stroke-width="2" marker-end="url(#rtArr)" class="route-flow" style="animation-delay:3s"/>
+                <text x="325" y="180" font-family="Outfit,system-ui,sans-serif" font-size="11" fill="#64748b">110</text>
               </svg>
             </div>
           </div>
